@@ -3,6 +3,7 @@
 include("config/autoload.php");
 include("config/constants.php");
 
+
 $daosFilms = new \daos\Films();
 
 $films = $daosFilms->GetAll();
@@ -23,3 +24,4 @@ echo "<pre>";
 var_dump($genres);
 echo "</pre>";
 
+?>
