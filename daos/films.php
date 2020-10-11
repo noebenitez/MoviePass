@@ -2,7 +2,10 @@
 
 namespace daos;
 
+<<<<<<< Updated upstream
 include("config/autoload.php");
+=======
+>>>>>>> Stashed changes
 //include("config/constants.php");
 
 class Films {
