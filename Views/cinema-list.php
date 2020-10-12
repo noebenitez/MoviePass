@@ -21,8 +21,7 @@
     <div class="content"> 
       <div class="scrollable">
 
-      <!-- Si van a probar el remove no se olviden de cambiar el action -->
-      <form action="<?= FRONT_ROOT ?>Cinema/ShowEditView" method="post">
+      <form method="post">
         <table style="text-align:center;">
           <thead>
             <tr>
@@ -44,13 +43,12 @@
               <td> <?= $cinema->getHoraApertura(); ?> </td>
               <td> <?= $cinema->getHoraCierre(); ?> </td>
               <td> <?= $cinema->getvalorEntrada(); ?> </td>
+
               <td>
-
-                <!-- Comentar para usar remove -->
-                <button type="submit" name='edit' class="btn" value="<?= $cinema->getId()?>"> Editar </button>
-
-                  <!-- Descomentar para remove -->
-                  <!-- <button type="submit" name='remove' class="btn" value="<?= $cinema->getId()?>"> Remove </button>  -->
+                <button type="submit" name='edit' class="btn" value="<?= $cinema->getId()?>" formaction="<?= FRONT_ROOT ?> Cinema/ShowEditView"> Editar </button>
+              </td>
+              <td>
+                  <button type="submit" name='remove' class="btn" value="<?= $cinema->getId()?>" formaction="<?=FRONT_ROOT ?> Cinema/Remove"> Remove </button> 
               </td>
             </tr>
 
