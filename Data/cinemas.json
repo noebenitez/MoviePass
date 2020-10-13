@@ -1,0 +1,26 @@
+[
+    {
+        "id": "1",
+        "nombre": "Cinema",
+        "direccion": "San Martin 4444",
+        "horaApertura": "15:00",
+        "horaCierre": "01:00",
+        "valorEntrada": "300"
+    },
+    {
+        "id": "2",
+        "nombre": "Plaza",
+        "direccion": "Belgrano 7777",
+        "horaApertura": "20:15",
+        "horaCierre": "02:05",
+        "valorEntrada": "120"
+    },
+    {
+        "id": "3",
+        "nombre": "Cineship",
+        "direccion": "Sarmiento 2222",
+        "horaApertura": "10:50",
+        "horaCierre": "02:50",
+        "valorEntrada": "250"
+    }
+]
