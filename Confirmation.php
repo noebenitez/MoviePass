@@ -1,15 +1,16 @@
 <?php
 
-if($_POST['username']=="cliente")
+$usuario=$_POST['username'];
+if($usuario=="cliente")
 {
    
     header("Status: 301 Moved Permanently");
-    header("Location: films.php");
+    header("Location: peliculas.php");
     exit;
   
 }
 
-if($_POST['username']=="admin")
+if($usuario=="admin")
 {
    
     header("Status: 301 Moved Permanently");

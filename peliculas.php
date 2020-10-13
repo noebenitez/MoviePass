@@ -15,22 +15,25 @@
 	/**
 	 * Archivos necesarios de inicio
 	 */
-	require("config/autoload.php");
-	require("config/config.php");
+	require("Config/Autoload.php");
+	require("Config/Config.php");
 
 	/**
 	 * Alias
 	 */
-	use config\Autoload as Autoload;
-	use config\Router as Router;
-	use config\Request as Request;
+	use Config\Autoload as Autoload;
+	use Config\Router as Router;
+	use Config\Request as Request;
 	
 	//echo 'Paso por index.php';
 	/**
 	 * Flujo de ejecución
 	 */
-	Autoload::start();
+	Autoload::Start();
 
 	$request = new Request();
 
 	Router::direccionar($request);
+
+
+	?>

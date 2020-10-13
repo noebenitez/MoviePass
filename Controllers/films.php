@@ -1,14 +1,14 @@
 <?php
 
-namespace controllers;
+namespace Controllers;
 
 class Films {
 
     public function getAll() {
 
-        require_once(ROOT . '/views/header.php');
+        require_once(ROOT . '/Views/film/header.php');
 
-        require_once(ROOT . '/views/nav.php');
+        require_once(ROOT . '/views/film/nav.php');
 
         $daosGenres = new \daos\Genres();
 

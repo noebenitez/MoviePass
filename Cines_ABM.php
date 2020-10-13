@@ -1,26 +1,22 @@
-
-//////////////////////////////////// NOELIA
-
 <?php
- 
-	ini_set('display_errors', 1);
+ 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL);
 	
-	require "Config/Autoload.php";
+	require_once "Config/Autoload.php";
 	require "Config/Config.php";
 
-	use Config\Autoload as Autoload;
+	use Config\Autoload as autoload;
 	use Config\Router 	as Router;
 	use Config\Request 	as Request;
 		
-	Autoload::start();
+	autoload::Start();
 
 	session_start();
 
-	require_once(VIEWS_PATH."header.php");
+	require_once(VIEWS_PATH."cinema/header.php");
 
-	Router::Route(new Request());
+	Router::Direccionar(new Request());
 
-	require_once(VIEWS_PATH."footer.php");
+	require_once(VIEWS_PATH."cinema/footer.php");
 ?>
