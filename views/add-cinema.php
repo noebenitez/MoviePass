@@ -1,11 +1,23 @@
 <?php 
  include('header.php');
- include('nav-admin.php');
+ include('nav-bar.php');
 ?>
-
-<div>
-<main> 
-    <div"> 
+<!-- ################################################################################################ -->
+<div class="wrapper row2 bgded" style="background-image:url('../images/demo/backgrounds/1.png');">
+  <div class="overlay">
+    <div id="breadcrumb" class="clear"> 
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Add</a></li>
+        <li><a href="#">List - Remove</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- ################################################################################################ -->
+<div class="wrapper row4">
+<main class="container clear"> 
+    <div class="content"> 
       <div id="comments" >
         <h2>ADD NEW CINEMA</h2>
         <form action= "<?= FRONT_ROOT ?>Cinema/Add" method="post"  style="background-color: #EAEDED;padding: 2rem !important;">
@@ -44,7 +56,7 @@
               </tbody>
           </table>
           <div>
-            <input type="submit" class="btn btn-primary" value="Agregar" style="background-color:#DC8E47;color:white;"/>
+            <input type="submit" class="btn" value="Agregar" style="background-color:#DC8E47;color:white;"/>
           </div>
         </form>
       </div>

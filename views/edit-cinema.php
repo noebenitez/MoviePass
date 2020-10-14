@@ -1,8 +1,20 @@
 <?php 
  include('header.php');
- include('nav-admin.php');
+ include('nav-bar.php');
 ?>
-
+<!-- ################################################################################################ -->
+<div class="wrapper row2 bgded" style="background-image:url('../images/demo/backgrounds/1.png');">
+  <div class="overlay">
+    <div id="breadcrumb" class="clear"> 
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Add</a></li>
+        <li><a href="#">List - Remove</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- ################################################################################################ -->
 <div class="wrapper row4">
 <main class="container clear"> 
     <div class="content"> 
@@ -56,7 +68,7 @@
     </div>
   </main>
 </div>
-
+<!-- ################################################################################################ -->
 
 <?php 
   include('footer.php');

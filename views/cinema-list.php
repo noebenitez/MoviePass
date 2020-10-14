@@ -1,13 +1,25 @@
 <?php 
  include('header.php');
- include('nav-admin.php');
+ include('nav-bar.php');
 ?>
-
-<div>
-  <main> 
+<!-- ################################################################################################ -->
+<div class="wrapper row2 bgded" style="background-image:url('../images/demo/backgrounds/1.png');">
+  <div class="overlay">
+    <div id="breadcrumb" class="clear"> 
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Add</a></li>
+        <li><a href="#">List - Remove</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- ################################################################################################ -->
+<div class="wrapper row4">
+  <main class="hoc container clear"> 
     <!-- main body -->
-    <div> 
-      <div>
+    <div class="content"> 
+      <div class="scrollable">
 
       <form method="post">
         <table style="text-align:center;">
@@ -31,11 +43,12 @@
               <td> <?= $cinema->getHoraApertura(); ?> </td>
               <td> <?= $cinema->getHoraCierre(); ?> </td>
               <td> <?= $cinema->getvalorEntrada(); ?> </td>
+
               <td>
-                <button type="submit" name='edit' class="btn btn-primary" value="<?= $cinema->getId()?>" formaction="<?= FRONT_ROOT ?> Cinema/ShowEditView"> Editar </button>
+                <button type="submit" name='edit' class="btn" value="<?= $cinema->getId()?>" formaction="<?= FRONT_ROOT ?> Cinema/ShowEditView"> Editar </button>
               </td>
               <td>
-                <button type="submit" name='remove' class="btn btn-primary" value="<?= $cinema->getId()?>" formaction="<?=FRONT_ROOT ?> Cinema/Remove"> Remove </button> 
+                  <button type="submit" name='remove' class="btn" value="<?= $cinema->getId()?>" formaction="<?=FRONT_ROOT ?> Cinema/Remove"> Remove </button> 
               </td>
             </tr>
 
