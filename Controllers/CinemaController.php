@@ -14,8 +14,13 @@
         }
 
         public function ShowAddView() {
+<<<<<<< HEAD
 
             require_once(VIEWS_PATH."add-cinema.php"); //Esto se modificaria por el formulario definitivo de añadir cines
+=======
+            
+            require_once(VIEWS_PATH."add-cinema.php");
+>>>>>>> main
         
         }
 
@@ -23,11 +28,19 @@
 
             $cinemaList = $this->cinemaDAO->GetAll();
 
+<<<<<<< HEAD
             require_once(VIEWS_PATH."cinema-list.php"); //Esto se modificaria por el formulario definitivo de listar cines
         }
 
         public function ShowEditView($id){ //Es una función para probar el Editar, no creo que la usemos después
             
+=======
+            require_once(VIEWS_PATH."cinema-list.php");
+        }
+
+        
+        public function ShowEditView($id){ 
+>>>>>>> main
             $cinema = $this->cinemaDAO->GetOne($id);
             require_once(VIEWS_PATH)."edit-cinema.php";
         }
@@ -68,7 +81,10 @@
             $cinema->setHoraApertura($horaApertura);
             $cinema->setHoraCierre($horaCierre);
             $cinema->setValorEntrada($valorEntrada);
+<<<<<<< HEAD
             var_dump($cinema);
+=======
+>>>>>>> main
             $this->cinemaDAO->Edit($cinema);
             $this->ShowListView();
         }

@@ -26,9 +26,24 @@
     {
         "id": "4",
         "nombre": "Paseo Aldrey",
+<<<<<<< HEAD
         "direccion": "Aldrey 1111",
         "horaApertura": "17:45",
         "horaCierre": "17:51",
         "valorEntrada": "400"
+=======
+        "direccion": "Aldrey 3333",
+        "horaApertura": "17:45",
+        "horaCierre": "17:51",
+        "valorEntrada": "400"
+    },
+    {
+        "id": "7",
+        "nombre": "america",
+        "direccion": "rivadavia 3628",
+        "horaApertura": "08:30",
+        "horaCierre": "22:30",
+        "valorEntrada": "300"
+>>>>>>> main
     }
 ]
