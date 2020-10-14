@@ -1,6 +1,6 @@
 <?php
 
-namespace daos;
+namespace DAO;
 
 //include("config/constants.php");
 

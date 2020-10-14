@@ -1,6 +1,4 @@
-<?php 
-
-namespace Config;   
+<?php namespace Config;
 	
     class Autoload {
         
@@ -10,10 +8,7 @@ namespace Config;
                 $classPath = ucwords(str_replace("\\", "/", ROOT.$className).".php");
                 
 				include_once($classPath);
-            });
-            
-            
+			});
         }
     }
 ?>
-

@@ -1,6 +1,4 @@
-<?php 
-
-namespace Config;
+<?php namespace Config;
 
     class Request {
 
@@ -19,13 +17,13 @@ namespace Config;
             
 
             if(empty($ArregloUrl)) {
-                $this->controlador = 'Films';  //inicio por defecto
+                $this->controlador = 'Home';  //inicio por defecto
             } else {
-                $this->controlador = array_shift($ArregloUrl);
+                $this->controlador = ucwords(array_shift($ArregloUrl));
             }
 
             if(empty($ArregloUrl)) {
-                $this->metodo = 'getAll';  //metodo del controlador por defecto
+                $this->metodo = 'Index';  //metodo del controlador por defecto
             } else {
                 $this->metodo = array_shift($ArregloUrl);
             }            
@@ -95,5 +93,3 @@ namespace Config;
             return $this->parametros;
         }
     }
-
-    ?>

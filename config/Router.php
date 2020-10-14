@@ -1,4 +1,4 @@
-<?php namespace config;
+<?php namespace Config;
 
     class Router {
 
@@ -13,12 +13,12 @@
             # code...
         }
         
-        public static function Direccionar(Request $request) {
+        public static function direccionar(Request $request) {
 
             /**
              *  
              */
-            $controlador = $request->getControlador();
+            $controlador = $request->getControlador() . 'Controller';
 
             // UsuariosControlador
 
@@ -45,7 +45,7 @@
             /**
              * 
              */
-            $mostrar = "controllers\\". $controlador;
+            $mostrar = "Controllers\\". $controlador;
 
             // Controladores\Usuarios
 
