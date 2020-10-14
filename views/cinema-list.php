@@ -3,22 +3,33 @@
  include('nav-admin.php');
 ?>
 
+<style>
+
+table, th, td {
+  border: 1px solid black;
+} 
+
+</style>
+
 <div>
-  <main> 
+  <main class="hoc container clear"> 
     <!-- main body -->
-    <div> 
+    <div>
+
+    <h2>LISTADO DE CINES</h2>
+
       <div>
 
       <form method="post">
         <table style="text-align:center;">
           <thead>
             <tr>
-              <th style="width: 15%;">Id</th>
-              <th style="width: 30%;">Nombre</th>
-              <th style="width: 30%;">Dirección</th>
-              <th style="width: 15%;">Hora de apertura</th>
+              <th style="width: 10%;">Id</th>
+              <th style="width: 25%;">Nombre</th>
+              <th style="width: 25%;">Dirección</th>
+              <th style="width: 10%;">Hora de apertura</th>
               <th style="width: 10%;">Hora de cierre</th>
-              <th style="width: 10%;">Valor de entrada</th>
+              <th style="width: 15%;">Valor de entrada</th>
             </tr>
           </thead>
           <tbody>
@@ -35,7 +46,7 @@
                 <button type="submit" name='edit' class="btn btn-primary" value="<?= $cinema->getId()?>" formaction="<?= FRONT_ROOT ?> Cinema/ShowEditView"> Editar </button>
               </td>
               <td>
-                <button type="submit" name='remove' class="btn btn-primary" value="<?= $cinema->getId()?>" formaction="<?=FRONT_ROOT ?> Cinema/Remove"> Remove </button> 
+                <button type="submit" name='remove' class="btn btn-primary" value="<?= $cinema->getId()?>" formaction="<?=FRONT_ROOT ?> Cinema/Remove"> Eliminar </button> 
               </td>
             </tr>
 

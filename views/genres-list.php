@@ -1,3 +1,10 @@
+<?php
+    
+    if ($_SESSION['esAdmin'] == true){
+        include("nav-admin.php");
+    }
+ ?>
+
 <br>
     <h2>GENEROS</h2>
     <nav aria-label="breadcrumb">

@@ -4,10 +4,10 @@
 ?>
 
 <div>
-<main> 
-    <div"> 
+<main class="container clear"> 
+    <div> 
       <div id="comments" >
-        <h2>ADD NEW CINEMA</h2>
+        <h2>AGREGAR CINE</h2>
         <form action= "<?= FRONT_ROOT ?>Cinema/Add" method="post"  style="background-color: #EAEDED;padding: 2rem !important;">
           <table> 
             <thead>
@@ -51,7 +51,6 @@
     </div>
   </main>
 </div>
-<!-- ################################################################################################ -->
 
 <?php 
   include('footer.php');

@@ -22,13 +22,14 @@ class LoginController {
         header("Location: films.php");
         exit;
      */
+        $_SESSION['esAdmin'] = false;
         $films = new FilmsController();
         $films->getAll();
     }
 
     if($_POST['username']=="admin")
     {
-    
+        $_SESSION['esAdmin'] = true;
         $cinema = new CinemaController();
         $cinema->ShowListView();
     

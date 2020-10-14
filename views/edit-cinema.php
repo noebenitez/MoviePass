@@ -3,11 +3,11 @@
  include('nav-admin.php');
 ?>
 
-<div class="wrapper row4">
+<div>
 <main class="container clear"> 
-    <div class="content"> 
+    <div> 
       <div id="comments" >
-        <h2>EDITAR CINEMA</h2>
+        <h2>EDITAR CINE</h2>
 
       <?php
 

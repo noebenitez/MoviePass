@@ -20,6 +20,7 @@
 	use config\Router as Router;
 	use config\Request as Request;
 	
+	session_start();
 	//echo 'Paso por index.php';
 	/**
 	 * Flujo de ejecución
