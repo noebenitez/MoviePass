@@ -4,7 +4,7 @@ namespace Controllers;
 
 class LoginController {
 
-    public function init() {
+    public function init($username) {
         
         /* require_once(ROOT . '/views/header.php');
 
@@ -15,7 +15,7 @@ class LoginController {
         require_once(ROOT . '/views/footer.php');
  */
 
-    if($_POST['username']=="cliente")
+    if($username =="cliente")
     {
     
         /* header("Status: 301 Moved Permanently");
@@ -27,7 +27,7 @@ class LoginController {
         $films->getAll();
     }
 
-    if($_POST['username']=="admin")
+    if($username =="admin")
     {
         $_SESSION['esAdmin'] = true;
         $cinema = new CinemaController();

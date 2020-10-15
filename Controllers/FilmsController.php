@@ -15,10 +15,14 @@ class FilmsController {
         $genres = $daosGenres->GetAll();
 
         require_once(ROOT . '/views/genres-list.php');
+        
+        $daosFilms = new \DAO\Films();
 
-       $daosFilms = new \DAO\Films();
+        $rangoFechas = $daosFilms->getRangoFechas();
 
-       $films = $daosFilms->GetAll();
+        require_once(ROOT . '/views/date-list.php');
+        
+        $films = $daosFilms->GetAll();
 
         require_once(ROOT . '/views/film-list.php');
 
@@ -64,6 +68,21 @@ class FilmsController {
 
         require_once(ROOT . '/views/footer.php');
 
+    }
+
+    public function getFilmsByDate($date){
+
+        require_once(ROOT . '/views/header.php');
+
+        require_once(ROOT . '/views/nav.php');
+
+        $daosFilms = new \DAO\Films();
+
+        $filmsDate = $daosFilms->getByDate($date);
+
+        require_once(ROOT . '/views/film-by-date.php');
+
+        require_once(ROOT . '/views/footer.php');
     }
 
 }

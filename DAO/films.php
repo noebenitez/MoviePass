@@ -86,4 +86,30 @@ class Films {
             }
     }
 
+    public function getRangoFechas(){
+
+        $rango = array();
+        if ($jsonContent = file_get_contents(PELICULAS)){
+            
+            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+            $rango = $arrayToDecode['dates'];
+        }
+        return $rango; //Es un array con keys 'maximum' y 'minimum'
+    }
+
+    public function getByDate($date){
+
+        $arrayFecha = array();
+        $this->RetrieveData();
+        foreach ($this->filmsArray as $film){
+
+            if ($film->getFechaEstreno() == $date){
+
+                array_push($arrayFecha, $film);
+            }
+        }
+        return $arrayFecha;
+    }
+
+
 }
