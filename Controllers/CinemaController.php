@@ -15,21 +15,41 @@
 
         public function ShowAddView() {
             
+            require_once(ROOT . '/views/header.php');
+        
+            require_once(ROOT . '/views/nav-admin.php');
+
             require_once(VIEWS_PATH."add-cinema.php");
+
+            require_once(ROOT . '/views/footer.php');
         
         }
 
         public function ShowListView() {
 
+            require_once(ROOT . '/views/header.php');
+        
+            require_once(ROOT . '/views/nav-admin.php');
+
             $cinemaList = $this->cinemaDAO->GetAll();
 
             require_once(VIEWS_PATH."cinema-list.php");
+
+            require_once(ROOT . '/views/footer.php');
         }
 
         
-        public function ShowEditView($id){ 
+        public function ShowEditView($id){
+
+            require_once(ROOT . '/views/header.php');
+        
+            require_once(ROOT . '/views/nav-admin.php');
+
             $cinema = $this->cinemaDAO->GetOne($id);
+
             require_once(VIEWS_PATH)."edit-cinema.php";
+
+            require_once(ROOT . '/views/footer.php');
         }
 
         public function Add($id, $nombre, $direccion, $horaApertura, $horaCierre, $valorEntrada){

@@ -5,7 +5,14 @@
     {
         public function Index($message = "")
         {
-            require_once(VIEWS_PATH."login.php");
+            $_SESSION['log'] = false;
+            $_SESSION['esAdmin'] = false;
+
+		$daosFilms = new \DAO\Films();
+
+		$films = $daosFilms->GetAll();
+
+            require_once(VIEWS_PATH."index.php");
         }        
     }
 ?>
