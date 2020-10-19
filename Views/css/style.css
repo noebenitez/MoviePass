@@ -1,0 +1,229 @@
+.card {
+        margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+	min-width: 18rem;
+}
+
+body {
+	background-image: url(../images/cine-2.jpg);
+	background-size: 100% 100%;
+	background-attachment: fixed;
+	color: grey;
+}
+
+h2 {
+	color: #B40808;
+}
+
+#estrellaPelicula {
+	font-size: 1.5rem;
+	color: orange;
+}
+
+.badge {
+	background-color: white;
+	color: grey;
+}
+
+#estrellasCard {
+	text-aling: right;
+}
+
+.container-fluid {
+	max-width: 90%;
+}
+
+article {
+	margin-left: 6%;
+}
+
+footer p {
+	opacity: 1;
+	color: white;
+}
+
+footer {
+	background-color: rgba(0,0,0,0.8);
+	/*opacity: 0.7;*/
+	margin-bottom: 0px;
+}
+
+header p {
+	opacity: 1;
+	color: white;
+}
+
+header {
+	/*background-color: #7D0808;
+	opacity: 0.7;*/
+	background-image: linear-gradient(to right, rgba(0,0,0,1), rgba(0,0,0,0.6));
+	margin-bottom: 0px;
+	z-index: 2; 
+	position: relative;
+	height: 25rem;
+
+}
+
+video {
+	align: right;
+	margin-top: -4%;
+}
+
+#video {
+	position: absolute;
+	text-align: right;
+	margin-top: -30%;
+	z-index: 1;
+	height: 25rem;
+	overflow: hidden;
+}
+
+#navUsuario {
+	background-color: #7D0808;
+	height: 60px;
+	padding: 10px;
+	border-radius: 4px;
+	margin-left: 0.7%;
+	
+}
+
+.nav-link:active {
+	background-color: rgba(255,0,0,0.4);
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+	background-color: rgba(255,0,0,0.3);
+}
+
+.dropdown-menu {
+	background-color: #7D0808;
+}
+
+.dropdown-item:hover {
+	background-color: rgba(255,0,0,0.4);
+}
+
+#navUsuario a {
+	color: white;
+}
+
+#peliculas {
+	margin-left: 7%;
+}
+
+
+#generos {
+	background-color: lightgrey;
+}
+
+#datosPeli {
+	background-color: lightgrey;
+	color: black;
+}
+
+.generos {
+	color: black;
+}
+
+.generos:hover {
+	color: red;
+}
+
+
+@media (max-width: 1360px) {
+  video {
+    display: none;
+  }
+}
+
+.container-fluid {
+	margin-top: 0px;
+}
+
+#cardHeader {
+	background-color: transparent;
+	margin-top: 3%;
+	margin-left: 10%;
+	position: absolute;
+	width: 30rem;
+	border-color: transparent;
+}
+
+#hHeader {
+	color: white;
+	line-height : 30px;
+}
+
+#integrantesFooter li {
+	color: white;
+}
+
+.puntuacion {
+	display: inline-block;
+}
+
+#puntuacionEstr {
+	display: inline-block;
+	margin-left: 40%;
+}
+
+#puntuacion {
+	display: inline-block;
+}
+
+.card-block {
+	margin-left: 2%;
+}
+
+
+#logoP {
+	width: 75%;
+	/*background-color: white;*/
+}
+
+
+#logoS {
+	width: 100%;
+	/*background-color: white;*/
+}
+
+
+
+
+
+/* Puntuacion estrellas */
+
+#form {
+  width: 250px;
+  margin: 0 auto;
+  height: 50px;
+}
+
+#form p {
+  text-align: center;
+}
+
+#form label {
+  font-size: 20px;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+label {
+  color: grey;
+}
+
+.clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
+
+label:hover,
+label:hover ~ label {
+  color: orange;
+}
+
+input[type="radio"]:checked ~ label {
+  color: orange;
+}
