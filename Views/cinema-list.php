@@ -12,7 +12,6 @@
       <table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col">ID</th>
       <th scope="col">Nombre</th>
       <th scope="col">Direcci&oacute;n</th>
       <th scope="col">Hora de Apertura</th>
@@ -25,7 +24,6 @@
     <?php foreach ($cinemaList as $cinema){ ?>
             
             <tr>
-            <th scope="row"> <?= $cinema->getId(); ?> </th>
               <td> <?= $cinema->getNombre(); ?> </td>
               <td> <?= $cinema->getDireccion(); ?> </td>
               <td> <?= $cinema->getHoraApertura(); ?> </td>

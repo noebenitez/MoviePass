@@ -52,25 +52,26 @@
             require_once(ROOT . '/views/footer.php');
         }
 
-        public function Add($id, $nombre, $direccion, $horaApertura, $horaCierre, $valorEntrada){
+        public function Add($nombre, $direccion, $horaApertura, $horaCierre, $valorEntrada){
 
             $cinema = new Cinema();
-            $cinema->setId($id);
             $cinema->setNombre($nombre);
             $cinema->setDireccion($direccion);
             $cinema->setHoraApertura($horaApertura);
             $cinema->setHoraCierre($horaCierre);
             $cinema->setValorEntrada($valorEntrada);
             
-            if ($this->cinemaDAO->Add($cinema)){ //Se agrega el cine si no hay otro con el mismo id
-            
-                $this->ShowListView(); 
+            if ($this->validate($cinema)){  //Valida que no exista otro cine con la misma dirección
+                
+                $this->cinemaDAO->Add($cinema);
+                $this->ShowListView();
 
             }else{
 
-                echo "<script> if(confirm('Error. Ya existe un cine con el ID ingresado.'));";
+                echo "<script> if(confirm('Error. Ya existe un cine con la dirección ingresada.'));";
                 echo "</script>";
                 $this->ShowAddView();
+
             }
         }
 
@@ -87,10 +88,28 @@
             $cinema->setDireccion($direccion);
             $cinema->setHoraApertura($horaApertura);
             $cinema->setHoraCierre($horaCierre);
+
             $cinema->setValorEntrada($valorEntrada);
-            $this->cinemaDAO->Edit($cinema);
-            $this->ShowListView();
+            if ($this->validate($cinema)){  //Valida que no exista otro cine con la misma dirección
+                
+                $this->cinemaDAO->Edit($cinema);
+                $this->ShowListView();
+
+            }else{
+
+                echo "<script> if(confirm('Error. Ya existe un cine con la dirección ingresada.'));";
+                echo "</script>";
+                $this->ShowListView();
+
+            }
         }
 
+        public function validate($cinema){
+            
+            if ($this->cinemaDAO->direccionRepetida($cinema->getDireccion())){
+                return false;
+            }
+            return true;
+        }
         
     }

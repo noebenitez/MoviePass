@@ -12,17 +12,10 @@
         public function Add(Cinema $cinema){
 
             $this->RetrieveData();
+            $cinema->setId($this->lastId() + 1 );
+            array_push($this->cinemaList, $cinema);
+            $this->SaveData();
 
-            if(!$this->existeId($cinema->getId())){
-                
-                array_push($this->cinemaList, $cinema);
-                $this->SaveData();
-                return true;
-
-            }else{
-
-                return false;
-            }
     
         }
 
@@ -123,10 +116,21 @@
             }
         }
 
-        private function existeId($id){
+        private function lastId(){
             
+            $this->RetrieveData();
+            $id = end($this->cinemaList); //end() recibe un array y devuelve el último elemento, si el array está vacío retorna false.
+            if ($id == false){
+                return 0;
+            }
+            return $id->getId();
+        }
+
+        public function direccionRepetida($direccion){
+
+            $this->RetrieveData();
             foreach($this->cinemaList as $cinema){
-                if ($cinema->getId() == $id){
+                if ($cinema->getDireccion() == $direccion){
                     return true;
                 }
             }
