@@ -5,7 +5,8 @@ namespace Controllers;
 class LoginController {
 
     public function init($username) {
-        
+
+     header('Cache-Control: no cache'); //Evita el error de cache por reenvío de formulario
 
     if($username =="cliente")
     {

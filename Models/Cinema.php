@@ -6,19 +6,23 @@
 
         private $id; //Agregé id para poder eliminar y modificar
         private $nombre;
-        private $direccion;
+        private $calle;
+        private $altura;
         private $horaApertura;
         private $horaCierre;
         private $valorEntrada;
+        private $capacidad;
 
-        public function __construct($id = null, $nombre = '', $direccion = '', $horaApertura = null, $horaCierre = null, $valorEntrada = null){
+        public function __construct($id = null, $nombre = '', $calle = '', $altura= null, $horaApertura = null, $horaCierre = null, $valorEntrada = null, $capacidad = 0){
             
             $this->$id = $id;
             $this->nombre = $nombre;
-            $this->direccion = $direccion;
+            $this->calle = $calle;
+            $this->altura = $altura;
             $this->horaApertura = $horaApertura;
             $this->horaCierre = $horaCierre;
             $this->valorEntrada = $valorEntrada;
+            $this->capacidad = $capacidad;
         }
 
         public function setId($id){
@@ -29,8 +33,12 @@
             $this->nombre = $nombre;
         }
 
-        public function setDireccion($direccion){
-            $this->direccion = $direccion;
+        public function setCalle($calle){
+            $this->calle = $calle;
+        }
+
+        public function setAltura($altura){
+            $this->altura = $altura;
         }
 
         public function setHoraApertura($horaApertura){
@@ -44,6 +52,10 @@
         public function setValorEntrada($valorEntrada){
             $this->valorEntrada = $valorEntrada;
         }
+
+        public function setCapacidad($capacidad){
+            $this->capacidad = $capacidad;
+        }
             
         public function getId(){
             return $this->id;
@@ -53,8 +65,12 @@
             return $this->nombre;
         }
 
-        public function getDireccion(){
-            return $this->direccion;
+        public function getCalle(){
+            return $this->calle;
+        }
+
+        public function getAltura(){
+            return $this->altura;
         }
 
         public function getHoraApertura(){
@@ -67,6 +83,10 @@
 
         public function getValorEntrada(){
             return $this->valorEntrada;
+        }
+
+        public function getCapacidad(){
+            return $this->capacidad;
         }
 
     }

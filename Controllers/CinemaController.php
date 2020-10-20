@@ -52,11 +52,12 @@
             require_once(ROOT . '/views/footer.php');
         }
 
-        public function Add($nombre, $direccion, $horaApertura, $horaCierre, $valorEntrada){
+        public function Add($nombre, $calle, $altura, $horaApertura, $horaCierre, $valorEntrada){
 
             $cinema = new Cinema();
             $cinema->setNombre($nombre);
-            $cinema->setDireccion($direccion);
+            $cinema->setCalle($calle);
+            $cinema->setAltura($altura);
             $cinema->setHoraApertura($horaApertura);
             $cinema->setHoraCierre($horaCierre);
             $cinema->setValorEntrada($valorEntrada);
@@ -80,16 +81,17 @@
             $this->ShowListView();
         }
 
-        public function Edit($id, $nombre, $direccion, $horaApertura, $horaCierre, $valorEntrada){
+        public function Edit($id, $nombre, $calle, $altura, $horaApertura, $horaCierre, $valorEntrada){
 
             $cinema = new Cinema();
             $cinema->setId($id);
             $cinema->setNombre($nombre);
-            $cinema->setDireccion($direccion);
+            $cinema->setCalle($calle);
+            $cinema->setAltura($altura);
             $cinema->setHoraApertura($horaApertura);
             $cinema->setHoraCierre($horaCierre);
-
             $cinema->setValorEntrada($valorEntrada);
+
             if ($this->validate($cinema)){  //Valida que no exista otro cine con la misma dirección
                 
                 $this->cinemaDAO->Edit($cinema);
@@ -106,7 +108,7 @@
 
         public function validate($cinema){
             
-            if ($this->cinemaDAO->direccionRepetida($cinema->getDireccion())){
+            if ($this->cinemaDAO->direccionRepetida($cinema->getCalle(), $cinema->getAltura())){
                 return false;
             }
             return true;

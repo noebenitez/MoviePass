@@ -15,9 +15,13 @@
     </div>
   </div>
   <div class="form-row">
-  <div class="form-group col-md-12">
-    <label for="direccion">Direcci&oacute;n</label>
-    <input type="text" class="form-control" name="direccion" placeholder="" required>
+  <div class="form-group col-md-6">
+    <label for="calle">Calle</label>
+    <input type="text" class="form-control" name="calle" placeholder="" required>
+  </div>
+  <div class="form-group col-md-6">
+    <label for="altura">Altura</label>
+    <input type="number" class="form-control" name="altura" placeholder="" min="0" max="9999" required>
   </div>
   </div>
   <div class="form-row">

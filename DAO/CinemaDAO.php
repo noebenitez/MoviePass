@@ -78,10 +78,12 @@
 
                 $valuesArray["id"] = $cinema->getId();
                 $valuesArray["nombre"] = $cinema->getNombre();
-                $valuesArray["direccion"] = $cinema->getDireccion();
+                $valuesArray["calle"] = $cinema->getCalle();
+                $valuesArray["altura"] = $cinema->getAltura();
                 $valuesArray["horaApertura"] = $cinema->getHoraApertura();
                 $valuesArray["horaCierre"] = $cinema->getHoraCierre();
                 $valuesArray["valorEntrada"] = $cinema->getvalorEntrada();
+                $valuesArray["capacidad"] = $cinema->getCapacidad();
 
                 array_push($arrayToEncode, $valuesArray);
             }
@@ -106,10 +108,12 @@
                     $cinema = new Cinema();
                     $cinema->setId($valuesArray["id"]);
                     $cinema->setNombre($valuesArray["nombre"]);
-                    $cinema->setDireccion($valuesArray["direccion"]);
+                    $cinema->setCalle($valuesArray["calle"]);
+                    $cinema->setAltura($valuesArray["altura"]);
                     $cinema->setHoraApertura($valuesArray["horaApertura"]);
                     $cinema->setHoraCierre($valuesArray["horaCierre"]);
                     $cinema->setValorEntrada($valuesArray["valorEntrada"]);
+                    $cinema->setCapacidad($valuesArray["capacidad"]);
 
                     array_push($this->cinemaList, $cinema);
                 }
@@ -126,11 +130,11 @@
             return $id->getId();
         }
 
-        public function direccionRepetida($direccion){
+        public function direccionRepetida($calle, $altura){
 
             $this->RetrieveData();
             foreach($this->cinemaList as $cinema){
-                if ($cinema->getDireccion() == $direccion){
+                if (strcasecmp($cinema->getCalle(), $calle) == 0 && $cinema->getAltura() == $altura){
                     return true;
                 }
             }
