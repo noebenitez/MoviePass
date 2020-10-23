@@ -37,6 +37,21 @@ class Films {
         return $this->filmsArray;
     }
 
+
+    public function GetOne($id) {
+
+        $this->RetrieveData();
+        foreach($this->filmsArray as $film) {
+
+            if($film->getId() == $id) {
+
+                return $film;
+            }
+        }
+        return false;
+    }
+
+
   /*  private function SaveData()
     {
         $arrayToEncode = array();

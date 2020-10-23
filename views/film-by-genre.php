@@ -1,5 +1,9 @@
 <br>
-<h2>FILTRO POR GENERO</h2>
+<?php
+        foreach($genres as $genre){ 
+          if($genre->getId() == $id){?>
+<h2>FILTRO POR GENERO &#160;"<?php echo $genre->getNombre() ?>"</h2>
+        <?php }} ?>
 <br>
 
         <div id="peliculas" class="row col-12">
@@ -25,25 +29,18 @@
   <div class="card-body">
 
     <h4 class="card-title"><?php echo $film->getTitulo() ?></h4>
-<br>
+    </div>
 <span>
-    <a href="#" class="btn btn-danger col-5">Comprar</a>&#160;
+<div class="row col-12">
+    <a href="<?php echo FRONT_ROOT ?>Films/BuyTicket/<?php echo $film->getId() ?>" class="btn btn-danger col-6"><i class="fa fa-ticket"></i>&#160;&#160;Comprar</a>&#160;&#160;
 
-	<a href="<?php echo FRONT_ROOT ?>Films/getInfo/<?php echo $film->getId() ?>" class="btn btn-secondary col-4">+ Info</a>&#160;
+	<a href="<?php echo FRONT_ROOT ?>Films/getInfo/<?php echo $film->getId() ?>" class="btn btn-secondary col-4"><i class="fa fa-plus"></i>&#160;&#160;Info</a>
 
-<span class="badge badge-secondary col-1" id="estrellasCard"><h5><b>&#160;<?php 
-
-if($film->getPuntuacion()==0) { 
-echo "-";
-}else{ 
-echo $film->getPuntuacion();
-}
-
-?> </b><span id="estrellaPelicula">&#9733; </span></h5></span>
-
+</div>
 </span>
+<br>
 </div>
-</div>
+
 
 
 <?php

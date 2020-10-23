@@ -140,5 +140,18 @@
             }
             return false;
         }
+
+        public function nombrePorId($id){
+
+            $this->RetrieveData();
+            foreach ($this->cinemaList as $cinema){
+                if ($cinema->getId() == $id){
+
+                    return $cinema->getNombre();
+                }
+            }
+            return false;
+        }
+
     }
 ?>

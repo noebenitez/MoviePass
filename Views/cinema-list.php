@@ -17,7 +17,7 @@
       <th scope="col">Hora de Apertura</th>
       <th scope="col">Hora de Cierre</th>
       <th scope="col">Valor de la Entrada</th>
-      <th scope="col">Capacidad total</th>
+      <th scope="col">Capacidad Total</th>
       <th scope="col">Opciones</th>
     </tr>
   </thead>

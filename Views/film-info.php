@@ -49,37 +49,11 @@ break;
 <?php echo $film->getFechaEstreno() ?></p></ol>
     </nav>
 	    <p class="card-text"><?php echo $film->getDescripcion() ?></p>
-	    <p class="card-text"><b>Puntuaci&oacute;n</b></p>
-<span id="puntuacion" class=" col-12">
-<span class="badge badge-secondary puntuacion col-1" id="estrellasCard"><h5><b>&#160;<?php 
-
-if($film->getPuntuacion()==0) { 
-  echo "-";
-  }else{ 
-  echo $film->getPuntuacion();
-  }
-
-?> </b><span id="estrellaPelicula">&#9733; </span></h5></span>
-
-
-<form id="puntuacionEstr">
-  <p class="clasificacion">
-    <input id="radio1" type="radio" name="estrellas" value="5"><!--
-    --><label for="radio1">&#9733;</label><!--
-    --><input id="radio2" type="radio" name="estrellas" value="4"><!--
-    --><label for="radio2">&#9733;</label><!--
-    --><input id="radio3" type="radio" name="estrellas" value="3"><!--
-    --><label for="radio3">&#9733;</label><!--
-    --><input id="radio4" type="radio" name="estrellas" value="2"><!--
-    --><label for="radio4">&#9733;</label><!--
-    --><input id="radio5" type="radio" name="estrellas" value="1"><!--
-    --><label for="radio5">&#9733;</label>
-  </p>
-</form></span>
-
-            <br><a href="#" class="btn btn-danger">Comprar</a><br><br>
+	    
+      <br><a href="<?php echo FRONT_ROOT ?>Films/BuyTicket/<?php echo $film->getId() ?>" class="btn btn-danger"><i class="fa fa-ticket"></i>&#160;&#160;Comprar Entrada</a>&#160;
+<a href="#" class="btn btn-secondary"><i class="fa fa-heart"></i>&#160;&#160;Agregar a Lista de Deseos</a><br><br>
         </div>
-    </div>
+    </div> 
  
 <?php
 		}

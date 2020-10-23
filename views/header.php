@@ -29,7 +29,7 @@
     <h5 id="hHeader" class="card-text">¡Adquiere entradas para ver tu pr&oacute;xima pel&iacute;cula favorita aqu&iacute;!</h5><br>
    
 
-<a type="button" class="btn btn-danger col-5" href="#">
+<a type="button" class="btn btn-danger col-5" href="<?php echo FRONT_ROOT ?>Films/getAll#peliculas">
  Comprar
 </a>
 

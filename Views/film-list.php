@@ -1,6 +1,14 @@
 <br>
-    <h2>PELICULAS DISPONIBLES</h2><br> 
-
+<div class="d-flex justify-content-between">
+    <h2>PELICULAS DISPONIBLES</h2>
+    <div class="col-md-2">
+<?php if($_SESSION['esAdmin'] == true){
+?>
+    <button href="#" class="btn btn-outline-danger"><i class="fa fa-refresh" aria-hidden="true"></i>&#160;&#160;&#160;Actualizar</button>
+<?php } ?>
+    </div>
+</div>
+<br> 
 <div id="peliculas" class="row col-12">
 
  <?php
@@ -21,25 +29,22 @@
   <div class="card-body">
 
     <h4 class="card-title"><?php echo $film->getTitulo() ?></h4>
-<br>
+
+    </div>
 <span>
-    <a href="#" class="btn btn-danger col-5">Comprar</a>&#160;
+<div class="row col-12">
+    <!-- <a href="<?php echo FRONT_ROOT ?>Films/BuyTicket/<?php echo $film->getId() ?>" class="btn btn-danger col-6"><i class="fa fa-ticket"></i>&#160;&#160;Comprar</a>&#160;&#160; -->
 
-	<a href="<?php echo FRONT_ROOT ?>Films/getInfo/<?php echo $film->getId() ?>" class="btn btn-secondary col-4">+ Info</a>&#160;
+    <a href="<?php echo FRONT_ROOT ?>Funcion/ShowAddView/ <?php echo $film->getId() ?>" class="btn btn-danger col-6"><i class="fa fa-ticket"></i>&#160;&#160;Agregar Función</a>&#160;&#160;
 
-<span class="badge badge-secondary col-1" id="estrellasCard"><h5><b>&#160;<?php 
+	<a href="<?php echo FRONT_ROOT ?>Films/getInfo/<?php echo $film->getId() ?>" class="btn btn-secondary col-4"><i class="fa fa-plus"></i>&#160;&#160;Info</a>
 
-if($film->getPuntuacion()==0) { 
-echo "-";
-}else{ 
-echo $film->getPuntuacion();
-}
-
-?> </b><span id="estrellaPelicula">&#9733; </span></h5></span>
-
+</div>
 </span>
+<br>
 </div>
-</div>
+
+
 <?php
         }
     ?>

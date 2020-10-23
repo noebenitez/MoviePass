@@ -12,6 +12,7 @@
         private $horaCierre;
         private $valorEntrada;
         private $capacidad;
+    
 
         public function __construct($id = null, $nombre = '', $calle = '', $altura= null, $horaApertura = null, $horaCierre = null, $valorEntrada = null, $capacidad = 0){
             
@@ -23,6 +24,7 @@
             $this->horaCierre = $horaCierre;
             $this->valorEntrada = $valorEntrada;
             $this->capacidad = $capacidad;
+           
         }
 
         public function setId($id){

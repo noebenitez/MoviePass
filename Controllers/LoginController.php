@@ -24,11 +24,11 @@ class LoginController {
         $_SESSION['name'] = "Admin";
         $_SESSION['log'] = true;
         $_SESSION['esAdmin'] = true;
-        $cinema = new CinemaController();
-        $cinema->ShowListView();
+        $films = new FilmsController();
+        $films->getAll();
     
     }
-    require_once(ROOT . '/views/footer.php');
+    require_once(ROOT . '/Views/footer.php');
     }
 
     public function logout() {
@@ -43,5 +43,17 @@ class LoginController {
         $home = new HomeController();
         $home->Index();
 
+    }
+
+    public function signinView() {
+
+        require_once(ROOT . '/Views/header-login.php');
+
+        require_once(ROOT . '/Views/nav-principal.php');
+
+        require_once(ROOT . '/Views/signin.php');
+        
+        require_once(ROOT . '/Views/footer.php');
+    
     }
 }

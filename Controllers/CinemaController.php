@@ -3,6 +3,7 @@
 
     use DAO\CinemaDAO as CinemaDAO;
     use Models\Cinema as Cinema;
+    
 
     class CinemaController{
 
@@ -15,41 +16,41 @@
 
         public function ShowAddView() {
             
-            require_once(ROOT . '/views/header.php');
+            require_once(ROOT . '/Views/header.php');
         
-            require_once(ROOT . '/views/nav-admin.php');
+            require_once(ROOT . '/Views/nav-admin.php');
 
             require_once(VIEWS_PATH."add-cinema.php");
 
-            require_once(ROOT . '/views/footer.php');
+            require_once(ROOT . '/Views/footer.php');
         
         }
 
         public function ShowListView() {
 
-            require_once(ROOT . '/views/header.php');
+            require_once(ROOT . '/Views/header.php');
         
-            require_once(ROOT . '/views/nav-admin.php');
+            require_once(ROOT . '/Views/nav-admin.php');
 
             $cinemaList = $this->cinemaDAO->GetAll();
 
             require_once(VIEWS_PATH."cinema-list.php");
 
-            require_once(ROOT . '/views/footer.php');
+            require_once(ROOT . '/Views/footer.php');
         }
 
         
         public function ShowEditView($id){
 
-            require_once(ROOT . '/views/header.php');
+            require_once(ROOT . '/Views/header.php');
         
-            require_once(ROOT . '/views/nav-admin.php');
+            require_once(ROOT . '/Views/nav-admin.php');
 
             $cinema = $this->cinemaDAO->GetOne($id);
 
             require_once(VIEWS_PATH)."edit-cinema.php";
 
-            require_once(ROOT . '/views/footer.php');
+            require_once(ROOT . '/Views/footer.php');
         }
 
         public function Add($nombre, $calle, $altura, $horaApertura, $horaCierre, $valorEntrada){
@@ -61,6 +62,7 @@
             $cinema->setHoraApertura($horaApertura);
             $cinema->setHoraCierre($horaCierre);
             $cinema->setValorEntrada($valorEntrada);
+            
             
             if ($this->validate($cinema)){  //Valida que no exista otro cine con la misma dirección
                 
@@ -92,18 +94,18 @@
             $cinema->setHoraCierre($horaCierre);
             $cinema->setValorEntrada($valorEntrada);
 
-            if ($this->validate($cinema)){  //Valida que no exista otro cine con la misma dirección
+            /*if ($this->validate($cinema)){  //Valida que no exista otro cine con la misma dirección*/
                 
                 $this->cinemaDAO->Edit($cinema);
                 $this->ShowListView();
 
-            }else{
+           /* }else{
 
                 echo "<script> if(confirm('Error. Ya existe un cine con la dirección ingresada.'));";
                 echo "</script>";
                 $this->ShowListView();
 
-            }
+            }*/
         }
 
         public function validate($cinema){
@@ -113,5 +115,14 @@
             }
             return true;
         }
+
+        public function nombrePorId($id){
+
+            return $this->cinemaDAO->nombrePorId($id);
+        }
         
+       
+
     }
+
+?>

@@ -20,23 +20,13 @@
         "capacidad": 0
     },
     {
-        "id": "3",
+        "id": 3,
         "nombre": "Paseo Aldrey",
         "calle": "Aldrey",
         "altura": "3333",
         "horaApertura": "19:47",
         "horaCierre": "23:57",
         "valorEntrada": "400",
-        "capacidad": 0
-    },
-    {
-        "id": 4,
-        "nombre": "america",
-        "calle": "rivadavia",
-        "altura": "3628",
-        "horaApertura": "08:30",
-        "horaCierre": "22:30",
-        "valorEntrada": "300",
         "capacidad": 0
     }
 ]

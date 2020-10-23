@@ -18,6 +18,7 @@
     este valor. Lo uso para buscar el cine que hay que actualizar por id -->
 
     <input type="hidden" name="id" value=<?= $cinema->getId() ?> > 
+    
 
     <div class="form-group col-md-12">
       <label for="nombre">Nombre</label>

@@ -15,11 +15,11 @@
     </div>
   </div>
   <div class="form-row">
-  <div class="form-group col-md-6">
+  <div class="form-group col-md-8">
     <label for="calle">Calle</label>
     <input type="text" class="form-control" name="calle" placeholder="" required>
   </div>
-  <div class="form-group col-md-6">
+  <div class="form-group col-md-4">
     <label for="altura">Altura</label>
     <input type="number" class="form-control" name="altura" placeholder="" min="0" max="9999" required>
   </div>
@@ -40,8 +40,10 @@
 
   </div>
   <br>
+ 
   <button type="submit" class="btn btn-danger">Agregar</button>
 </form>
+
       </div>
     </div>
   </main>

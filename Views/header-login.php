@@ -90,7 +90,7 @@
 
         </div>
     </form><br>
-    <p class="text-center text-muted small">¿No tienes una cuenta? <a href="#">Reg&iacute;strate!</a></p>
+    <p class="text-center text-muted small">¿No tienes una cuenta? <a href="<?php echo FRONT_ROOT ?>Login/signinView">Reg&iacute;strate!</a></p>
 </div>
       </div>
     </div>

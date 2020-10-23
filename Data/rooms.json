@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "idCine": 3,
+        "nombre": "Sala 1",
+        "capacidad": "30"
+    },
+    {
+        "id": 2,
+        "idCine": 4,
+        "nombre": "Sala 2",
+        "capacidad": "68"
+    },
+    {
+        "id": 3,
+        "idCine": 3,
+        "nombre": "Sala 3",
+        "capacidad": "80"
+    },
+    {
+        "id": "4",
+        "idCine": "2",
+        "nombre": "Sala 4",
+        "capacidad": "90"
+    },
+    {
+        "id": 5,
+        "idCine": 1,
+        "nombre": "Sala 5",
+        "capacidad": "25"
+    },
+    {
+        "id": 6,
+        "idCine": 6,
+        "nombre": "Sala 6",
+        "capacidad": "45"
+    }
+]
