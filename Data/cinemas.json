@@ -1,60 +1,23 @@
 [
     {
-        "id": "1",
-        "nombre": "Cinema",
-        "direccion": "San Martin 4444",
-        "horaApertura": "15:00",
-        "horaCierre": "01:00",
-        "valorEntrada": "300"
-    },
-    {
-        "id": "2",
+        "id": 1,
         "nombre": "Plaza",
-        "direccion": "Belgrano 7777",
+        "calle": "Belgrano",
+        "altura": "7777",
         "horaApertura": "20:15",
         "horaCierre": "02:05",
-<<<<<<< Updated upstream
-        "valorEntrada": "120"
-=======
         "valorEntrada": "120",
-        "capacidad": 0,
-        "salas": [
-            {
-                "nombre": "Sala 3",
-                "capacidad": "75"
-            },
-            {
-                "nombre": "Sala 4",
-                "capacidad": "95"
-            }
-        ]
->>>>>>> Stashed changes
+        "capacidad": 0
     },
     {
-        "id": "3",
+        "id": 2,
         "nombre": "Cineship",
-        "direccion": "Sarmiento 2222",
+        "calle": "Sarmiento",
+        "altura": "2222",
         "horaApertura": "10:50",
         "horaCierre": "02:50",
-<<<<<<< Updated upstream
-        "valorEntrada": "250"
-    },
-    {
-        "id": "4",
-        "nombre": "Paseo Aldrey",
-        "direccion": "Aldrey 3333",
-        "horaApertura": "17:45",
-        "horaCierre": "17:51",
-        "valorEntrada": "400"
-=======
         "valorEntrada": "250",
-        "capacidad": 0,
-        "salas": [
-            {
-                "nombre": "Sala 2",
-                "capacidad": "120"
-            }
-        ]
+        "capacidad": 0
     },
     {
         "id": 3,
@@ -64,24 +27,6 @@
         "horaApertura": "19:47",
         "horaCierre": "23:57",
         "valorEntrada": "400",
-        "capacidad": 0,
-        "salas": [
-            {
-                "nombre": "Sala 1",
-                "capacidad": "80"
-            }
-        ]
-    },
-    {
-        "id": 6,
-        "nombre": "Prueba",
-        "calle": "Olazabal",
-        "altura": "2236",
-        "horaApertura": "09:52",
-        "horaCierre": "16:55",
-        "valorEntrada": "400",
-        "capacidad": 0,
-        "salas": []
->>>>>>> Stashed changes
+        "capacidad": 0
     }
 ]

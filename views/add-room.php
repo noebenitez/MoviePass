@@ -6,19 +6,18 @@
       <br>
         <h2>AGREGAR SALA</h2>
         <br>
-        <form action= "<?= FRONT_ROOT ?>Cinema/AddRoom" method="post">
+        <form action= "<?= FRONT_ROOT ?>Room/Add" method="post">
 
   <div class="form-row">
 
   <div class="form-group col-md-12">
     <label for="cinema">Seleccione el Cine</label>
-    <select class="form-control" id="cinema" name="cinema" required>
+    <select class="form-control" id="idCine" name="idCine" required>
 
     <?php 
         foreach($cinemaList as $cinema) {
     ?>
-      <option value="<?php echo $cinema->getId(); ?>"><?php echo $cinema->getNombre(); ?></option>
-
+      <option value="<?php echo $cinema->getId() ?>"><?php echo $cinema->getNombre(); ?></option>
         <?php } ?>
     </select>
   </div>

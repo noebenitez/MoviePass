@@ -3,11 +3,11 @@
 <ul class="nav nav-pills">
 
 <li class="nav-item dropdown">
-<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido <?php echo $_SESSION['name'] ?>!</a>
+<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido/a <?php echo $_SESSION['name'] ?>!</a>
 <div class="dropdown-menu">
-      <a class="dropdown-item" href="#">Ver Perfil</a>
+      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>User/perfil/<?php echo $_SESSION['id'] ?>">Ver Perfil</a>
       <a class="dropdown-item" href="#">Mis Entradas</a>
-      <a class="dropdown-item" href="#">Mi Lista de Deseos</a>
+      
 	<div class="dropdown-divider"></div>
 <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Login/logout">Cerrar Sesi&oacute;n</a>
 </div>
@@ -18,8 +18,8 @@
     <div class="dropdown-menu">
     <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Cinema/ShowListView">Listado de Cines</a>
       <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Cinema/ShowAddView">Agregar Cine</a>
-      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Cinema/ShowRoomListView">Listado de Salas</a>
-      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Cinema/ShowAddRoomView">Agregar Salas</a>
+      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Room/ShowListView">Listado de Salas</a>
+      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Room/ShowAddView">Agregar Salas</a>
   </li>
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pel&iacute;culas</a>

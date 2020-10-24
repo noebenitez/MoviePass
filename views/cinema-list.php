@@ -12,16 +12,12 @@
       <table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col">ID</th>
       <th scope="col">Nombre</th>
       <th scope="col">Direcci&oacute;n</th>
       <th scope="col">Hora de Apertura</th>
       <th scope="col">Hora de Cierre</th>
       <th scope="col">Valor de la Entrada</th>
-<<<<<<< Updated upstream
-=======
       <th scope="col">Capacidad Total</th>
->>>>>>> Stashed changes
       <th scope="col">Opciones</th>
     </tr>
   </thead>
@@ -29,12 +25,12 @@
     <?php foreach ($cinemaList as $cinema){ ?>
             
             <tr>
-            <th scope="row"> <?= $cinema->getId(); ?> </th>
               <td> <?= $cinema->getNombre(); ?> </td>
-              <td> <?= $cinema->getDireccion(); ?> </td>
+              <td> <?php echo $cinema->getCalle() . " " . $cinema->getAltura();?> </td>
               <td> <?= $cinema->getHoraApertura(); ?> </td>
               <td> <?= $cinema->getHoraCierre(); ?> </td>
               <td> <?= $cinema->getvalorEntrada(); ?> </td>
+              <td> <?= $cinema->getCapacidad(); ?> </td>
               <td>
                 <button type="submit" name='edit' class="btn btn-danger" value="<?= $cinema->getId()?>" formaction="<?= FRONT_ROOT ?> Cinema/ShowEditView"> Editar </button>
                 <button type="submit" name='remove' class="btn btn-secondary" value="<?= $cinema->getId()?>" formaction="<?=FRONT_ROOT ?> Cinema/Remove"> Eliminar </button> 

@@ -51,7 +51,8 @@ break;
 	    <p class="card-text"><?php echo $film->getDescripcion() ?></p>
 	    
       <br><a href="<?php echo FRONT_ROOT ?>Films/BuyTicket/<?php echo $film->getId() ?>" class="btn btn-danger"><i class="fa fa-ticket"></i>&#160;&#160;Comprar Entrada</a>&#160;
-<a href="#" class="btn btn-secondary"><i class="fa fa-heart"></i>&#160;&#160;Agregar a Lista de Deseos</a><br><br>
+
+<br><br>
         </div>
     </div> 
  
@@ -60,3 +61,7 @@ break;
 	}
     ?>
 
+
+
+
+ 

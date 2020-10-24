@@ -10,7 +10,7 @@ define( 'GENEROS', 'https://api.themoviedb.org/3/genre/movie/list?api_key=f20416
 
 define( 'IMAGENES', 'https://image.tmdb.org/t/p/w500');
 
-define("FRONT_ROOT", "/TPF-Lab4/");
+define("FRONT_ROOT", "/TP-METODOLOGIA/");
 
 define('VIEWS_PATH', "Views/");
 

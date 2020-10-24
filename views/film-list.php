@@ -2,10 +2,10 @@
 <div class="d-flex justify-content-between">
     <h2>PELICULAS DISPONIBLES</h2>
     <div class="col-md-2">
-    <?php 
-    if($_SESSION['esAdmin'] == true){ ?>
+<?php if($_SESSION['esAdmin'] == true){
+?>
     <button href="#" class="btn btn-outline-danger"><i class="fa fa-refresh" aria-hidden="true"></i>&#160;&#160;&#160;Actualizar</button>
-    <?php } ?>
+<?php } ?>
     </div>
 </div>
 <br> 

@@ -25,7 +25,7 @@
 	<form>
     <div class="form-group">
     <label for="funcion">Seleccione una funci&oacute;n</label>
-    <select class="form-control" id="funcion">
+    <select class="form-control" name="funcion">
       <option>Cine - Sala - Fecha - Horario</option>
      
     </select>
@@ -33,13 +33,13 @@
   <div class="form-row">
   <div class="form-group col-md-4">
     <label for="cantidad">Cantidad</label>
-    <input type="number" class="form-control" id="cantidad" placeholder="1">
+    <input type="number" class="form-control" name="cantidad" value="1">
   </div>
   <div class="form-group col-md-4">
     <label for="total">Total</label>
-    <input type="number" class="form-control" id="total" placeholder="$ 200.00" readonly>
+    <input type="number" class="form-control" name="total" placeholder="$ 200.00" readonly>
   </div>
-  </div>
+  </div> 
 
   <div class="form-row">
   <div class="form-group col-md-12">
@@ -58,23 +58,29 @@
 <div class="form-row">
   <div class="form-group col-md-12">
     <label for="titular">Titular</label>
-    <input type="text" class="form-control" id="titular" placeholder="">
+    <input type="text" class="form-control" name="titular" placeholder="" required>
   </div>
   </div>
   <div class="form-row">
   <div class="form-group col-md-8">
     <label for="nroTarjeta">Nro. de Tarjeta</label>
-    <input type="number" class="form-control" id="nroTarjeta" placeholder="">
+    <input type="number" class="form-control" name="nroTarjeta" placeholder="" required>
   </div>
   </div>
   <div class="form-row">
   <div class="form-group col-md-8">
     <label for="vencimiento">Vencimiento</label>
-    <input type="month" class="form-control" id="vencimiento" placeholder="">
+    <input type="month" class="form-control" name="vencimiento" placeholder="" required>
   </div>
   <div class="form-group col-md-4">
     <label for="codSeguridad">CVV/CVC</label>
-    <input type="number" class="form-control" id="codSeguridad" placeholder="">
+    <input type="number" class="form-control" name="codSeguridad" placeholder="" required>
+  </div>
+  </div>
+  <div class="form-row">
+  <div class="form-group col-md-12">
+    <label for="email">Enviar a </label>
+    <input type="text" class="form-control" name="email" value="<?php if($_SESSION['email'] != 'undefined') {echo $_SESSION['email'];} ?>" required>
   </div>
   </div>
   </form>

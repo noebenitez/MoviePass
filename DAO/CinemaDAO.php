@@ -3,7 +3,6 @@
 
     use DAO\ICinemaDAO as ICinemaDAO;
     use Models\Cinema as Cinema;
-    use Models\Room as Room;
 
     class CinemaDAO implements ICinemaDAO{
 
@@ -13,17 +12,10 @@
         public function Add(Cinema $cinema){
 
             $this->RetrieveData();
+            $cinema->setId($this->lastId() + 1 );
+            array_push($this->cinemaList, $cinema);
+            $this->SaveData();
 
-            if(!$this->existeId($cinema->getId())){
-                
-                array_push($this->cinemaList, $cinema);
-                $this->SaveData();
-                return true;
-
-            }else{
-
-                return false;
-            }
     
         }
 
@@ -86,22 +78,12 @@
 
                 $valuesArray["id"] = $cinema->getId();
                 $valuesArray["nombre"] = $cinema->getNombre();
-                $valuesArray["direccion"] = $cinema->getDireccion();
+                $valuesArray["calle"] = $cinema->getCalle();
+                $valuesArray["altura"] = $cinema->getAltura();
                 $valuesArray["horaApertura"] = $cinema->getHoraApertura();
                 $valuesArray["horaCierre"] = $cinema->getHoraCierre();
                 $valuesArray["valorEntrada"] = $cinema->getvalorEntrada();
-
-                $arraySalas = array();
-
-               foreach($cinema->getSalas() as $sala){
-
-                    $valueSalas['nombre'] = $sala->getNombre();
-                    $valueSalas['capacidad'] = $sala->getCapacidad();
-
-                    array_push($arraySalas, $valueSalas);
-               }
-
-               $valuesArray['salas'] = $arraySalas;
+                $valuesArray["capacidad"] = $cinema->getCapacidad();
 
                 array_push($arrayToEncode, $valuesArray);
             }
@@ -126,38 +108,33 @@
                     $cinema = new Cinema();
                     $cinema->setId($valuesArray["id"]);
                     $cinema->setNombre($valuesArray["nombre"]);
-                    $cinema->setDireccion($valuesArray["direccion"]);
+                    $cinema->setCalle($valuesArray["calle"]);
+                    $cinema->setAltura($valuesArray["altura"]);
                     $cinema->setHoraApertura($valuesArray["horaApertura"]);
                     $cinema->setHoraCierre($valuesArray["horaCierre"]);
                     $cinema->setValorEntrada($valuesArray["valorEntrada"]);
-<<<<<<< Updated upstream
-=======
                     $cinema->setCapacidad($valuesArray["capacidad"]);
-                    
-                   
-                   
-                    $salas = $valuesArray["salas"];
-                    
-                  
-                    foreach($salas as $sala)
-                    {
-                        $nuevaSala = new Room();
-                        $nuevaSala->setNombre($sala['nombre']);
-                        $nuevaSala->setCapacidad($sala['capacidad']);
-                        $cinema->addSalas($nuevaSala);
-                    }
-                    
->>>>>>> Stashed changes
 
                     array_push($this->cinemaList, $cinema);
                 }
             }
         }
 
-        private function existeId($id){
+        private function lastId(){
             
+            $this->RetrieveData();
+            $id = end($this->cinemaList); //end() recibe un array y devuelve el último elemento, si el array está vacío retorna false.
+            if ($id == false){
+                return 0;
+            }
+            return $id->getId();
+        }
+
+        public function direccionRepetida($calle, $altura){
+
+            $this->RetrieveData();
             foreach($this->cinemaList as $cinema){
-                if ($cinema->getId() == $id){
+                if (strcasecmp($cinema->getCalle(), $calle) == 0 && $cinema->getAltura() == $altura){
                     return true;
                 }
             }

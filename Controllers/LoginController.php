@@ -2,32 +2,28 @@
 
 namespace Controllers;
 
+use DAO\UsersDAO as UsersDAO;
+use Models\User as User;
+
 class LoginController {
 
-    public function init($username) {
-        
+    public function init($email, $pass) {
 
-    if($username =="cliente")
-    {
+     header('Cache-Control: no cache'); //Evita el error de cache por reenvío de formulario
 
-        $_SESSION['name'] = "Cliente";
-        $_SESSION['esAdmin'] = false;
+        $usersDAO = new UsersDAO();
+
+        $user = $usersDAO->read($email, $pass);
+
         $_SESSION['log'] = true;
-        $films = new FilmsController();
-        $films->getAll();
-    }
+        $_SESSION['id'] = $user->getId();
+        $_SESSION['name'] = $user->getNombre();
+        $_SESSION['email'] = $user->getEmail();
+        $_SESSION['esAdmin'] = $user->getAdmin();
 
-    if($username =="admin")
-    {
-
-        $_SESSION['name'] = "Admin";
-        $_SESSION['log'] = true;
-        $_SESSION['esAdmin'] = true;
         $films = new FilmsController();
         $films->getAll();
     
-    }
-    require_once(ROOT . '/views/footer.php');
     }
 
     public function logout() {
@@ -55,4 +51,69 @@ class LoginController {
         require_once(ROOT . '/views/footer.php');
     
     }
+
+    public function signin($nombre, $apellido, $dni, $email, $pass){
+
+        $user = new User();
+        $user->setNombre($nombre);
+        $user->setApellido($apellido);
+        $user->setDni($dni);
+        $user->setEmail($email);
+        $user->setPassword($pass);
+        $user->setAdmin(false);
+        $user->setIdFB(0);
+
+        $usersDAO = new UsersDAO();
+
+        $idUser = $usersDAO->Add($user);
+
+        $_SESSION['log'] = true;
+        $_SESSION['id'] = $idUser;
+        $_SESSION['name'] = $nombre;
+        $_SESSION['email'] = $email;
+        $_SESSION['esAdmin'] = false;
+
+        $films = new FilmsController();
+        $films->getAll();
+    }
+
+    public function fbLogin($idFB, $nombre, $apellido, $email) {
+
+        $usersDAO = new UsersDAO();
+
+        $userFB = $usersDAO->GetOneFB($idFB);
+
+        if(!$userFB){
+
+            $user = new User();
+            $user->setNombre($nombre);
+            $user->setApellido($apellido);
+            $user->setDni(null);
+            $user->setEmail($email);
+            $user->setPassword(null);
+            $user->setAdmin(false);
+            $user->setIdFB($idFB);
+
+            $idUser = $usersDAO->Add($user);
+
+        $_SESSION['log'] = true;
+        $_SESSION['id'] = $idUser;
+        $_SESSION['name'] = $nombre;
+        $_SESSION['email'] = $email;
+        $_SESSION['esAdmin'] = false;
+
+        }else{
+
+        $_SESSION['log'] = true;
+        $_SESSION['id'] = $userFB->getId();
+        $_SESSION['name'] = $nombre;
+        $_SESSION['email'] = $email;
+        $_SESSION['esAdmin'] = false;
+        }
+
+        $films = new FilmsController();
+        $films->getAll();
+        
+    }
+
 }
