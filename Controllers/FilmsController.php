@@ -167,46 +167,23 @@ class FilmsController {
         require_once(ROOT . '/Views/footer.php');
     }
 
-    public function BuyTicket($idFilm){
+    public function getInfoFuncion($id) {
 
-        $daosFilms = new \DAO\Films();
+    
+        require_once(ROOT . '/Views/header.php');
+        require_once(ROOT . '/Views/nav-admin.php');
 
-       $films = $daosFilms->GetAll();
-
-       $daosGenres = new \DAO\Genres();
+        $daosGenres = new \DAO\Genres();
 
         $genres = $daosGenres->GetAll();
 
-        $funcionesController = new \Controllers\FuncionController();
+       $daosFilms = new \DAO\Films();
 
-        $cinemaController = new \Controllers\CinemaController();
+       $films = $daosFilms->GetAll();
 
-        $roomController = new \Controllers\RoomController();
+        require_once(ROOT . '/Views/film-info-funcion.php');
 
-        $funciones = $funcionesController->GetAll();
-
-        if($_SESSION['esAdmin'] == false)
-        {
-            if($_SESSION['log'] == false) {
-                require_once(ROOT . '/Views/header-login.php');
-                require_once(ROOT . '/Views/nav-principal.php');
-                require_once(ROOT . '/Views/login.php');
-
-            }else{
-                require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-user.php');
-                require_once(ROOT . '/Views/buy-ticket.php');
-            }
-        }
-    
-        if($_SESSION['esAdmin'] == true)
-        {
-            require_once(ROOT . '/Views/header.php');
-            require_once(ROOT . '/Views/nav-admin.php');
-            require_once(ROOT . '/Views/buy-ticket.php');
-        }
-    
-            require_once(ROOT . '/Views/footer.php');
+        require_once(ROOT . '/Views/footer.php');
 
     }
 }

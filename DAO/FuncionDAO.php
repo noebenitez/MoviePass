@@ -38,23 +38,6 @@
             return false;
         }
 
-        /* public function Remove($idRemove){
-
-            $this->RetrieveData();
-            $newList = array();
-
-            foreach ($this->funcionList as $funcion){
-
-                if ($funcion->getId() != $idRemove){
-                    
-                    array_push($newList, $funcion);
-                } 
-            }
-            $this->funcionList = $newList;
-            $this->SaveData();       
-        }
-
-
         public function Edit(Funcion $funcionActualizada){
             
             $this->RetrieveData();
@@ -62,11 +45,11 @@
 
                 if ($funcion->getId() == $funcionActualizada->getId()){
                     
-                    $this->funcionList[$key] = $funcionActualizado;
+                    $this->funcionList[$key] = $funcionActualizada;
                 } 
             }
             $this->SaveData();
-        } */
+        } 
     
 
         private function SaveData(){
@@ -203,7 +186,38 @@
             return false;
         }
 
+        public function getByDate($date){
 
+            $arrayFecha = array();
+            $this->RetrieveData();
+            foreach ($this->funcionList as $funcion){
+    
+                if ($funcion->getFecha() == $date){
+    
+                    $daosFilms = new \DAO\Films();
+                    $film = $daosFilms->GetOne($funcion->getIdFilm());
+                    array_push($arrayFecha, $film);
+                }
+            }
+            return $arrayFecha;
+        }
 
+        public function Remove($idRemove){
+
+            $this->RetrieveData();
+            $newList = array();
+
+            foreach ($this->funcionList as $funcion){
+
+                if ($funcion->getId() != $idRemove){
+                    
+                    array_push($newList, $funcion);
+                } 
+            }
+            $this->funcionList = $newList;
+            $this->SaveData();       
+        }
+        
+         
     }
 ?>

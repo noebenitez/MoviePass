@@ -3,7 +3,7 @@
     namespace Models;
 
     class Funcion{
-
+ 
         private $id;
         private $fecha;
         private $hora;

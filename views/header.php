@@ -14,22 +14,18 @@
 </head>
 <body>
 
-<!-- BOTON DE FB 
-<div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v8.0" nonce="AQgMbjZe"></script>-->
-
 <header>
 <div id="cardHeader" class="card">
   <div class="card-body">
 <div id="logoP">
 	<img src="<?php echo IMAGES.'logo.png' ?>" class="card-img-top" alt="MoviePass" width="100%">
-    <!--<h1 class="card-title">MoviePASS</h1>-->
+   
 </div>
 <br>
     <h5 id="hHeader" class="card-text">¡Adquiere entradas para ver tu pr&oacute;xima pel&iacute;cula favorita aqu&iacute;!</h5><br>
    
 
-<a type="button" class="btn btn-danger col-5" href="<?php echo FRONT_ROOT ?>Films/getAll#peliculas">
+<a type="button" class="btn btn-danger col-5" href="<?php echo FRONT_ROOT ?>Funcion/ShowCartelera#peliculas">
  Comprar
 </a>
 

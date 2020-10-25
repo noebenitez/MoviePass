@@ -7,7 +7,7 @@ include('header-login.php');
 
 include('nav-principal.php');
 
-include('film-list.php');
+include('cartelera.php');
 
 include('footer.php');
 

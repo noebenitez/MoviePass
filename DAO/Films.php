@@ -13,6 +13,19 @@ class Films {
         $filmsArray = array();
     }
 
+    public function GetOne($id) {
+
+        $this->RetrieveData();
+        foreach($this->filmsArray as $film) {
+
+            if($film->getId() == $id) {
+
+                return $film;
+            }
+        }
+        return false;
+    }
+
    /* public function create($film) {
 
         if($this->Add($film)) {
@@ -36,21 +49,6 @@ class Films {
 
         return $this->filmsArray;
     }
-
-
-    public function GetOne($id) {
-
-        $this->RetrieveData();
-        foreach($this->filmsArray as $film) {
-
-            if($film->getId() == $id) {
-
-                return $film;
-            }
-        }
-        return false;
-    }
-
 
   /*  private function SaveData()
     {

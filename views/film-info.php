@@ -43,15 +43,16 @@ break;
 	      foreach($film->getGeneros() as $genreFilm){
 		
         if ($genre->getId() == $genreFilm) { ?>
-		      <li class="breadcrumb-item"><a href="<?php echo FRONT_ROOT ?>Films/getFilmsByGenres/<?php echo $genre->getId() ?>" class="generos"><?php echo $genre->getNombre() ?></a></li> <?php
+		      <li class="breadcrumb-item"><a href="<?php echo FRONT_ROOT ?>Funcion/getFilmsByGenres/<?php echo $genre->getId() ?>" class="generos"><?php echo $genre->getNombre() ?></a></li> <?php
 }}}
  ?>&#160;&#160;|&#160; 
 <?php echo $film->getFechaEstreno() ?></p></ol>
     </nav>
 	    <p class="card-text"><?php echo $film->getDescripcion() ?></p>
-	    
-      <br><a href="<?php echo FRONT_ROOT ?>Films/BuyTicket/<?php echo $film->getId() ?>" class="btn btn-danger"><i class="fa fa-ticket"></i>&#160;&#160;Comprar Entrada</a>&#160;
-<a href="#" class="btn btn-secondary"><i class="fa fa-heart"></i>&#160;&#160;Agregar a Lista de Deseos</a><br><br>
+
+      <br><a href="<?php echo FRONT_ROOT ?>Ticket/BuyTicket/<?php echo $film->getId() ?>" class="btn btn-danger"><i class="fa fa-ticket"></i>&#160;&#160;Comprar Entrada</a>&#160;
+      
+<br><br>
         </div>
     </div> 
  
@@ -60,3 +61,7 @@ break;
 	}
     ?>
 
+
+
+
+ 

@@ -8,11 +8,11 @@
             $_SESSION['log'] = false;
             $_SESSION['esAdmin'] = false;
 
-		$daosFilms = new \DAO\Films();
+            $cartelera = new FuncionController();
 
-		$films = $daosFilms->GetAll();
+            $cartelera->ShowCartelera();
 
-            require_once(VIEWS_PATH."index.php");
+            //require_once(VIEWS_PATH."index.php");
         }        
     }
 ?>

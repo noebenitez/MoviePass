@@ -19,9 +19,9 @@
 
         public function ShowAddView(){
 
-            require_once(ROOT . '/Views/header.php');
+            require_once(ROOT . '/views/header.php');
         
-            require_once(ROOT . '/Views/nav-admin.php');
+            require_once(ROOT . '/views/nav-admin.php');
 
             $cinemaList = $this->cinemaDAO->GetAll();
 
@@ -29,15 +29,15 @@
 
             require_once(VIEWS_PATH."add-room.php");
 
-            require_once(ROOT . '/Views/footer.php');
+            require_once(ROOT . '/views/footer.php');
 
         }
 
         public function ShowListView() {
 
-            require_once(ROOT . '/Views/header.php');
+            require_once(ROOT . '/views/header.php');
         
-            require_once(ROOT . '/Views/nav-admin.php');
+            require_once(ROOT . '/views/nav-admin.php');
 
             $cinemaList = $this->cinemaDAO->GetAll();
 
@@ -45,15 +45,15 @@
 
             require_once(VIEWS_PATH."room-list.php");
 
-            require_once(ROOT . '/Views/footer.php');
+            require_once(ROOT . '/views/footer.php');
         }
 
         
         public function ShowEditView($id){
 
-            require_once(ROOT . '/Views/header.php');
+            require_once(ROOT . '/views/header.php');
         
-            require_once(ROOT . '/Views/nav-admin.php');
+            require_once(ROOT . '/views/nav-admin.php');
 
             $room = $this->roomDAO->GetOne($id);
 
@@ -61,7 +61,7 @@
 
             require_once(VIEWS_PATH)."edit-room.php";
 
-            require_once(ROOT . '/Views/footer.php');
+            require_once(ROOT . '/views/footer.php');
         }
 
         public function Add($idCine, $nombre, $capacidad){
@@ -80,10 +80,6 @@
             $this->ShowListView();
         }
 
-        public function GetOne($id){
-            return $this->roomDAO->GetOne($id);
-        }
-
         public function Edit($id, $idCine, $nombre, $capacidad){
 
             $room = new Room();
@@ -98,9 +94,9 @@
         }
 
         public function nombrePorId($id){
-            $this->roomDAO->nombrePorId($id);
-        }
 
+            return $this->roomDAO->nombrePorId($id);
+        }
     }
     
 ?>

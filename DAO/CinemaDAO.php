@@ -35,9 +35,11 @@
 
                     return $cinema;
                 }
-            }
+            } 
             return false;
         }
+
+
 
         public function Remove($idRemove){
 
