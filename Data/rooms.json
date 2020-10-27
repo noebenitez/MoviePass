@@ -6,20 +6,14 @@
         "capacidad": "30"
     },
     {
-        "id": 2,
-        "idCine": 4,
-        "nombre": "Sala 2",
-        "capacidad": "68"
-    },
-    {
         "id": 3,
         "idCine": 3,
         "nombre": "Sala 3",
         "capacidad": "80"
     },
     {
-        "id": "4",
-        "idCine": "2",
+        "id": 4,
+        "idCine": 2,
         "nombre": "Sala 4",
         "capacidad": "90"
     },

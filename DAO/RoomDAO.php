@@ -44,14 +44,42 @@
 
             foreach ($this->roomList as $room){
 
-                if ($room->getId() !== $idRemove){
+                if ($room->getId() != $idRemove){
                     
                     array_push($newList, $room);
                 } 
             }
             $this->roomList = $newList;
-            $this->SaveData();       
+            $this->SaveData();  
+            
+            $funcionController = new \Controllers\FuncionController();
+            $funcionController->RemovePorSala($idRemove);
+
         }
+
+
+        public function RemovePorCine($idRemove){
+
+            $this->RetrieveData();
+            $newList = array();
+
+            foreach ($this->roomList as $room){
+
+                if ($room->getIdCine() == $idRemove){
+                    
+                    $funcionController = new \Controllers\FuncionController();
+                    $funcionController->RemovePorSala($room->getId());
+                    
+                }else{
+                    
+                    array_push($newList, $room);
+                } 
+            }
+            $this->roomList = $newList;
+            $this->SaveData();
+            
+        }
+
 
         public function Edit(Room $roomActualizado){
             

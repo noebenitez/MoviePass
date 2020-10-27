@@ -94,23 +94,23 @@
             $cinema->setHoraCierre($horaCierre);
             $cinema->setValorEntrada($valorEntrada);
 
-            /*if ($this->validate($cinema)){  //Valida que no exista otro cine con la misma dirección*/
+            if ($this->validate($cinema)){  //Valida que no exista otro cine con la misma dirección
                 
                 $this->cinemaDAO->Edit($cinema);
                 $this->ShowListView();
 
-           /* }else{
+           }else{
 
                 echo "<script> if(confirm('Error. Ya existe un cine con la dirección ingresada.'));";
                 echo "</script>";
                 $this->ShowListView();
 
-            }*/
+            }
         }
 
         public function validate($cinema){
             
-            if ($this->cinemaDAO->direccionRepetida($cinema->getCalle(), $cinema->getAltura())){
+            if ($this->cinemaDAO->direccionRepetida($cinema)){
                 return false;
             }
             return true;

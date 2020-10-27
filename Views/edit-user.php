@@ -8,15 +8,15 @@
     <div class="form-group col-md-4">
     <input type="hidden" name="id" value=<?php echo $user->getId() ?> > 
       <label for="nombre">Nombre</label>
-      <input type="text" class="form-control" name="nombre" value="<?php echo $user->getNombre() ?>" required>
+      <input type="text" class="form-control" name="nombre" value="<?php echo $user->getNombre() ?>" pattern="[A-Za-z\s]+" title="Únicamente letras" required>
     </div>
     <div class="form-group col-md-4">
       <label for="apellido">Apellido</label>
-      <input type="text" class="form-control" name="apellido" value="<?php echo $user->getApellido() ?>" required>
+      <input type="text" class="form-control" name="apellido" value="<?php echo $user->getApellido() ?>" pattern="[A-Za-z\s]+" title="Únicamente letras" required>
     </div>
     <div class="form-group col-md-4">
       <label for="dni">DNI</label>
-      <input type="number" class="form-control" name="dni" value="<?php echo $user->getDni() ?>" required>
+      <input type="number" class="form-control" name="dni" value="<?php echo $user->getDni() ?>" min="0" required>
     </div>
   </div>
   <div class="form-row">

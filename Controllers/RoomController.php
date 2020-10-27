@@ -80,6 +80,11 @@
             $this->ShowListView();
         }
 
+        public function RemovePorCine($idCine){
+            $this->roomDAO->RemovePorCine($idCine);
+        }
+
+
         public function Edit($id, $idCine, $nombre, $capacidad){
 
             $room = new Room();
@@ -97,6 +102,12 @@
 
             return $this->roomDAO->nombrePorId($id);
         }
+
+        public function GetAll(){
+            return $this->roomDAO->GetAll();
+        }
+
+
     }
     
 ?>

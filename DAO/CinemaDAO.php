@@ -54,7 +54,11 @@
                 } 
             }
             $this->cinemaList = $newList;
-            $this->SaveData();       
+            $this->SaveData();
+
+            $roomController = new \Controllers\RoomController();
+            $roomController->RemovePorCine($idRemove);
+
         }
 
         public function Edit(Cinema $cinemaActualizado){
@@ -86,6 +90,7 @@
                 $valuesArray["horaCierre"] = $cinema->getHoraCierre();
                 $valuesArray["valorEntrada"] = $cinema->getvalorEntrada();
                 $valuesArray["capacidad"] = $cinema->getCapacidad();
+                
 
                 array_push($arrayToEncode, $valuesArray);
             }
@@ -115,7 +120,7 @@
                     $cinema->setHoraApertura($valuesArray["horaApertura"]);
                     $cinema->setHoraCierre($valuesArray["horaCierre"]);
                     $cinema->setValorEntrada($valuesArray["valorEntrada"]);
-                    $cinema->setCapacidad($valuesArray["capacidad"]);
+                    $cinema->setCapacidad($this->capacidadCine($cinema->getId()));
 
                     array_push($this->cinemaList, $cinema);
                 }
@@ -132,11 +137,11 @@
             return $id->getId();
         }
 
-        public function direccionRepetida($calle, $altura){
+        public function direccionRepetida($entry){
 
             $this->RetrieveData();
             foreach($this->cinemaList as $cinema){
-                if (strcasecmp($cinema->getCalle(), $calle) == 0 && $cinema->getAltura() == $altura){
+                if (strcasecmp($cinema->getCalle(), $entry->getCalle()) == 0 && $cinema->getAltura() == $entry->getAltura() && $cinema->getId() == $entry->getId()){
                     return true;
                 }
             }
@@ -154,6 +159,21 @@
             }
             return false;
         }
+
+        private function capacidadCine($id){
+            
+            $capacidad = 0;
+            $roomController = new \Controllers\RoomController();
+            $roomList = $roomController->GetAll();
+
+            foreach ($roomList as $room){
+                if ($room->getIdCine() == $id){
+                    $capacidad += $room->getCapacidad();
+                }
+            }
+            return $capacidad;
+        }
+
 
     }
 ?>

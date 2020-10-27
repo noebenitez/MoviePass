@@ -217,6 +217,26 @@
             $this->funcionList = $newList;
             $this->SaveData();       
         }
+
+        public function RemovePorSala($idSala){  //Elimina todas las funciones que pertenezcan a una sala
+
+            $this->RetrieveData();
+            $newList = array();
+
+            foreach ($this->funcionList as $funcion){
+
+                if($funcion->getIdSala() != $idSala){
+
+                    array_push($newList, $funcion);
+                }
+
+                $this->funcionList = $newList;
+                $this->SaveData();
+            }
+        }
+
+        
+
         
          
     }

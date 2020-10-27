@@ -7,15 +7,16 @@
 <div class="form-row">
     <div class="form-group col-md-4">
       <label for="nombre">Nombre</label>
-      <input type="text" class="form-control" name="nombre" placeholder="" required>
+      <!-- El atributo pattern indica que solo se aceptan letras y espacios -->
+      <input type="text" class="form-control" name="nombre" placeholder="" pattern="[A-Za-z\s]+" title="Únicamente letras" required>
     </div>
     <div class="form-group col-md-4">
       <label for="apellido">Apellido</label>
-      <input type="text" class="form-control" name="apellido" placeholder="" required>
+      <input type="text" class="form-control" name="apellido" placeholder="" pattern="[A-Za-z\s]+" title="Únicamente letras" required>
     </div>
     <div class="form-group col-md-4">
       <label for="dni">DNI</label>
-      <input type="number" class="form-control" name="dni" placeholder="" required>
+      <input type="number" class="form-control" name="dni" placeholder="" min="0" required>
     </div>
   </div>
   <div class="form-row">

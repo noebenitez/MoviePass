@@ -14,19 +14,29 @@ class LoginController {
         $usersDAO = new UsersDAO();
 
         $user = $usersDAO->read($email, $pass);
-
-        $_SESSION['log'] = true;
-        $_SESSION['id'] = $user->getId();
-        $_SESSION['name'] = $user->getNombre();
-        $_SESSION['email'] = $user->getEmail();
-        $_SESSION['esAdmin'] = $user->getAdmin();
-
-        if( $_SESSION['esAdmin'] == true){
-            $films = new FilmsController();
-             $films->getAll();
+        
+        if ($user){
+            
+            $_SESSION['log'] = true;
+            $_SESSION['id'] = $user->getId();
+            $_SESSION['name'] = $user->getNombre();
+            $_SESSION['email'] = $user->getEmail();
+            $_SESSION['esAdmin'] = $user->getAdmin();
+    
+            if( $_SESSION['esAdmin'] == true){
+                $films = new FilmsController();
+                 $films->getAll();
+            }else{
+                $cartelera = new FuncionController();
+                $cartelera->ShowCartelera();
+            }
         }else{
-            $cartelera = new FuncionController();
-            $cartelera->ShowCartelera();
+
+            echo "<script> if(confirm('Error. Usuario o contraseña incorrecto.'));";
+            echo "</script>";
+            $home = new HomeController();
+            $home->Index();
+
         }
     }
 
@@ -98,7 +108,7 @@ class LoginController {
             $user->setAdmin(false);
             $user->setIdFB($idFB);
 
-            $idUser = $usersDAO->Add($user);
+            $idUser = $usersDAO->AddFB($user);
 
         $_SESSION['log'] = true;
         $_SESSION['id'] = $idUser;

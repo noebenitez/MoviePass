@@ -90,6 +90,10 @@
             $this->ShowListView();
         }
 
+        public function RemovePorSala($idSala){
+            $this->funcionDAO->RemovePorSala($idSala);
+        }
+
         public function Edit($id, $idFilm, $idSala, $fecha, $hora, $duracion){
 
             $funcion = new Funcion();
