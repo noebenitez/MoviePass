@@ -10,7 +10,7 @@
 
 <?php
 foreach($films as $film){
-	foreach($film->getGeneros() as $genre){
+	foreach($daosFilms->getGeneros($film->getId()) as $genre){
 		if($genre == $id) {
 			 ?>
 
@@ -32,7 +32,7 @@ foreach($films as $film){
     </div>
 <span>
 <div class="row col-12">
-    <a href="<?php echo FRONT_ROOT ?>Films/BuyTicket/<?php echo $film->getId() ?>" class="btn btn-danger col-6"><i class="fa fa-ticket"></i>&#160;&#160;Comprar</a>&#160;&#160;
+    <a href="<?php echo FRONT_ROOT ?>Ticket/BuyTicket/<?php echo $film->getId() ?>" class="btn btn-danger col-6"><i class="fa fa-ticket"></i>&#160;&#160;Comprar</a>&#160;&#160;
 
 	<a href="<?php echo FRONT_ROOT ?>Films/getInfo/<?php echo $film->getId() ?>" class="btn btn-secondary col-4"><i class="fa fa-plus"></i>&#160;&#160;Info</a>
 

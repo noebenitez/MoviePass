@@ -1,7 +1,7 @@
 <?php
     namespace Controllers;
 
-    use DAO\CinemaDAO as CinemaDAO;
+    use DAO\CinemaDAODB as CinemaDAO;
     use Models\Cinema as Cinema;
     
 
@@ -63,8 +63,11 @@
             $cinema->setHoraCierre($horaCierre);
             $cinema->setValorEntrada($valorEntrada);
             
+            $this->cinemaDAO->Add($cinema);
+            $this->ShowListView();
             
-            if ($this->validate($cinema)){  //Valida que no exista otro cine con la misma dirección
+            
+            /* if ($this->validate($cinema)){  //Valida que no exista otro cine con la misma dirección
                 
                 $this->cinemaDAO->Add($cinema);
                 $this->ShowListView();
@@ -75,7 +78,7 @@
                 echo "</script>";
                 $this->ShowAddView();
 
-            }
+            } */
         }
 
         public function Remove($id){
@@ -94,7 +97,11 @@
             $cinema->setHoraCierre($horaCierre);
             $cinema->setValorEntrada($valorEntrada);
 
-            if ($this->validate($cinema)){  //Valida que no exista otro cine con la misma dirección
+            $this->cinemaDAO->Edit($cinema);
+            $this->ShowListView();
+            
+
+            /* if ($this->validate($cinema)){  //Valida que no exista otro cine con la misma dirección
                 
                 $this->cinemaDAO->Edit($cinema);
                 $this->ShowListView();
@@ -105,7 +112,7 @@
                 echo "</script>";
                 $this->ShowListView();
 
-            }
+            } */
         }
 
         public function validate($cinema){

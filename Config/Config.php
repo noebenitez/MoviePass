@@ -24,4 +24,12 @@ define('VIDEOS', 'http://avmartinmalharro.edu.ar/dweb/4a/2019/YAROSSI/TPFLab4/vi
 
 define('IMAGES', 'http://avmartinmalharro.edu.ar/dweb/4a/2019/YAROSSI/TPFLab4/images/');
 
+define("DB_HOST", "localhost");
+
+define("DB_NAME", "cinesbd");
+
+define("DB_USER", "root");
+
+define("DB_PASS", "");
+
 ?>

@@ -19,20 +19,20 @@ class Film {
     private $video; //está como video, es un booleano, calculo será si tiene o no trailer
     private $puntuacion; 
 
-    function __constructor() {
-        $this->poster = '';
-        $this->adultos = false;
-        $this->descripcion = '';
-        $this->fechaEstreno = '';
+    function __construct($poster = '', $adultos = false, $descripcion = '', $fechaEstreno = '', $id = 0, $titulo = '', $idiomaOriginal = '', $fondo = '', $popularidad = 0, $cantidadVotos = 0, $video = false, $puntuacion = 0) {
+        $this->poster = $poster;
+        $this->adultos = $adultos;
+        $this->descripcion = $descripcion;
+        $this->fechaEstreno = $fechaEstreno;
         $this->generos = array();
-        $this->id = 0;
-        $this->titulo = '';
-        $this->idiomaOriginal = '';
-        $this->fondo = '';
-        $this->popularidad = 0;
-        $this->cantidadVotos = 0;
-        $this->video = false;
-        $this->puntuacion = 0; 
+        $this->id = $id;
+        $this->titulo = $titulo;
+        $this->idiomaOriginal = $idiomaOriginal;
+        $this->fondo = $fondo;
+        $this->popularidad = $popularidad;
+        $this->cantidadVotos = $cantidadVotos;
+        $this->video = $video;
+        $this->puntuacion = $puntuacion;
     }
 
     public function getPoster() {

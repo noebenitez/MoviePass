@@ -11,7 +11,7 @@
 
         public function __construct($id = null, $nombre = '', $capacidad = 0, $idCine = null){
             
-            $this->$id = $id;
+            $this->id = $id;
             $this->nombre = $nombre;
             $this->capacidad = $capacidad;
             $this->idCine = $idCine;

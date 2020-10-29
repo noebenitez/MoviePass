@@ -10,7 +10,7 @@
 
 <?php
         foreach($films as $film){
-	foreach($film->getGeneros() as $genre){
+	foreach($daosFilms->getGeneros($film->getId()) as $genre){
 		if($genre == $id) {
 			 ?>
 

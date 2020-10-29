@@ -10,7 +10,7 @@
         <br>
         <form action= "<?= FRONT_ROOT ?>Funcion/Add" method="post">
 
-          <input type="hidden" name="id" value=<?= $film->getId() ?> > 
+          <input type="hidden" name="idFilm" value=<?= $film->getId() ?> > 
 
           <div class="form-row">
           <div class="form-group col-md-12">

@@ -2,11 +2,13 @@
     namespace Controllers;
 
     use Models\Funcion as Funcion;
-    use DAO\FuncionDAO as FuncionDAO;
+    use DAO\FuncionDAODB as FuncionDAO;
     use Models\Film as Film;
-    use DAO\Films as FilmDAO;
+    use DAO\FilmsDAODB as FilmsDAO;
     use Models\Room as Room;
-    use DAO\RoomDAO as RoomDAO;
+    use DAO\RoomDAODB as RoomDAO;
+    use DAO\CinemaDAODB as CinemaDAO;
+    use DAO\GenresDAODB as GenresDAO;
 
     class FuncionController{
 
@@ -18,7 +20,7 @@
 
             $this->funcionDAO = new FuncionDAO();
             $this->roomDAO = new RoomDAO();
-            $this->filmDAO = new FilmDAO();
+            $this->filmDAO = new FilmsDAO();
         }
 
 
@@ -47,7 +49,7 @@
         
             require_once(ROOT . '/Views/nav-admin.php');
 
-            $cinemaDAO = new \DAO\CinemaDAO();
+            $cinemaDAO = new CinemaDAO();
 
             $filmList = $this->filmDAO->GetAll();
 
@@ -118,10 +120,15 @@
             $funcion->setHora($hora);
             $funcion->setDuracion($duracion);
             
-            if($this->funcionDAO->verificacion($funcion)){
+            var_dump($funcion);
 
-                $this->funcionDAO->Add($funcion);
-                $this->ShowCartelera();
+            $this->funcionDAO->Add($funcion);
+            $this->ShowCartelera();
+
+            
+            if($this->funcionDAO->Add($funcion)){
+
+               $this->ShowListView();
 
             }else{
 
@@ -186,10 +193,10 @@
                  require_once(ROOT . '/Views/nav-user.php');
              }
     
-            $daosGenres = new \DAO\Genres();
+            $daosGenres = new GenresDAO();
             $genres = $daosGenres->GetAll();
 
-            $daosFilms = new \DAO\Films();
+            $daosFilms = new FilmsDAO();
             $rangoFechas = $daosFilms->getRangoFechas();
     
             require_once(ROOT . '/Views/filter-funcion.php');
@@ -205,16 +212,22 @@
                     require_once(ROOT . '/Views/nav-principal.php');
                 }else{
                     require_once(ROOT . '/Views/header.php');
-                    require_once(ROOT . '/Views/nav-user.php');
+
+                    if ($_SESSION['esAdmin'] == true){
+
+                        require_once(ROOT . '/Views/nav-admin.php');
+                    }else{
+                        require_once(ROOT . '/Views/nav-user.php');
+                    }
                 }
     
-            $daosGenres = new \DAO\Genres();
+            $daosGenres = new GenresDAO();
     
             $genres = $daosGenres->GetAll();
 
-            $daosFilms = new \DAO\Films();
+            $daosFilms = new FilmsDAO();
 
-           $daosFunciones = new \DAO\FuncionDAO();
+           $daosFunciones = new FuncionDAO();
     
            $funciones = $daosFunciones->GetAll();
 
@@ -243,7 +256,7 @@
                     require_once(ROOT . '/Views/nav-user.php');
                 }
     
-            $daosFuncion = new \DAO\FuncionDAO();
+            $daosFuncion = new FuncionDAO();
     
             $films = $daosFuncion->getByDate($date);
     

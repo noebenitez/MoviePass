@@ -1,13 +1,15 @@
 <?php
 
 namespace Controllers;
+use DAO\FilmsDAODB as FilmsDAO;
+use DAO\GenresDAODB as GenresDAO;
 
 class FilmsController {
 
+
     public function getAll() {
 
-        
-        $daosFilms = new \DAO\Films();
+        $daosFilms = new FilmsDAO();
         $films = $daosFilms->GetAll();
 
 
@@ -56,13 +58,13 @@ class FilmsController {
 
     }
 
-        $daosGenres = new \DAO\Genres();
+        $daosGenres = new GenresDAO();
 
         $genres = $daosGenres->GetAll();
 
-       $daosFilms = new \DAO\Films();
+        $filmsDAO = new FilmsDAO();
 
-       $films = $daosFilms->GetAll();
+        $films = $filmsDAO->GetAll();
 
         require_once(ROOT . '/Views/film-info.php');
 
@@ -91,11 +93,11 @@ class FilmsController {
     
         }
 
-        $daosGenres = new \DAO\Genres();
+        $daosGenres = new GenresDAO();
 
         $genres = $daosGenres->GetAll();
 
-       $daosFilms = new \DAO\Films();
+       $daosFilms = new FilmsDAO();
 
        $films = $daosFilms->GetAll();
 
@@ -126,7 +128,7 @@ class FilmsController {
     
         }
 
-        $daosFilms = new \DAO\Films();
+        $daosFilms = new FilmsDAO();
 
         $filmsDate = $daosFilms->getByDate($date);
 
@@ -156,10 +158,10 @@ class FilmsController {
 
     }
 
-            $daosGenres = new \DAO\Genres();
+            $daosGenres = new GenresDAO();
             $genres = $daosGenres->GetAll();
 
-            $daosFilms = new \DAO\Films();
+            $daosFilms = new FilmsDAO();
             $rangoFechas = $daosFilms->getRangoFechas();
     
             require_once(ROOT . '/Views/filter.php');
@@ -173,11 +175,11 @@ class FilmsController {
         require_once(ROOT . '/Views/header.php');
         require_once(ROOT . '/Views/nav-admin.php');
 
-        $daosGenres = new \DAO\Genres();
+        $daosGenres = new GenresDAO();
 
         $genres = $daosGenres->GetAll();
 
-       $daosFilms = new \DAO\Films();
+       $daosFilms = new FilmsDAO();
 
        $films = $daosFilms->GetAll();
 
@@ -185,5 +187,16 @@ class FilmsController {
 
         require_once(ROOT . '/Views/footer.php');
 
+    }
+
+    public function refresh(){
+        $daosFilms = new FilmsDAO();
+        $daosFilms->refrescarDB();
+        
+    }
+
+    public function getGeneros($idFilm){
+        $daosFilms = new FilmsDAO();
+        $daosFilms->getGeneros($idFilm);
     }
 }

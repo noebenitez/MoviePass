@@ -40,7 +40,7 @@ break;
 
 <?php 
       foreach($genres as $genre){
-	      foreach($film->getGeneros() as $genreFilm){
+	      foreach($daosFilms->getGeneros($film->getId()) as $genreFilm){
 		
         if ($genre->getId() == $genreFilm) { ?>
 		      <li class="breadcrumb-item"><a href="<?php echo FRONT_ROOT ?>Films/getFilmsByGenres/<?php echo $genre->getId() ?>" class="generos"><?php echo $genre->getNombre() ?></a></li> <?php

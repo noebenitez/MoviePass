@@ -25,7 +25,10 @@ class LoginController {
     
             if( $_SESSION['esAdmin'] == true){
                 $films = new FilmsController();
-                 $films->getAll();
+               /*  $films->refresh(); */
+                $genres = new \DAO\GenresDAODB();
+                /* $genres->cargarGeneros(); */
+                $films->getAll();
             }else{
                 $cartelera = new FuncionController();
                 $cartelera->ShowCartelera();

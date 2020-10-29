@@ -16,7 +16,7 @@
 
         public function __construct($id = null, $nombre = '', $calle = '', $altura= null, $horaApertura = null, $horaCierre = null, $valorEntrada = null, $capacidad = 0){
             
-            $this->$id = $id;
+            $this->id = $id;
             $this->nombre = $nombre;
             $this->calle = $calle;
             $this->altura = $altura;

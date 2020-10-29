@@ -21,7 +21,7 @@
         <div class="form-row">
     <div class="form-group col-md-9">
 
-            <input type="date" name="date" class="form-control" min= <?= $rangoFechas['minimum'] ?> max= <?= $rangoFechas['maximum'] ?> >
+            <input type="date" name="date" class="form-control" min= <?= date("Y-m-d") ?> required>
 </div>
 <div class="form-group col-md-3">
 
