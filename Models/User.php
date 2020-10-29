@@ -13,6 +13,19 @@
         private $esAdmin;
         private $idFB;
 
+        public function __construct($id_usuario=NULL, $nombre_usuario=NULL, $apellido_usuario=NULL, $email_usuario=NULL, $password_usuario=NULL, $admin_usuario=NULL, $id_fb_usuario=NULL, $dni_usuario=NULL)
+        {
+            $this->id=$id_usuario;
+            $this->nombre=$nombre_usuario;
+            $this->apellido=$apellido_usuario;
+            $this->dni=$dni_usuario;
+            $this->email=$email_usuario;
+            $this->password=$password_usuario;
+            $this->esAdmin=$admin_usuario;
+            $this->idFB=$id_fb_usuario;
+
+        }
+
         public function setId($id) {
             $this->id = $id;
         }
@@ -62,7 +75,7 @@
         }
 
         public function setAdmin($esAdmin) {
-            $this->esAdmin = $esAdmin;
+            $this->esAdmin = (bool)$esAdmin;
         }
 
         public function getAdmin() {

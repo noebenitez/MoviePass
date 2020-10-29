@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-use DAO\UsersDAO as UsersDAO;
+use DAO\UsersDAODB as UsersDAO;
 use Models\User as User;
 
 class LoginController {
@@ -82,7 +82,7 @@ class LoginController {
 
         $usersDAO = new UsersDAO();
 
-        $idUser = $usersDAO->Add($user);
+        $usersDAO->Add($user);
 
         $_SESSION['log'] = true;
         $_SESSION['id'] = $idUser;

@@ -47,17 +47,26 @@ namespace DAO;
                                     $valuesArray["dni"] = $user->getDni();
                                     $valuesArray["email"] = $user->getEmail();
                                     $valuesArray["password"] = $user->getPassword();
-                                    $valuesArray["esAdmin"] = $user->getAdmin();
-                                    $valuesArray["idFB"] = $user->getIdFB();
+                                    $valuesArray["admin"] = $user->getAdmin();
+                                    $valuesArray["id_fb"] = $user->getIdFB();
                 
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $valuesArray);
+
+                /* $getId = "SELECT id_usuario FROM ". $this->tableName . " WHERE email_usuario = " . $user->getEmail(). ";";
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($getId);
+
+                $row = $resultSet[0];
+                return $row["id_usuario"]; */
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
         }    
+
+
         public function AddFB($user)
         {
            $this->add($user);
@@ -98,12 +107,21 @@ namespace DAO;
                 throw $ex;
             }
         }
-        
+        protected function mapear($value){
+
+            $value = is_array($value) ? $value : [];
+            $resp = array_map(function($p){
+                return new User($p["id_usuario"], $p["nombre_usuario"], $p["apellido_usuario"], $p["email_usuario"], $p["password_usuario"], $p["admin_usuario"], $p["id_fb_usuario"], $p["dni_usuario"]);
+            }, $value);
+
+            return count($resp) > 1 ? $resp : $resp["0"];
+        }
 
         public function GetOne($id) {
 
-
-                $query = "SELECT * FROM " . $this->tableName . " WHERE id_usuario = " . $id;
+            $query ="SELECT * FROM " . $this->tableName . " WHERE id_usuario = '" . $id. "';";
+            
+               
                 try{
                     $this->connection = Connection::GetInstance();
                     $resultSet = $this->connection->Execute($query);
@@ -113,17 +131,9 @@ namespace DAO;
                 }
     
                 if (!empty($resultSet)){
-                    $user = new User();
-                    $user->setId($resultSet["id_usuario"]);
-                    $user->setNombre($resultSet["nombre_usuario"]);
-                    $user->setApellido($resultSet["apellido_usuario"]);
-                    $user->setDni($resultSet["dni_usuario"]);
-                    $user->setEmail($resultSet["email_usuario"]);
-                    $user->setPassword($resultSet["password_usuario"]);
-                    $user->setAdmin($resultSet["admin_usuario"]);
-                    $user->setIdFB($resultSet["id_fb_usuario"]);
+                   
     
-                    return $user;
+                    return $this->mapear($resultSet);
     
                 }else{
                     return false;
@@ -131,7 +141,7 @@ namespace DAO;
             }
     
 
-           
+            
 
         public function GetOneFB($idFB) {
                 $query = "SELECT * FROM " . $this->tableName . " WHERE id_fb_usuario = " . $idFB.";";
@@ -144,7 +154,32 @@ namespace DAO;
                 }
     
                 if (!empty($resultSet)){
-                    $user = new User();
+                   
+    
+                    return $this->mapear($resultSet);
+    
+                }else{
+                    return false;
+                }
+            }
+
+
+          
+
+        public function read($email, $pass)
+        {   
+            $query ="SELECT * FROM " . $this->tableName . " WHERE email_usuario = '" . $email. "' and password_usuario= '".$pass."';";
+            
+            try
+            {
+                
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query);
+                var_dump($resultSet);
+                
+                if (!empty($resultSet))
+                {
+                    /*$user = new User();
                     $user->setId($resultSet["id_usuario"]);
                     $user->setNombre($resultSet["nombre_usuario"]);
                     $user->setApellido($resultSet["apellido_usuario"]);
@@ -153,38 +188,11 @@ namespace DAO;
                     $user->setPassword($resultSet["password_usuario"]);
                     $user->setAdmin($resultSet["admin_usuario"]);
                     $user->setIdFB($resultSet["id_fb_usuario"]);
-    
-                    return $user;
-    
-                }else{
-                    return false;
+                    return $user;*/
+                    return $this->mapear($resultSet);
                 }
-            }
 
-        public function read($email, $pass)
-        {   
-            $query ="SELECT * FROM " . $this->tableName . " WHERE email_usuario = :email and password_usuario= :pass";
-            $parameters["email"] = $email;
-            $parameters["pass"] = $pass;
-            
-            
-            try
-            {
-                $this->connection = Connection::GetInstance();
-                $resultSet = $this->connection->Execute($query, $parameters);
-                if (!empty($resultSet))
-                {
-                    $user = new User();
-                    $user->setId($resultSet['id_usuario']);
-                    $user->setNombre($resultSet['nombre_usuario']);
-                    $user->setApellido($resultSet['apellido_usuario']);
-                    $user->setDni($resultSet['dni_usuario']);
-                    $user->setEmail($resultSet['email_usuario']);
-                    $user->setPassword($resultSet['password_usuario']);
-                    $user->setAdmin($resultSet['admin_usuario']);
-                    $user->setIdFB($resultSet['id_fb_usuario']);
-                    return $user;
-                }
+              
                 else
                 {
                     return false;
@@ -210,14 +218,14 @@ namespace DAO;
                                                         WHERE id_usuario = :id";
             
             
-
-                                    $valuesArray["nombre"] = $user->getNombre();
-                                    $valuesArray["apellido"] = $user->getApellido();
-                                    $valuesArray["dni"] = $user->getDni();
-                                    $valuesArray["email"] = $user->getEmail();
-                                    $valuesArray["password"] = $user->getPassword();
-                                    $valuesArray["esAdmin"] = $user->getAdmin();
-                                    $valuesArray["idFB"] = $user->getIdFB();
+                                    $valuesArray["id"] = $userEditado->getId();
+                                    $valuesArray["nombre"] = $userEditado->getNombre();
+                                    $valuesArray["apellido"] = $userEditado->getApellido();
+                                    $valuesArray["dni"] = $userEditado->getDni();
+                                    $valuesArray["email"] = $userEditado->getEmail();
+                                    $valuesArray["password"] = $userEditado->getPassword();
+                                    $valuesArray["admin"] = $userEditado->getAdmin();
+                                    $valuesArray["id_fb"] = $userEditado->getIdFB();
 
 
             try{
