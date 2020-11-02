@@ -11,7 +11,7 @@
 <div class="card col-3">
 <br>
 <?php if (empty($film->getPoster())) { ?>
-  <img class="card-img-top" src="../Views/images/not-available.jpg" alt="Card image cap">
+  <img class="card-img-top" src="<?php echo IMAGES ?>not-available.jpg" alt="Card image cap">
 
 <?php }else{ ?>
 
@@ -26,7 +26,7 @@
 </div>
 <span>
 <div class="row col-12">
-    <a href="<?php echo FRONT_ROOT ?>Films/BuyTicket/<?php echo $film->getId() ?>" class="btn btn-danger col-6"><i class="fa fa-ticket"></i>&#160;&#160;Comprar</a>&#160;&#160;
+    <a href="<?php echo FRONT_ROOT ?>Compra/BuyTicket/<?php echo $film->getId() ?>" class="btn btn-danger col-6"><i class="fa fa-ticket"></i>&#160;&#160;Comprar</a>&#160;&#160;
 
 	<a href="<?php echo FRONT_ROOT ?>Films/getInfo/<?php echo $film->getId() ?>" class="btn btn-secondary col-4"><i class="fa fa-plus"></i>&#160;&#160;Info</a>
 

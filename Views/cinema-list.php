@@ -20,7 +20,7 @@
       <th scope="col">Capacidad Total</th>
       <th scope="col">Opciones</th>
     </tr>
-  </thead>
+  </thead> 
   <tbody>
     <?php foreach ($cinemaList as $cinema){ ?>
             
@@ -33,7 +33,7 @@
               <td> <?= $cinema->getCapacidad(); ?> </td>
               <td>
                 <button type="submit" name='edit' class="btn btn-danger" value="<?= $cinema->getId()?>" formaction="<?= FRONT_ROOT ?> Cinema/ShowEditView"> Editar </button>
-                <button type="submit" name='remove' class="btn btn-secondary" value="<?= $cinema->getId()?>" formaction="<?=FRONT_ROOT ?> Cinema/Remove"> Eliminar </button> 
+                <button type="submit" name='remove' class="btn btn-secondary" value="<?= $cinema->getId()?>" formaction="<?=FRONT_ROOT ?> Cinema/ShowRemoveView"> Eliminar </button> 
               </td>
             </tr>
 

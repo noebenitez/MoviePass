@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "nroTarjeta": "567899000000",
+        "empresa": "MasterCard",
+        "codSeguridad": "345",
+        "vencimiento": "2020-07",
+        "titular": "Candela Yarossi",
+        "idUsuario": "3"
+    },
+    {
+        "id": 2,
+        "nroTarjeta": "4567788999999",
+        "empresa": "Visa",
+        "codSeguridad": "345",
+        "vencimiento": "2020-09",
+        "titular": "Candela Yarossi",
+        "idUsuario": "1"
+    }
+]

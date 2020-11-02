@@ -2,13 +2,13 @@
     namespace Controllers;
 
     use Models\Funcion as Funcion;
-    use DAO\FuncionDAODB as FuncionDAO;
+    use DAO\FuncionDAO as FuncionDAO;
     use Models\Film as Film;
-    use DAO\FilmsDAODB as FilmsDAO;
+    use DAO\Films as FilmsDAO;
     use Models\Room as Room;
-    use DAO\RoomDAODB as RoomDAO;
-    use DAO\CinemaDAODB as CinemaDAO;
-    use DAO\GenresDAODB as GenresDAO;
+    use DAO\RoomDAO as RoomDAO;
+    use DAO\CinemaDAO as CinemaDAO;
+    use DAO\Genres as GenresDAO;
 
     class FuncionController{
 
@@ -87,6 +87,24 @@
             require_once(ROOT . '/Views/footer.php');
         }
 
+        public function ShowRemoveView($id){
+
+            require_once(ROOT . '/Views/header.php');
+        
+            require_once(ROOT . '/Views/nav-admin.php');
+
+            $funcion = $this->funcionDAO->GetOne($id);
+            $film = $this->filmDAO->GetOne($funcion->getIdFilm());
+            $room = $this->roomDAO->GetOne($funcion->getIdSala());
+
+            $cinemaDAO = new CinemaDAO();
+            $cinema = $cinemaDAO->GetOne($room->getIdCine());
+
+            require_once(VIEWS_PATH)."remove-funcion.php";
+
+            require_once(ROOT . '/Views/footer.php');
+        }
+
         public function Remove($id){
             $this->funcionDAO->Remove($id);
             $this->ShowListView();
@@ -119,14 +137,11 @@
             $funcion->setFecha($fecha);
             $funcion->setHora($hora);
             $funcion->setDuracion($duracion);
-            
-            var_dump($funcion);
 
             $this->funcionDAO->Add($funcion);
-            $this->ShowCartelera();
-
-            
-            if($this->funcionDAO->Add($funcion)){
+            $this->ShowListView();
+        
+            /*if($this->funcionDAO->Add($funcion)){
 
                $this->ShowListView();
 
@@ -136,7 +151,7 @@
                 echo "</script>";
                 $this->ShowAddView($idFilm);
 
-            }
+            }*/
         }
 
 
@@ -176,30 +191,13 @@
                 }
             }
 
-            require_once(VIEWS_PATH)."cartelera.php";
-
-            require_once(ROOT . '/Views/footer.php');
-
-        }
-
-
-        public function filterFunciones(){
-            
-            if($_SESSION['log'] == false) {
-                require_once(ROOT . '/Views/header-login.php');
-                require_once(ROOT . '/Views/nav-principal.php');
-            }else{
-               require_once(ROOT . '/Views/header.php');
-                 require_once(ROOT . '/Views/nav-user.php');
-             }
-    
             $daosGenres = new GenresDAO();
             $genres = $daosGenres->GetAll();
 
             $daosFilms = new FilmsDAO();
             $rangoFechas = $daosFilms->getRangoFechas();
-    
-            require_once(ROOT . '/Views/filter-funcion.php');
+
+            require_once(VIEWS_PATH)."cartelera.php";
 
             require_once(ROOT . '/Views/footer.php');
 

@@ -6,7 +6,8 @@
 
     </div>
 </div>
-<br> 
+<?php require_once(ROOT . '/Views/filter.php'); ?>
+<br>
 <div id="peliculas" class="row col-12">
 
  <?php
@@ -16,7 +17,7 @@
   <div class="card col-3">
 <br>
 <?php if (empty($film->getPoster())) { ?>
-  <img class="card-img-top" src="../Views/images/not-available.jpg" alt="Card image cap">
+  <img class="card-img-top" src="<?php echo IMAGES ?>not-available.jpg" alt="Card image cap">
 
 <?php }else{ ?>
 

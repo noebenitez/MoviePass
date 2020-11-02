@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-use DAO\UsersDAODB as UsersDAO;
+use DAO\UsersDAO as UsersDAO;
 use Models\User as User;
 
 class LoginController {

@@ -6,7 +6,7 @@
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pel&iacute;culas</a>
     <div class="dropdown-menu">
     <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Funcion/ShowCartelera">Pel&iacute;culas en Cartelera</a>
-      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Funcion/filterFunciones">Filtro de Pel&iacute;culas</a>
+      
 </div>
   </li> 
 <form class="form-inline my-2 my-lg-0 ml-auto">

@@ -1,7 +1,7 @@
 <br>
-    <h2>GENEROS</h2>
     <nav aria-label="breadcrumb">
-        <ol id="generos" class="breadcrumb">
+        <ol id="generos" class="breadcrumb" style="background-color: #f1f1f1;">
+        <li>GENEROS: &#160;</li>
     <?php
         foreach($genres as $genre){
     ?>
@@ -10,25 +10,16 @@
         }
     ?>
         </ol>
-    </nav>
-
-    <br>
-    <h2>FECHA DE ESTRENO</h2>
-    <nav aria-label="breadcrumb">
-        <ol id="generos"  class="breadcrumb">
-    
-        <form method="post" action="<?=FRONT_ROOT ?>Films/getFilmsByDate">
-        <div class="form-row">
-    <div class="form-group col-md-9">
-
+        <ol id="generos"  class="breadcrumb" style="background-color: #f1f1f1;">
+        <form class="form-inline" method="post" action="<?=FRONT_ROOT ?>Films/getFilmsByDate">
+        <div class="form-group">
+            <label class="">FECHA DE ESTRENO: &#160;</label>
             <input type="date" name="date" class="form-control" min= <?= $rangoFechas['minimum'] ?> max= <?= $rangoFechas['maximum'] ?> >
-</div>
-<div class="form-group col-md-3">
-
-            <button type="submit" class="btn btn-danger" value="">Filtrar</button>
-            </div>
-            </div>
+           </div>&#160;
+            <button type="submit" class="btn btn-danger">Filtrar</button>
         </form>
 
         </ol>
     </nav>
+
+    

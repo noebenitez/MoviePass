@@ -28,7 +28,7 @@
               <td> <?php echo $room->getCapacidad(); ?> </td>
               <td>
                 <button type="submit" name='edit' class="btn btn-danger" value="<?php echo $room->getId(); ?>" formaction="<?php FRONT_ROOT ?> ../Room/ShowEditView"> Editar </button>
-                <button type="submit" name='remove' class="btn btn-secondary" value="<?php echo $room->getId(); ?>" formaction="<?php FRONT_ROOT ?> ../Room/Remove"> Eliminar </button> 
+                <button type="submit" name='remove' class="btn btn-secondary" value="<?php echo $room->getId(); ?>" formaction="<?php FRONT_ROOT ?> ../Room/ShowRemoveView"> Eliminar </button> 
               </td>
             </tr>
 

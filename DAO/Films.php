@@ -124,5 +124,21 @@ class Films {
         return $arrayFecha;
     }
 
+    public function getGeneros($idFilm){
+            
+        $genres = array();
+       
+        $this->RetrieveData();
+
+        foreach ($this->filmsArray as $film){
+
+            if ($film->getId() == $idFilm){
+
+                $genres = $film->getGeneros();
+            }
+        }
+        return $genres;
+
+    }
 
 }

@@ -1,5 +1,5 @@
 <br>
-<h2>COMPRAR ENTRADA</h2>
+<h2>COMPRAR ENTRADAS</h2>
 <br>
 
 <?php
@@ -22,16 +22,19 @@
             <h3 class="card-title"><?php echo $film->getTitulo() ?></h3>
 <br>
 
-	<form>
+	<form method="post" action="<?php echo FRONT_ROOT ?>/Compra/ShowConfirmView">
     <div class="form-group">
+
+    <input type="hidden" class="form-control" name="idFilm" value="<?php echo $film->getId() ?>">
+
     <label for="funcion">Seleccione una funci&oacute;n</label>
 
-    <select class="form-control" name="funcion">
+    <select class="form-control" name="idFuncion">
     <?php foreach($funciones as $funcion){ 
               if($funcion->getIdFilm() == $idFilm){
                 $room = $roomDAO->GetOne($funcion->getIdSala());      
       ?>
-        <option value="<?php $funcion->getId();?>"><?php echo $cinemaDAO->nombrePorId($room->getIdCine()) . " - " . $room->getNombre() . " - " . $funcion->getFecha() . " - " . $funcion->getHora() ?></option> 
+        <option value="<?php echo $funcion->getId();?>"><?php echo $cinemaDAO->nombrePorId($room->getIdCine()) . " - " . $room->getNombre() . " - " . $funcion->getFecha() . " - " . $funcion->getHora() ?></option> 
         
     <?php } } ?>
     </select>
@@ -44,34 +47,34 @@
   </div>
   <div class="form-group col-md-4">
     <label for="total">Total</label>
-    <input type="number" class="form-control" name="total" placeholder="$ 200.00" readonly>
+    <input type="number" class="form-control" name="total" value="200" readonly>
   </div>
   </div> 
 
   <div class="form-row">
-  <div class="form-group col-md-12">
+  <div class="form-group col-md-4">
   <label for="pago">Medios de Pago</label>
+ 
+  <div class="input-group">
+  &#160;&#160;&#160;&#160;
+  <input class="form-check-input" type="hidden" id="visa" value="visa">
+  <label class="form-check-label" for="visa"><img src="<?php echo IMAGES.'visa.png' ?>" style="width: 60px; margin-top: 8px;" /></label>
+  &#160;&#160;&#160;&#160;&#160;
+  <input class="form-check-input" type="hidden" id="master" value="master">
+  <label class="form-check-label" for="master"><img src="<?php echo IMAGES.'master.png' ?>" style="width: 45px; margin-top: 5px;" /></label>
+ </div> </div>
+
+<div class="form-group col-md-8">
+    <label for="nroTarjeta">Nro. de Tarjeta</label>
+    <input type="number" class="form-control" name="nroTarjeta" placeholder="" required>
   </div>
-  <div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="visa" value="visa">
-  <label class="form-check-label" for="visa"><img src="<?php echo IMAGES.'visa.png' ?>" style="width: 60px;" /></label>&#160;
+
 </div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="master" value="master">
-  <label class="form-check-label" for="master">&#160;<img src="<?php echo IMAGES.'master.png' ?>" style="width: 50px;" /></label>
-</div>
-</div>
-<br>
+
 <div class="form-row">
   <div class="form-group col-md-12">
     <label for="titular">Titular</label>
     <input type="text" class="form-control" name="titular" placeholder="" required>
-  </div>
-  </div>
-  <div class="form-row">
-  <div class="form-group col-md-8">
-    <label for="nroTarjeta">Nro. de Tarjeta</label>
-    <input type="number" class="form-control" name="nroTarjeta" placeholder="" required>
   </div>
   </div>
   <div class="form-row">
@@ -90,10 +93,12 @@
     <input type="text" class="form-control" name="email" value="<?php if($_SESSION['email'] != 'undefined') {echo $_SESSION['email'];} ?>" required>
   </div>
   </div>
+  <br>
+      <button type="submit" class="btn btn-danger col-md-4">Comprar Entradas</button>
+      <a href="<?php echo FRONT_ROOT ?>Funcion/ShowCartelera" class="btn btn-secondary col-md-3">Cancelar</a>
   </form>
-        <br>
-      <a href="#" class="btn btn-danger col-md-4">Confirmar Compra</a>
-      <br><br>
+      
+      <br>
         </div>
     </div> 
  

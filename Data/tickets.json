@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "valor": 100,
+        "asiento": "K10",
+        "qr": "Ticket Nro.: 1 - Funcion ID: 4 - Asiento: K10",
+        "idUsuario": "3",
+        "idFuncion": "4"
+    },
+    {
+        "id": 2,
+        "valor": 100,
+        "asiento": "K10",
+        "qr": "Ticket Nro.: 2 - Funcion ID: 4 - Asiento: K10",
+        "idUsuario": "3",
+        "idFuncion": "4"
+    },
+    {
+        "id": 3,
+        "valor": 200,
+        "asiento": "K10",
+        "qr": "Ticket Nro.: 3 - Funcion ID: 6 - Asiento: K10",
+        "idUsuario": "1",
+        "idFuncion": "6"
+    }
+]

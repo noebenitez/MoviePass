@@ -10,7 +10,7 @@
  <div class="card flex-row flex-wrap">
         <div class="card-header border-0 col-4">
             <?php if (empty($film->getPoster())) { ?>
-  <img class="card-img-top" src="../Views/images/not-available.jpg" alt="Card image cap">
+  <img class="card-img-top" src="<?php echo IMAGES ?>not-available.jpg" alt="Card image cap">
 
 <?php }else{ ?>
 
@@ -33,7 +33,7 @@ case "en":
 echo "Ingl&eacute;s";
 break;
 default:
-echo "-";
+echo "-"; 
 break;
 } 
 ?> &#160;|&#160;&#160;

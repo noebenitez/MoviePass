@@ -10,7 +10,7 @@
  <div class="card flex-row flex-wrap">
         <div class="card-header border-0 col-4">
             <?php if (empty($film->getPoster())) { ?>
-  <img class="card-img-top" src="../Views/images/not-available.jpg" alt="Card image cap">
+  <img class="card-img-top" src="<?php echo IMAGES ?>not-available.jpg" alt="Card image cap">
 
 <?php }else{ ?>
 
@@ -41,7 +41,7 @@ break;
 <?php 
       foreach($genres as $genre){
 	      foreach($filmsDAO->getGeneros($film->getId()) as $genreFilm){
-		
+		 
         if ($genre->getId() == $genreFilm) { ?>
 		      <li class="breadcrumb-item"><a href="<?php echo FRONT_ROOT ?>Funcion/getFilmsByGenres/<?php echo $genre->getId() ?>" class="generos"><?php echo $genre->getNombre() ?></a></li> <?php
 }}}
@@ -50,7 +50,7 @@ break;
     </nav>
 	    <p class="card-text"><?php echo $film->getDescripcion() ?></p>
 
-      <br><a href="<?php echo FRONT_ROOT ?>Ticket/BuyTicket/<?php echo $film->getId() ?>" class="btn btn-danger"><i class="fa fa-ticket"></i>&#160;&#160;Comprar Entrada</a>&#160;
+      <br><a href="<?php echo FRONT_ROOT ?>Compra/BuyTicket/<?php echo $film->getId() ?>" class="btn btn-danger"><i class="fa fa-ticket"></i>&#160;&#160;Comprar Entrada</a>&#160;
       
 <br><br>
         </div>

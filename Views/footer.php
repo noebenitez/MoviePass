@@ -14,22 +14,25 @@ $('#myModal').on('shown.bs.modal', function () {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 <footer>
 <br>
+<br>
 <div class="footer-main">
     <div class="container">
-        <div class="row">
+        <div class="row d-flex justify-content-between">
 
-        <div class="col-md-8">
+        <div class="col-md-4">
             <div class="infoarea">
                 <p>Tecnicatura Universitaria en Programaci&oacute;n</p>
-		<p>Universidad Tecnol&oacute;gica Nacional FRMDP &copy; 2020</p>
+		<p>Universidad Tecnol&oacute;gica Nacional FRMDP</p>
           </div>
         </div>
 
-        <div class="col-md-2">
+        <div id="logoS" class="d-flex justify-content-center col-md-5" style="margin-left: -50px;">
+	<img src="<?php echo IMAGES.'logo.png' ?>" alt="MoviePass" width="38%" height="60%">
+</div>
+
+        <div class="col-md-3">
             <div>
-<div id="logoS">
-	<img src="<?php echo IMAGES.'logo.png' ?>" alt="MoviePass" width="100%">
-</div><br>
+
              <ul id="integrantesFooter">
               <li>Benitez, Noelia.</li>
               <li>Collova, Pablo.</li>
@@ -39,7 +42,7 @@ $('#myModal').on('shown.bs.modal', function () {
           </div>
         </div>
 
-<br><br>
+<br><br><br>
 </footer>
 </body>
 </html>

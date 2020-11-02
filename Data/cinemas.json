@@ -1,15 +1,5 @@
 [
     {
-        "id": 1,
-        "nombre": "Plaza",
-        "calle": "Belgrano",
-        "altura": "7777",
-        "horaApertura": "20:15",
-        "horaCierre": "02:05",
-        "valorEntrada": "120",
-        "capacidad": 25
-    },
-    {
         "id": 2,
         "nombre": "Cineship",
         "calle": "Sarmiento",

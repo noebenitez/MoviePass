@@ -1,8 +1,8 @@
 <?php
     namespace Controllers;
 
-    use DAO\RoomDAODB as RoomDAO;
-    use DAO\CinemaDAODB as CinemaDAO;
+    use DAO\RoomDAO as RoomDAO;
+    use DAO\CinemaDAO as CinemaDAO;
     use Models\Cinema as Cinema;
     use Models\Room as Room;
 
@@ -72,7 +72,21 @@
             $room->setIdCine($idCine);
 
             $this->roomDAO->Add($room);
-            $this->ShowListView();
+            $this->ShowListView(); 
+        }
+
+        public function ShowRemoveView($id){
+
+            require_once(ROOT . '/Views/header.php');
+        
+            require_once(ROOT . '/Views/nav-admin.php');
+
+            $room = $this->roomDAO->GetOne($id);
+            $cinema = $this->cinemaDAO->GetOne($room->getIdCine());
+
+            require_once(VIEWS_PATH)."remove-room.php";
+
+            require_once(ROOT . '/Views/footer.php');
         }
 
         public function Remove($id){

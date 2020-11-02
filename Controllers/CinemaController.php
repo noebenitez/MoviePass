@@ -1,7 +1,7 @@
 <?php
     namespace Controllers;
 
-    use DAO\CinemaDAODB as CinemaDAO;
+    use DAO\CinemaDAO as CinemaDAO;
     use Models\Cinema as Cinema;
     
 
@@ -79,6 +79,19 @@
                 $this->ShowAddView();
 
             } */
+        }
+
+        public function ShowRemoveView($id){
+
+            require_once(ROOT . '/Views/header.php');
+        
+            require_once(ROOT . '/Views/nav-admin.php');
+
+            $cinema = $this->cinemaDAO->GetOne($id);
+
+            require_once(VIEWS_PATH)."remove-cinema.php";
+
+            require_once(ROOT . '/Views/footer.php');
         }
 
         public function Remove($id){
