@@ -5,8 +5,8 @@
     
     if($ticket->getIdUsuario() == $idUser){ 
      
-        $funcion = $funcionDAO->GetOne($ticket->getIdFuncion());
-        $film = $filmDAO->GetOne($funcion->getIdFilm());
+        $funcion = $this->funcionDAO->GetOne($ticket->getIdFuncion());
+        $film = $this->filmsDAO->GetOne($funcion->getIdFilm());
 
                 ?>
  <div class="card flex-row flex-wrap">
@@ -27,8 +27,8 @@
 
             <a href="<?php echo FRONT_ROOT ?>Ticket/ShowTicketDetails/<?php echo $ticket->getId() ?>" class="btn btn-danger"><i class="fa fa-qrcode"></i>&#160;&#160;Ver</a>
     </div>
-    <?php $room = $roomDAO->GetOne($funcion->getIdSala());  ?>
-	    <p class="card-text"><?php echo $cinemaDAO->nombrePorId($room->getIdCine()) . " - " . $room->getNombre() . " - " . $funcion->getFecha() . " - " . $funcion->getHora() ?></p>
+    <?php $room = $this->roomDAO->GetOne($funcion->getIdSala());  ?>
+	    <p class="card-text"><?php echo $this->cinemaDAO->nombrePorId($room->getIdCine()) . " - " . $room->getNombre() . " - " . $funcion->getFecha() . " - " . $funcion->getHora() ?></p>
 <br>
         </div>
     </div> 

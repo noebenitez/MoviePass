@@ -5,7 +5,7 @@
     class Compra{
 
         private $id; 
-        private $nroTarjeta;
+        private $idTarjeta;
         private $cantidadEntradas;
         private $valorTotal;
         private $idUsuario;
@@ -30,12 +30,12 @@
             return $this->id;
         }
 
-        public function setNroTarjeta($nroTarjeta){
-            $this->nroTarjeta = $nroTarjeta;
+        public function setIdTarjeta($idTarjeta){
+            $this->idTarjeta = $idTarjeta;
         }
 
-        public function getNroTarjeta(){
-            return $this->nroTarjeta;
+        public function getIdTarjeta(){
+            return $this->idTarjeta;
         }
 
         public function setCantidadEntradas($cantidadEntradas){

@@ -114,18 +114,19 @@
         }
 
         public function GetOne($id){
-
-            $query = "SELECT * FROM " . $this->tableName . " WHERE id = :id";
-            $parameters["id"] = $id;
-
+            
             try{
+
+                $query = "SELECT * FROM " . $this->tableName . " WHERE id = :id";
+                $parameters["id"] = $id;
                 $this->connection = Connection::GetInstance();
                 $resultSet = $this->connection->Execute($query, $parameters);
-
+                
+                
             } catch (Exception $ex){ 
                 throw $ex;
             }
-
+            
             if (!empty($resultSet)){
 
                 return $this->mapear($resultSet);
@@ -212,6 +213,20 @@
             } catch(Exeption $ex){
 
                 throw $ex;
+            }
+        }
+
+        public function getDuracion($idFilm){
+
+            $request = "https://api.themoviedb.org/3/movie/" . $idFilm . "?api_key=f20416aa14acdc6b2cd1af3feb7633a6";
+    
+            if($jsonContent = file_get_contents($request)){
+    
+                $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+                return $arrayToDecode["runtime"];
+            }else{
+    
+                return false;
             }
         }
 

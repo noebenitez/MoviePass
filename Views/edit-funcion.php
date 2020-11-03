@@ -37,9 +37,11 @@
             </div>
           <div class="form-group col-md-4">
             <label for="duracion">Duración en Minutos</label>
-            <input type="number" class="form-control" name="duracion" min="0" max="1439" value="<?php echo $funcion->getDuracion() ?>" required>
+            <input type="number" class="form-control" name="duracion" min="0" max="1439" value="<?php echo $funcion->getDuracion() ?>" readonly>
             </div>
           </div>
+
+          <input type="hidden" name="entradasVendidas" value=<?= $funcion->getEntradasVendidas() ?> > 
 
 
           <br>

@@ -22,5 +22,13 @@
         "qr": "Ticket Nro.: 3 - Funcion ID: 6 - Asiento: K10",
         "idUsuario": "1",
         "idFuncion": "6"
+    },
+    {
+        "id": 4,
+        "valor": 200,
+        "asiento": "K10",
+        "qr": "Ticket Nro.: 4 - Funcion ID: 1 - Asiento: K10",
+        "idUsuario": "2",
+        "idFuncion": "1"
     }
 ]

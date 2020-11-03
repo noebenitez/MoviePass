@@ -2,11 +2,6 @@
 <h2>CONFIRMAR COMPRA</h2>
 <br>
 
-<?php
-        foreach($films as $film){
-		if($film->getId() == $idFilm) {
-?>
-
  <div class="card flex-row flex-wrap">
         <div class="card-header border-0 col-4">
             <?php if (empty($film->getPoster())) { ?>
@@ -37,14 +32,11 @@
 
 
     <div class="form-group">
-    <?php foreach($funciones as $funcion){ 
-              if($funcion->getId() == $idFuncion){
-                $room = $roomDAO->GetOne($funcion->getIdSala());      
+    <?php
+                $room = $this->roomDAO->GetOne($funcion->getIdSala());      
       ?>
-        <label for="funcion"><b>Funci&oacute;n:</b> &#160;<?php echo $cinemaDAO->nombrePorId($room->getIdCine()) . " - " . $room->getNombre() . " - " . $funcion->getFecha() . " - " . $funcion->getHora() ?></label> 
+        <label for="funcion"><b>Funci&oacute;n:</b> &#160;<?php echo $this->cinemaDAO->nombrePorId($room->getIdCine()) . " - " . $room->getNombre() . " - " . $funcion->getFecha() . " - " . $funcion->getHora() ?></label> 
         
-    <?php } } ?>
-
   </div>
   <div class="form-row">
   <div class="form-group col-md-4">
@@ -93,8 +85,3 @@
       <br>
         </div>
     </div> 
- 
-<?php
-		}
-	}
-    ?>

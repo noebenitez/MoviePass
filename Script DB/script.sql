@@ -21,7 +21,6 @@ create table cines (
 			altura_cine int unsigned,
 			hora_apertura time,
 			hora_cierre time,
-			valor_entrada float unsigned,
 			capacidad int unsigned,
 			constraint pk_id_cine primary key (id_cine),
 			constraint unq_nombre unique (nombre_cine),
@@ -33,6 +32,7 @@ create table salas (
 			nombre varchar(50),
 			capacidad int unsigned,
 			id_cine int unsigned not null,
+            valor_entrada double unsigned,
 			constraint pk_sala primary key (id_sala),
 			constraint fk_sala_cine foreign key (id_cine) references cines(id_cine)
 			);
@@ -76,9 +76,56 @@ create table funciones (
             id_sala int unsigned,
             id_pelicula int unsigned,
             duracion int unsigned,
+            entradas_vendidas int unsigned,
             constraint pk_funciones primary key (id_funcion),
             constraint fk_funciones_sala foreign key (id_sala) references salas(id_sala),
             constraint fk_funciones_pelicula foreign key (id_pelicula) references peliculas(id),
             constraint unq_fecha_pelicula unique (fecha, id_pelicula)
             );
-                        
+            
+create table tickets (
+			id int unsigned auto_increment,
+            valor_unitario double unsigned,
+            asiento int unsigned,
+            qr varchar(100),
+            id_usuario int unsigned not null,
+            id_funcion int unsigned not null,
+            constraint pk_ticket primary key (id),
+            constraint fk_tickets_usuario foreign key (id_usuario) references usuarios(id_usuario),
+            constraint fk_tickets_funcion foreign key (id_funcion) references funciones(id_funcion)
+            );
+            
+            
+create table tarjetasCredito (
+			id int unsigned auto_increment,
+            nro_tarjeta bigint unsigned,
+            empresa varchar(50),
+            cod_seguridad int unsigned,
+            vencimiento date,
+            titular varchar(50),
+            id_usuario int unsigned not null,
+            constraint pk_tarjetasCredito primary key (id),
+            constraint fk_tarjetasCredito_usuario foreign key (id_usuario) references usuarios(id_usuario),
+            constraint unq_nroTarjeta unique (nro_tarjeta)
+            );
+            
+create table compras (
+			id int unsigned auto_increment,
+            id_tarjeta int unsigned not null,
+            cantidad_entradas int unsigned,
+            valor_total double unsigned,
+            id_usuario int unsigned not null,
+            id_funcion int unsigned not null,
+            constraint pk_compras primary key (id),
+            constraint fk_compras_usuario foreign key (id_usuario) references usuarios(id_usuario),
+            constraint fk_compras_funcion foreign key (id_funcion) references funciones(id_funcion)
+			);
+            
+select * from tickets;
+select * from peliculas;
+select * from funciones;
+select * from cines;
+select * from salas;
+select * from tarjetasCredito;
+
+

@@ -14,7 +14,7 @@
         private $capacidad;
     
 
-        public function __construct($id = null, $nombre = '', $calle = '', $altura= null, $horaApertura = null, $horaCierre = null, $valorEntrada = null, $capacidad = 0){
+        public function __construct($id = null, $nombre = '', $calle = '', $altura= null, $horaApertura = null, $horaCierre = null, $capacidad = 0){
             
             $this->id = $id;
             $this->nombre = $nombre;
@@ -22,7 +22,6 @@
             $this->altura = $altura;
             $this->horaApertura = $horaApertura;
             $this->horaCierre = $horaCierre;
-            $this->valorEntrada = $valorEntrada;
             $this->capacidad = $capacidad;
            
         }
@@ -49,10 +48,6 @@
 
         public function setHoraCierre($horaCierre){
             $this->horaCierre = $horaCierre;
-        }
-        
-        public function setValorEntrada($valorEntrada){
-            $this->valorEntrada = $valorEntrada;
         }
 
         public function setCapacidad($capacidad){
@@ -81,10 +76,6 @@
 
         public function getHoraCierre(){
             return $this->horaCierre;
-        }
-
-        public function getValorEntrada(){
-            return $this->valorEntrada;
         }
 
         public function getCapacidad(){

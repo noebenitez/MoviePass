@@ -11,14 +11,14 @@
         private $idUsuario;
         private $idFuncion;
 
-        public function __construct(){
+        public function __construct($id = 0, $valorUnitario = 0, $asiento = "", $qr = "", $idUsuario = 0, $idFuncion = 0){
 
-            $this->id = 0;
-            $this->valorUnitario = 0;
-            $this->asiento = '';
-            $this->qr = '';
-            $this->idUsuario = 0;
-            $this->idFuncion = 0;
+            $this->id = $id;
+            $this->valorUnitario = $valorUnitario;
+            $this->asiento = $asiento;
+            $this->qr = $qr;
+            $this->idUsuario = $idUsuario;
+            $this->idFuncion = $idFuncion;
             
         }
 

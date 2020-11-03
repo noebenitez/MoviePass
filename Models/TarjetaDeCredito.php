@@ -12,7 +12,7 @@
         private $titular;
         private $idUsuario;
 
-        public function __construct(){
+        public function __construct($id = null, $nroTarjeta = null, $empresa= null, $codSeguridad = null, $vencimiento = null, $titular = null){
             $this->id = 0;
             $this->nroTarjeta = 0;  
             $this->empresa = '';

@@ -24,7 +24,13 @@
     </div>
     <div class="form-group col-md-4">
     <label for="capacidad">Capacidad</label>
-    <input type="number" class="form-control" value="<?php echo $room->getCapacidad() ?>" name="capacidad" required>
+    <input type="number" class="form-control" value="<?php echo $room->getCapacidad() ?>" name="capacidad" min="0" required>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-12">
+    <label for="nombreSala">Valor Entrada</label>
+    <input type="number" class="form-control" value="<?php echo $room->getValorEntrada() ?>" name="valorEntrada" min="0" required>
     </div>
   </div>
   <br>

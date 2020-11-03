@@ -1,7 +1,7 @@
 <?php
     namespace Controllers;
 
-    use DAO\CinemaDAO as CinemaDAO;
+    use DAO\CinemaDAODB as CinemaDAO;
     use Models\Cinema as Cinema;
     
 
@@ -53,7 +53,7 @@
             require_once(ROOT . '/Views/footer.php');
         }
 
-        public function Add($nombre, $calle, $altura, $horaApertura, $horaCierre, $valorEntrada){
+        public function Add($nombre, $calle, $altura, $horaApertura, $horaCierre){
 
             $cinema = new Cinema();
             $cinema->setNombre($nombre);
@@ -61,7 +61,6 @@
             $cinema->setAltura($altura);
             $cinema->setHoraApertura($horaApertura);
             $cinema->setHoraCierre($horaCierre);
-            $cinema->setValorEntrada($valorEntrada);
             
             $this->cinemaDAO->Add($cinema);
             $this->ShowListView();
@@ -99,7 +98,7 @@
             $this->ShowListView();
         }
 
-        public function Edit($id, $nombre, $calle, $altura, $horaApertura, $horaCierre, $valorEntrada){
+        public function Edit($id, $nombre, $calle, $altura, $horaApertura, $horaCierre){
 
             $cinema = new Cinema();
             $cinema->setId($id);
@@ -108,7 +107,6 @@
             $cinema->setAltura($altura);
             $cinema->setHoraApertura($horaApertura);
             $cinema->setHoraCierre($horaCierre);
-            $cinema->setValorEntrada($valorEntrada);
 
             $this->cinemaDAO->Edit($cinema);
             $this->ShowListView();

@@ -2,13 +2,13 @@
     namespace Controllers;
 
     use Models\Funcion as Funcion;
-    use DAO\FuncionDAO as FuncionDAO;
+    use DAO\FuncionDAODB as FuncionDAO;
     use Models\Film as Film;
-    use DAO\Films as FilmsDAO;
+    use DAO\FilmsDAODB as FilmsDAO;
     use Models\Room as Room;
-    use DAO\RoomDAO as RoomDAO;
-    use DAO\CinemaDAO as CinemaDAO;
-    use DAO\Genres as GenresDAO;
+    use DAO\RoomDAODB as RoomDAO;
+    use DAO\CinemaDAODB as CinemaDAO;
+    use DAO\GenresDAODB as GenresDAO;
 
     class FuncionController{
 
@@ -33,6 +33,8 @@
             $cinemaController = new CinemaController();
 
             $film = $this->filmDAO->GetOne($idFilm);
+
+            $duracionFilm = $this->filmDAO->getDuracion($idFilm);
 
             $rooms = $this->roomDAO->GetAll();
 
@@ -114,7 +116,7 @@
             $this->funcionDAO->RemovePorSala($idSala);
         }
 
-        public function Edit($id, $idFilm, $idSala, $fecha, $hora, $duracion){
+        public function Edit($id, $idFilm, $idSala, $fecha, $hora, $duracion, $entradasVendidas){
 
             $funcion = new Funcion();
             $funcion->setId($id);
@@ -123,6 +125,7 @@
             $funcion->setIdSala($idSala);
             $funcion->setIdFilm($idFilm);
             $funcion->setDuracion($duracion);
+            $funcion->setEntradasVendidas($entradasVendidas);
 
            $this->funcionDAO->Edit($funcion);
             $this->ShowListView();
@@ -137,6 +140,7 @@
             $funcion->setFecha($fecha);
             $funcion->setHora($hora);
             $funcion->setDuracion($duracion);
+            $funcion->setEntradasVendidas(0);
 
             $this->funcionDAO->Add($funcion);
             $this->ShowListView();

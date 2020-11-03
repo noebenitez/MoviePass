@@ -2,15 +2,29 @@
 
 namespace Controllers;
 
-use DAO\TicketDAO as TicketDAO;
-use DAO\CinemaDAO as CinemaDAO;
-use DAO\RoomDAO as RoomDAO;
-use DAO\FuncionDAO as FuncionDAO;
-use DAO\Films as FilmsDAO;
+use DAO\TicketDAODB as TicketDAO;
+use DAO\CinemaDAODB as CinemaDAO;
+use DAO\RoomDAODB as RoomDAO;
+use DAO\FuncionDAODB as FuncionDAO;
+use DAO\FilmsDAODB as FilmsDAO;
 use phpqrcode\qrcode as QRcode;
 
 class TicketController {
 
+    private $ticketDAO;
+    private $cinemaDAO;
+    private $roomDAO;
+    private $funcionDAO;
+    private $filmsDAO;
+
+    public function __construct(){
+
+        $this->ticketDAO = new TicketDAO();
+        $this->cinemaDAO = new CinemaDAO();
+        $this->roomDAO = new RoomDAO();
+        $this->funcionDAO = new FuncionDAO();
+        $this->filmsDAO = new FilmsDAO();
+    }
 
         public function ShowTicketList($idUser){
 
@@ -25,14 +39,8 @@ class TicketController {
             require_once(ROOT . '/Views/header.php');
             require_once(ROOT . '/Views/nav-admin.php');
         }
-        
-        $ticketDAO = new TicketDAO();
-        $tickets = $ticketDAO->GetAll();
 
-        $filmDAO = new FilmsDAO();
-        $cinemaDAO = new CinemaDAO();
-        $roomDAO = new RoomDAO();
-        $funcionDAO = new FuncionDAO();
+        $tickets = $this->ticketDAO->GetAll();
 
         require_once(ROOT . '/Views/ticket-list.php');
         require_once(ROOT . '/Views/footer.php');
@@ -56,14 +64,8 @@ class TicketController {
             
             $ticketController = new \Controllers\TicketController(); 
 
-            $ticketDAO = new TicketDAO();
-            $ticket = $ticketDAO->GetOne($id);
-
-            $filmDAO = new FilmsDAO();
-            $cinemaDAO = new CinemaDAO();
-            $roomDAO = new RoomDAO();
-            $funcionDAO = new FuncionDAO();
-
+            $ticket = $this->ticketDAO->GetOne($id);
+            
             require_once(ROOT . '/Views/ticket.php');
             require_once(ROOT . '/Views/footer.php');
 

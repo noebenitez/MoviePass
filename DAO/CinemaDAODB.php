@@ -14,14 +14,13 @@
 
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (nombre_cine, domicilio_cine, altura_cine, hora_apertura, hora_cierre, valor_entrada, capacidad) VALUES (:nombre, :calle, :altura, :horaApertura, :horaCierre, :valorEntrada, :capacidad);";
+                $query = "INSERT INTO ".$this->tableName." (nombre_cine, domicilio_cine, altura_cine, hora_apertura, hora_cierre, capacidad) VALUES (:nombre, :calle, :altura, :horaApertura, :horaCierre, :capacidad);";
                 
                 $parameters["nombre"] = $cinema->getNombre();
                 $parameters["calle"] = $cinema->getCalle();
                 $parameters["altura"] = $cinema->getAltura();
                 $parameters["horaApertura"] = $cinema->getHoraApertura();
                 $parameters["horaCierre"] = $cinema->getHoraCierre();
-                $parameters["valorEntrada"] = $cinema->getValorEntrada();
                 $parameters["capacidad"] = $cinema->getCapacidad();
 
                 $this->connection = Connection::GetInstance();
@@ -55,9 +54,6 @@
                     $cinema->setAltura($row["altura_cine"]);
                     $cinema->setHoraApertura($row["hora_apertura"]);
                     $cinema->setHoraCierre($row["hora_cierre"]);
-                    $cinema->setValorEntrada($row["valor_entrada"]);
-
-                   /*  $this->updateCapacidadCine($cinema->getId()); */
                     $cinema->setCapacidad($row["capacidad"]);
 
                     array_push($cinemaList, $cinema);
@@ -107,13 +103,12 @@
 
         public function Edit(Cinema $cinemaActualizado){
             
-            $query = "UPDATE " . $this->tableName . " SET nombre_cine = :nombre, domicilio_cine = :calle, altura_cine = :altura, hora_apertura = :horaApertura, hora_cierre = :horaCierre, valor_entrada = :valorEntrada, capacidad = :capacidad WHERE id_cine = :id";
+            $query = "UPDATE " . $this->tableName . " SET nombre_cine = :nombre, domicilio_cine = :calle, altura_cine = :altura, hora_apertura = :horaApertura, hora_cierre = :horaCierre, capacidad = :capacidad WHERE id_cine = :id";
             $parameters["nombre"] = $cinemaActualizado->getNombre();
             $parameters["calle"] = $cinemaActualizado->getCalle();
             $parameters["altura"] = $cinemaActualizado->getAltura();
             $parameters["horaApertura"] = $cinemaActualizado->getHoraApertura();
             $parameters["horaCierre"] = $cinemaActualizado->getHoraCierre();
-            $parameters["valorEntrada"] = $cinemaActualizado->getValorEntrada();
             $parameters["capacidad"] = $cinemaActualizado->getCapacidad();
             $parameters["id"] = $cinemaActualizado->getId();
 
@@ -131,7 +126,7 @@
 
             $value = is_array($value) ? $value : [];
             $resp = array_map(function($p){
-                return new Cinema($p["id_cine"], $p["nombre_cine"], $p["domicilio_cine"], $p["altura_cine"], $p["hora_apertura"], $p["hora_cierre"], $p["valor_entrada"], $p["capacidad"]);
+                return new Cinema($p["id_cine"], $p["nombre_cine"], $p["domicilio_cine"], $p["altura_cine"], $p["hora_apertura"], $p["hora_cierre"], $p["capacidad"]);
             }, $value);
 
             return count($resp) > 1 ? $resp : $resp["0"];
@@ -158,18 +153,12 @@
             }
         }
 
-        /* public function updateCapacidades(){
-            
-            $cinemas = $this->GetAll();
-            foreach($cinemas as $cinema){
-                $this->updateCapacidadCine($cinema->getId());
-            }
-        }
+        public function updateCapacidadCine($idCine, $capacidad){
 
-        private function updateCapacidadCine($id){
+            $query = "UPDATE " . $this->tableName . " SET capacidad = :capacidad WHERE id_cine = :id;";
+            $parameters["capacidad"] = $capacidad;
+            $parameters["id"] = $idCine;
 
-            $query = "UPDATE " . $this->tableName . " SET capacidad = :capacidad WHEN id_cine = " . $id;
-            $parameters["capacidad"] = $this->capacidadCine($id);
             try{
                 $this->connection = Connection::GetInstance();
                 $resultSet = $this->connection->ExecuteNonQuery($query, $parameters);
@@ -179,20 +168,8 @@
             }
         }
 
-        
-        private function capacidadCine($id){
-            
-            $capacidad = 0;
-            $roomController = new \Controllers\RoomController();
-            $roomList = $roomController->GetAll();
 
-            foreach ($roomList as $room){
-                if ($room->getIdCine() == $id){
-                    $capacidad += $room->getCapacidad();
-                }
-            }
-            return $capacidad;
-        } */
+        
 
     }
 

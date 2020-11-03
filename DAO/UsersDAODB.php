@@ -175,7 +175,6 @@ namespace DAO;
                 
                 $this->connection = Connection::GetInstance();
                 $resultSet = $this->connection->Execute($query);
-                var_dump($resultSet);
                 
                 if (!empty($resultSet))
                 {

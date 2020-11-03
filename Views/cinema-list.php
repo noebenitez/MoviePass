@@ -16,7 +16,6 @@
       <th scope="col">Direcci&oacute;n</th>
       <th scope="col">Hora de Apertura</th>
       <th scope="col">Hora de Cierre</th>
-      <th scope="col">Valor de la Entrada</th>
       <th scope="col">Capacidad Total</th>
       <th scope="col">Opciones</th>
     </tr>
@@ -29,7 +28,6 @@
               <td> <?php echo $cinema->getCalle() . " " . $cinema->getAltura();?> </td>
               <td> <?= $cinema->getHoraApertura(); ?> </td>
               <td> <?= $cinema->getHoraCierre(); ?> </td>
-              <td> <?= $cinema->getvalorEntrada(); ?> </td>
               <td> <?= $cinema->getCapacidad(); ?> </td>
               <td>
                 <button type="submit" name='edit' class="btn btn-danger" value="<?= $cinema->getId()?>" formaction="<?= FRONT_ROOT ?> Cinema/ShowEditView"> Editar </button>

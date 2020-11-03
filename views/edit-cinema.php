@@ -36,17 +36,13 @@
   </div>
   </div>
   <div class="form-row">
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
     <label for="horaApertura">Hora de Apertura</label>
     <input type="time" class="form-control" name="horaApertura" value="<?= $cinema->getHoraApertura() ?>" required>
     </div>
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
     <label for="horaCierre">Hora de Cierre</label>
     <input type="time" class="form-control" name="horaCierre" value="<?= $cinema->getHoraCierre() ?>" required>
-    </div>
-    <div class="form-group col-md-4">
-    <label for="valorEntrada">Valor de la Entrada</label>
-    <input type="number" class="form-control" name="valorEntrada" value="<?= $cinema->getValorEntrada() ?>" min= "0" required>
     </div>
 
   </div>

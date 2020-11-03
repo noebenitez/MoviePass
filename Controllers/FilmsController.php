@@ -1,8 +1,8 @@
 <?php
 
 namespace Controllers;
-use DAO\Films as FilmsDAO;
-use DAO\Genres as GenresDAO;
+use DAO\FilmsDAODB as FilmsDAO;
+use DAO\GenresDAODB as GenresDAO;
 
 class FilmsController {
 

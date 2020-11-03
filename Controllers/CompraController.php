@@ -2,33 +2,41 @@
 
 namespace Controllers;
 
-use DAO\CompraDAO as CompraDAO;
-use DAO\TarjetaDAO as TarjetaDAO;
-use DAO\TicketDAO as TicketDAO;
+use DAO\CompraDAODB as CompraDAO;
+use DAO\TarjetaDAODB as TarjetaDAO;
+use DAO\TicketDAODB as TicketDAO;
 use Models\Ticket as Ticket;
+use DAO\RoomDAODB as RoomDAO;
+use DAO\CinemaDAODB as CinemaDAO;
+use DAO\FilmsDAODB as FilmsDAO;
+use DAO\FuncionDAODB as FuncionDAO;
 
 class CompraController {
 
+    private $compraDAO;
+    private $tarjetaDAO;
+    private $ticketDAO;
+    private $roomDAO;
+    private $cinemaDAO;
+    private $filmsDAO;
+    private $funcionDAO;
+
+    public function __construct(){
+
+        $this->compraDAO = new CompraDAO();
+        $this->tarjetaDAO = new TarjetaDAO();
+        $this->ticketDAO = new TicketDAO();
+        $this->roomDAO = new RoomDAO();
+        $this->cinemaDAO = new CinemaDAO();
+        $this->filmsDAO = new FilmsDAO();
+        $this->funcionDAO = new FuncionDAO();
+    }
+
     public function BuyTicket($idFilm){
-
-        $daosFilms = new \DAO\Films();
+    
+        $film = $this->filmsDAO->GetOne($idFilm);
         
-        $films = $daosFilms->GetAll();
-        
-        $daosGenres = new \DAO\Genres();
-        
-        $genres = $daosGenres->GetAll();
-        
-        $funcionesController = new \Controllers\FuncionController();
-
-        $funciones = $funcionesController->GetAll();
-        
-        $cinemaDAO = new \DAO\CinemaDAO();
-
-        $cinemas = $cinemaDAO->GetAll();
-        
-        $roomDAO = new \DAO\RoomDAO();
-        
+        $funciones = $this->funcionDAO->getFuncionesPorPelicula($idFilm);
         
         if($_SESSION['esAdmin'] == false)
         {
@@ -56,7 +64,7 @@ class CompraController {
         }
 
 
-        public function ShowConfirmView($idFilm, $idFuncion, $cantidad, $total, $nroTarjeta, $titular, $vencimiento, $codSeguridad, $email){
+        public function ShowConfirmView($idFilm, $idFuncion, $cantidad, $precioUnitario, $nroTarjeta, $titular, $vencimiento, $codSeguridad, $email){
 
 
         if( $nroTarjeta[0] == 4){
@@ -67,19 +75,16 @@ class CompraController {
             //...
         }
 
-        $daosFilms = new \DAO\Films();
+        $total = $precioUnitario * $cantidad;
         
-        $films = $daosFilms->GetAll();
-        
-        $funcionesController = new \Controllers\FuncionController();
+        $film = $this->filmsDAO->GetOne($idFilm);
 
-        $funciones = $funcionesController->GetAll();
-        
-        $cinemaDAO = new \DAO\CinemaDAO();
+        $funcion = $this->funcionDAO->getOne($idFuncion);
 
-        $cinemas = $cinemaDAO->GetAll();
+        $room = $this->roomDAO->getOne($funcion->getIdSala());
+
+        $cinemaNombre = $this->cinemaDAO->nombrePorId($room->getIdCine());
         
-        $roomDAO = new \DAO\RoomDAO();
 
         if($_SESSION['esAdmin'] == false)
         {
@@ -99,48 +104,45 @@ class CompraController {
 
         public function compraConfirmada($idFilm, $idFuncion, $cantidad, $total, $nroTarjeta, $titular, $vencimiento, $codSeguridad, $email, $empresa){
             
-        $compra = new \Models\Compra();
-
-        $compra->setNroTarjeta($nroTarjeta);
-        $compra->setCantidadEntradas($cantidad);
-        $compra->setValorTotal($total);
-        $compra->setIdUsuario($_SESSION['id']);
-        $compra->setIdFuncion($idFuncion);
-
-        $tarjeta = new \Models\TarjetaDeCredito();
-
-        $tarjeta->setNroTarjeta($nroTarjeta);
-        $tarjeta->setEmpresa($empresa);
-        $tarjeta->setCodSeguridad($codSeguridad);
-        $tarjeta->setVencimiento($vencimiento);
-        $tarjeta->setTitular($titular);
-        $tarjeta->setIdUsuario($_SESSION['id']);
             
-        $compraDAO = new CompraDAO();
+            $tarjeta = new \Models\TarjetaDeCredito();
+            
+            $tarjeta->setNroTarjeta($nroTarjeta);
+            $tarjeta->setEmpresa($empresa);
+            $tarjeta->setCodSeguridad($codSeguridad);
+            $tarjeta->setVencimiento($vencimiento);
+            $tarjeta->setTitular($titular);
+            $tarjeta->setIdUsuario($_SESSION['id']);
+            
+            $this->tarjetaDAO->Add($tarjeta);
+            
+            $compra = new \Models\Compra();
+    
+            $compra->setIdTarjeta($this->tarjetaDAO->getIdByNroTarjeta($nroTarjeta));
+            $compra->setCantidadEntradas($cantidad);
+            $compra->setValorTotal($total);
+            $compra->setIdUsuario($_SESSION['id']);
+            $compra->setIdFuncion($idFuncion);
 
-        $compraDAO->Add($compra);
+            $this->compraDAO->Add($compra);
+            $this->funcionDAO->actualizarEntradasVendidas($idFuncion, $cantidad);
 
-        $tarjetaDAO = new TarjetaDAO();
+            for($i=0; $i<$cantidad; $i++){
 
-        $tarjetaDAO->Add($tarjeta);
+                $ticket = new Ticket();
 
-        $ticketDAO = new TicketDAO();
+                $ticket->setValorUnitario($total/$cantidad);
+                $ticket->setAsiento($this->ticketDAO->nroAsiento($idFuncion));
+                $ticket->setIdUsuario($_SESSION['id']);
+                $ticket->setIdFuncion($compra->getIdFuncion());
+                $ticket->setQR('Ticket Nro.: '.$ticket->getId().' - Funcion ID: '.$ticket->getIdFuncion().' - Asiento: '.$ticket->getAsiento());
 
-        for($i=0; $i<$cantidad; $i++){
+                $this->ticketDAO->Add($ticket);
+            }
 
-            $ticket = new Ticket();
+            $ticketController = new TicketController();
 
-            $ticket->setValorUnitario($total/$cantidad);
-            $ticket->setAsiento('K10');  //VER
-            $ticket->setIdUsuario($_SESSION['id']);
-            $ticket->setIdFuncion($compra->getIdFuncion());
-
-            $ticketDAO->Add($ticket);
-        }
-
-        $ticketController = new TicketController();
-
-        $ticketController->ShowTicketList($_SESSION['id']);
+            $ticketController->ShowTicketList($_SESSION['id']);
 
         }
 

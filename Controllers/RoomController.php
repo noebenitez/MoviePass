@@ -1,8 +1,8 @@
 <?php
     namespace Controllers;
 
-    use DAO\RoomDAO as RoomDAO;
-    use DAO\CinemaDAO as CinemaDAO;
+    use DAO\RoomDAODB as RoomDAO;
+    use DAO\CinemaDAODB as CinemaDAO;
     use Models\Cinema as Cinema;
     use Models\Room as Room;
 
@@ -64,14 +64,16 @@
             require_once(ROOT . '/views/footer.php');
         }
 
-        public function Add($idCine, $nombre, $capacidad){
+        public function Add($idCine, $nombre, $capacidad, $valorEntrada){
 
             $room = new Room();
             $room->setNombre($nombre);
             $room->setCapacidad($capacidad);
             $room->setIdCine($idCine);
+            $room->setValorEntrada($valorEntrada);
 
             $this->roomDAO->Add($room);
+            $this->cinemaDAO->updateCapacidadCine($idCine, $this->roomDAO->capacidadCine($idCine));
             $this->ShowListView(); 
         }
 
@@ -90,7 +92,10 @@
         }
 
         public function Remove($id){
+
+            $room = $this->roomDAO->getOne($id);
             $this->roomDAO->Remove($id);
+            $this->cinemaDAO->updateCapacidadCine($room->getIdCine(), $this->roomDAO->capacidadCine($room->getIdCine()));
             $this->ShowListView();
         }
 
@@ -99,15 +104,17 @@
         }
 
 
-        public function Edit($id, $idCine, $nombre, $capacidad){
+        public function Edit($id, $idCine, $nombre, $capacidad, $valorEntrada){
 
             $room = new Room();
             $room->setId($id);
             $room->setIdCine($idCine);
             $room->setNombre($nombre);
             $room->setCapacidad($capacidad);
+            $room->setValorEntrada($valorEntrada);
 
             $this->roomDAO->Edit($room);
+            $this->cinemaDAO->updateCapacidadCine($idCine, $this->roomDAO->capacidadCine($idCine));
             $this->ShowListView();
 
         }
