@@ -15,12 +15,15 @@
         private $funcionDAO;
         private $roomDAO;
         private $filmDAO;
+        private $cinemaDAO;
 
         public function __construct(){
 
             $this->funcionDAO = new FuncionDAO();
             $this->roomDAO = new RoomDAO();
             $this->filmDAO = new FilmsDAO();
+            $this->cinemaDAO = new CinemaDAO();
+
         }
 
 
@@ -50,8 +53,6 @@
             require_once(ROOT . '/Views/header.php');
         
             require_once(ROOT . '/Views/nav-admin.php');
-
-            $cinemaDAO = new CinemaDAO();
 
             $filmList = $this->filmDAO->GetAll();
 
@@ -99,8 +100,7 @@
             $film = $this->filmDAO->GetOne($funcion->getIdFilm());
             $room = $this->roomDAO->GetOne($funcion->getIdSala());
 
-            $cinemaDAO = new CinemaDAO();
-            $cinema = $cinemaDAO->GetOne($room->getIdCine());
+            $cinema = $this->cinemaDAO->GetOne($room->getIdCine());
 
             require_once(VIEWS_PATH)."remove-funcion.php";
 
@@ -142,20 +142,18 @@
             $funcion->setDuracion($duracion);
             $funcion->setEntradasVendidas(0);
 
-            $this->funcionDAO->Add($funcion);
-            $this->ShowListView();
-        
-            /*if($this->funcionDAO->Add($funcion)){
+            if($this->funcionDAO->verificarHora($funcion)){
 
-               $this->ShowListView();
+                $this->funcionDAO->Add($funcion);
+                $this->ShowListView();
 
             }else{
 
-                echo "<script> if(confirm('Error. La película ya tiene una función asignada para la fecha ingresada o el horario es antes de los 15 minutos de terminar la anterior función.'));";
+                echo "<script> if(confirm('Error. La película se interpone con otra función.'));";
                 echo "</script>";
                 $this->ShowAddView($idFilm);
 
-            }*/
+            }
         }
 
 

@@ -210,6 +210,76 @@
 
         }
 
+        private function getFuncionesEnFechaYSala($date, $idSala){
+
+            $query = "SELECT * FROM " . $this->tableName . " WHERE id_sala = :idSala AND fecha = :fecha;";
+
+            $parameters["idSala"] = $idSala;
+            $parameters["fecha"] = $date;
+
+            try{
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query, $parameters);
+
+                if (!empty($resultSet)){
+
+                    $funciones = array();
+                    
+                    foreach ($resultSet as $row)
+                    {                
+                        $funcion = new Funcion();
+                        $funcion->setId($row["id_funcion"]);
+                        $funcion->setFecha($row["fecha"]);
+                        $funcion->setHora($row["horario_funcion"]);
+                        $funcion->setIdSala($row["id_sala"]);
+                        $funcion->setIdFilm($row["id_pelicula"]);
+                        $funcion->setDuracion($row["duracion"]);
+                        $funcion->setEntradasVendidas($row["entradas_vendidas"]);
+
+                        array_push($funciones, $funcion);
+                    }
+            
+                    return $funciones;
+                }
+
+            } catch (Exception $ex){ 
+                throw $ex;
+            }
+        }
+
+
+        public function verificarHora($entry){
+
+            $funcionesMismoDiaSala = $this->getFuncionesEnFechaYSala($entry->getFecha(), $entry->getIdSala());
+
+            if(!empty($funcionesMismoDiaSala)){  //Si es que hay funciones el mismo día en la misma sala
+
+                $comienzoEntry = date ( 'Y-m-d H:i:s' , strtotime($entry->getFecha() . $entry->getHora())); //Comienzo funcion entrante
+                $duracionMas15MinEntry = $entry->getDuracion() + 15;
+                $entryMasDuracion = strtotime ( "+".$duracionMas15MinEntry." minute" , strtotime($entry->getFecha() . $entry->getHora()) );  //Se calcula el final funcion entrante
+                $finalEntry = date ( 'Y-m-d H:i:s' , $entryMasDuracion);  //Formato a la fecha de final de la funcion entrante
+
+                foreach($funcionesMismoDiaSala as $func){
+
+                    if ($func->getId() != $entry->getId()){ //Para que al editar una funcion no la evalue con el horario viejo
+
+                        $comienzoFunc = date ( 'Y-m-d H:i:s' , strtotime($func->getFecha() . $func->getHora())); //Comienzo de funcion existente
+                        $duracionMas15MinFunc = $func->getDuracion() + 15;
+                        $funcMasDuracion = strtotime ( "+".$duracionMas15MinFunc." minute" , strtotime($func->getFecha() . $func->getHora()) ); // Se calcular el final de la funcion existente
+                        $finalFunc = date ( 'Y-m-d H:i:s' , $funcMasDuracion); //Formato a la fecha de final de la funcion existente
+                        
+                        
+                        if ($comienzoEntry < $finalFunc && $comienzoFunc < $finalEntry){ // Si el comienzo de la función entrante es antes de la función existente y termina después del comienzo de la función existente entonces se interponen
+        
+                            return false;
+                        }
+                    }
+    
+                }
+            }
+            return true;
+        }
+
     }
 
 ?>
