@@ -67,36 +67,43 @@ class CompraController {
         public function ShowConfirmView($idFilm, $idFuncion, $cantidad, $precioUnitario, $nroTarjeta, $titular, $vencimiento, $codSeguridad, $email){
 
 
-        if( $nroTarjeta[0] == 4){
-            $empresa = 'Visa';
-        }else if( $nroTarjeta[0] == 5){
-            $empresa = 'MasterCard';
-        }else{
-            //...
-        }
+            if( $nroTarjeta[0] == 4){
+                $empresa = 'Visa';
+            }else if( $nroTarjeta[0] == 5){
+                $empresa = 'MasterCard';
+            }else{
+                //...
+            }
 
-        $total = $precioUnitario * $cantidad;
-        
-        $film = $this->filmsDAO->GetOne($idFilm);
+            $total = $precioUnitario * $cantidad;
+            
+            $film = $this->filmsDAO->GetOne($idFilm);
 
-        $funcion = $this->funcionDAO->getOne($idFuncion);
+            $funcion = $this->funcionDAO->getOne($idFuncion);
 
-        $room = $this->roomDAO->getOne($funcion->getIdSala());
+            $room = $this->roomDAO->getOne($funcion->getIdSala());
 
-        $cinemaNombre = $this->cinemaDAO->nombrePorId($room->getIdCine());
-        
+            $cinemaNombre = $this->cinemaDAO->nombrePorId($room->getIdCine());
+            
+            $entradasDisponibles = $this->cantidadEntradasDisponibles($idFuncion);
 
-        if($_SESSION['esAdmin'] == false)
-        {
+            if($_SESSION['esAdmin'] == false)
+            {
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-user.php');
+            }
+            if($_SESSION['esAdmin'] == true)
+            {
                 require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-user.php');
-        }
-        if($_SESSION['esAdmin'] == true)
-        {
-            require_once(ROOT . '/Views/header.php');
-            require_once(ROOT . '/Views/nav-admin.php');
-        }
-            require_once(ROOT . '/Views/confirmar-compra.php');
+                require_once(ROOT . '/Views/nav-admin.php');
+            }
+            
+            if($cantidad > $entradasDisponibles){
+                require_once(ROOT . '/Views/tickets-insuficientes.php');
+
+            }else{
+                require_once(ROOT . '/Views/confirmar-compra.php');
+            }   
             require_once(ROOT . '/Views/footer.php');
 
         }
@@ -149,6 +156,17 @@ class CompraController {
         public function enviarMail(){
 
 
+        }
+
+        public function cantidadEntradasDisponibles($idFuncion){
+
+            $funcion = $this->funcionDAO->GetOne($idFuncion);
+            var_dump($funcion);
+    
+            $room = $this->roomDAO->GetOne($funcion->getIdSala());
+            
+            var_dump($room);
+            return $room->getCapacidad() - $funcion->getEntradasVendidas();
         }
 
 

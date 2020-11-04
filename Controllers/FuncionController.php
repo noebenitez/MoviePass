@@ -166,6 +166,24 @@
             return $this->funcionDAO->peliculaEnCartelera($id);
         }
 
+        public function entradasDisponibles($idFilm){
+
+            $funciones = $this->funcionDAO->getFuncionesPorPelicula($idFilm);
+            if (!empty($funciones)){
+
+                foreach ($funciones as $funcion){
+                    
+                    $room = $this->roomDAO->getOne($funcion->getIdSala());
+
+                    if ($funcion->getEntradasVendidas() == $room->getCapacidad()){
+
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
         public function ShowCartelera(){
 
 
@@ -188,7 +206,7 @@
             $films = array();
 
             foreach($allFilms as $film){
-                if ($this->peliculaEnCartelera($film->getId())){
+                if ($this->peliculaEnCartelera($film->getId()) && $this->entradasDisponibles($film->getId())){
                     array_push($films, $film);
                 }
             }

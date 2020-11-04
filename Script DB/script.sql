@@ -66,7 +66,9 @@ create table generos (
 create table peliculaxgenero (
 			id_pelicula int unsigned not null,
 			id_genero int unsigned not null,
-			constraint pk_peliculaxgenero primary key (id_pelicula, id_genero)
+			constraint pk_peliculaxgenero primary key (id_pelicula, id_genero),
+            constraint fk_idGenero foreign key (id_genero) references generos(id),
+            constraint fk_idPelicula foreign key (id_pelicula) references peliculas(id)
 			);
                                 
 create table funciones (

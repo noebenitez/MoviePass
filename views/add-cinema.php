@@ -11,13 +11,13 @@
   
     <div class="form-group col-md-12">
       <label for="nombre">Nombre</label>
-      <input type="text" class="form-control" name="nombre" placeholder="" required>
+      <input type="text" class="form-control" name="nombre" placeholder="" pattern="[A-Za-z0-9\s]+" title="Únicamente letras y números" required>
     </div>
   </div>
   <div class="form-row">
   <div class="form-group col-md-8">
     <label for="calle">Calle</label>
-    <input type="text" class="form-control" name="calle" placeholder="" required>
+    <input type="text" class="form-control" name="calle" placeholder="" pattern="[A-Za-z\s]+" title="Únicamente letras" required>
   </div>
   <div class="form-group col-md-4">
     <label for="altura">Altura</label>

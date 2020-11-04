@@ -26,7 +26,7 @@
 
             <div class="form-group col-md-8">
               <label for="nombreSala">Nombre</label>
-              <input type="text" class="form-control" name="nombre" required>
+              <input type="text" class="form-control" name="nombre" pattern="[A-Za-z0-9\s]+" title="Únicamente letras y números" required>
             </div>
 
             <div class="form-group col-md-4">

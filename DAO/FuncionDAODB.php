@@ -207,7 +207,6 @@
             } catch (Exception $ex){ 
                 throw $ex;
             }
-
         }
 
         private function getFuncionesEnFechaYSala($date, $idSala){
@@ -279,6 +278,7 @@
             }
             return true;
         }
+
 
     }
 

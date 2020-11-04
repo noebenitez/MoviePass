@@ -59,14 +59,14 @@
         </div>
         <div class="form-group col-md-8">
           <label for="nroTarjeta">Nro. de Tarjeta</label>
-          <input type="number" class="form-control" name="nroTarjeta" placeholder="" required>
+          <input type="number" class="form-control" name="nroTarjeta" placeholder="" min="0" max="9999999999999999" required>
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col-md-12">
           <label for="titular">Titular</label>
-          <input type="text" class="form-control" name="titular" placeholder="" required>
+          <input type="text" class="form-control" name="titular" placeholder="" pattern="[A-Za-z\s]+" title="Únicamente letras" required>
         </div>
       </div>
 
@@ -77,7 +77,7 @@
         </div>
         <div class="form-group col-md-4">
           <label for="codSeguridad">CVV/CVC</label>
-          <input type="number" class="form-control" name="codSeguridad" placeholder="" required>
+          <input type="number" class="form-control" name="codSeguridad" placeholder="" min="0" max="9999" required>
         </div>
       </div>
 

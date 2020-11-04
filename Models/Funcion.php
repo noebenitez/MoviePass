@@ -21,7 +21,7 @@
             $this->idSala = $idSala;
             $this->idFilm = $idFilm;
             $this->duracion = $duracion;
-            $this->entradasVenidas = $entradasVendidas;
+            $this->entradasVendidas = $entradasVendidas;
         }
 
         public function setId($id){
