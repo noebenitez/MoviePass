@@ -2,45 +2,58 @@
 
 namespace Controllers;
 
+use \Exception as Exception;
 use DAO\UsersDAODB as UsersDAO;
 use Models\User as User;
 
 class LoginController {
 
+    private $usersDAO;
+
+    public function __construct(){
+
+        $this->usersDAO = new UsersDAO();
+    }
+
     public function init($email, $pass) {
 
      header('Cache-Control: no cache'); //Evita el error de cache por reenvío de formulario
 
-        $usersDAO = new UsersDAO();
+        try{
+            $user = $this->usersDAO->read($email, $pass);
 
-        $user = $usersDAO->read($email, $pass);
+            if ($user){
+                
+                $_SESSION['log'] = true;
+                $_SESSION['id'] = $user->getId();
+                $_SESSION['name'] = $user->getNombre();
+                $_SESSION['email'] = $user->getEmail();
+                $_SESSION['esAdmin'] = $user->getAdmin();
         
-        if ($user){
-            
-            $_SESSION['log'] = true;
-            $_SESSION['id'] = $user->getId();
-            $_SESSION['name'] = $user->getNombre();
-            $_SESSION['email'] = $user->getEmail();
-            $_SESSION['esAdmin'] = $user->getAdmin();
-    
-            if( $_SESSION['esAdmin'] == true){
-                $films = new FilmsController();
-               /*  $films->refresh(); */
-                $genres = new \DAO\GenresDAODB();
-                /* $genres->cargarGeneros(); */
-                $films->getAll();
+                if( $_SESSION['esAdmin'] == true){
+                    $films = new FilmsController();
+                   /*  $films->refresh(); */
+                    $genres = new \DAO\GenresDAODB();
+                    /* $genres->cargarGeneros(); */
+                    $films->getAll();
+                }else{
+                    $cartelera = new FuncionController();
+                    $cartelera->ShowCartelera();
+                }
             }else{
-                $cartelera = new FuncionController();
-                $cartelera->ShowCartelera();
+    
+                echo "<script> if(confirm('Error. Usuario o contraseña incorrecto.'));";
+                echo "</script>";
+                $home = new HomeController();
+                $home->Index();
+    
             }
-        }else{
+            
+        }catch (Exception $ex){
 
-            echo "<script> if(confirm('Error. Usuario o contraseña incorrecto.'));";
-            echo "</script>";
-            $home = new HomeController();
-            $home->Index();
-
+            HomeController::ShowErrorView("Error al leer el usuario.", $ex->getMessage(), "Home/Index/");
         }
+        
     }
 
     public function logout() {
@@ -80,56 +93,65 @@ class LoginController {
         $user->setAdmin(false);
         $user->setIdFB(0);
 
-        $usersDAO = new UsersDAO();
+        try{
+            
+            $this->$usersDAO->Add($user);
+    
+            $_SESSION['log'] = true;
+            $_SESSION['id'] = $idUser;
+            $_SESSION['name'] = $nombre;
+            $_SESSION['email'] = $email;
+            $_SESSION['esAdmin'] = false;
+    
+            $films = new FilmsController();
+            $films->getAll();
 
-        $usersDAO->Add($user);
+        }catch(Exception $ex){
 
-        $_SESSION['log'] = true;
-        $_SESSION['id'] = $idUser;
-        $_SESSION['name'] = $nombre;
-        $_SESSION['email'] = $email;
-        $_SESSION['esAdmin'] = false;
-
-        $films = new FilmsController();
-        $films->getAll();
+            HomeController::ShowErrorView("Error al agregar al usuario.", $ex->getMessage(), "Home/Index/");
+        }
     }
 
     public function fbLogin($idFB, $nombre, $apellido, $email) {
 
-        $usersDAO = new UsersDAO();
+        try{
+            $userFB = $this->usersDAO->GetOneFB($idFB);
+            
+             if(!$userFB){
 
-        $userFB = $usersDAO->GetOneFB($idFB);
+                $user = new User();
+                $user->setNombre($nombre);
+                $user->setApellido($apellido);
+                $user->setDni(null);
+                $user->setEmail($email);
+                $user->setPassword(null);
+                $user->setAdmin(false);
+                $user->setIdFB($idFB);
 
-        if(!$userFB){
+                $idUser = $this->usersDAO->AddFB($user);
 
-            $user = new User();
-            $user->setNombre($nombre);
-            $user->setApellido($apellido);
-            $user->setDni(null);
-            $user->setEmail($email);
-            $user->setPassword(null);
-            $user->setAdmin(false);
-            $user->setIdFB($idFB);
+                $_SESSION['log'] = true;
+                $_SESSION['id'] = $idUser;
+                $_SESSION['name'] = $nombre;
+                $_SESSION['email'] = $email;
+                $_SESSION['esAdmin'] = false;
+                
+            }else{
+                
+                $_SESSION['log'] = true;
+                $_SESSION['id'] = $userFB->getId();
+                $_SESSION['name'] = $userFB->getNombre();
+                $_SESSION['email'] = $userFB->getEmail();
+                $_SESSION['esAdmin'] = false;
+            }
+            
+            $funciones = new FuncionController();
+            $funciones->ShowCartelera();
 
-            $idUser = $usersDAO->AddFB($user);
+        }catch(Exception $ex){
 
-        $_SESSION['log'] = true;
-        $_SESSION['id'] = $idUser;
-        $_SESSION['name'] = $nombre;
-        $_SESSION['email'] = $email;
-        $_SESSION['esAdmin'] = false;
-
-        }else{
-
-        $_SESSION['log'] = true;
-        $_SESSION['id'] = $userFB->getId();
-        $_SESSION['name'] = $userFB->getNombre();
-        $_SESSION['email'] = $userFB->getEmail();
-        $_SESSION['esAdmin'] = false;
+            HomeController::ShowErrorView("Error al leer o agregar un usuario de Facebook.", $ex->getMessage(), "Home/Index");
         }
-
-        $funciones = new FuncionController();
-        $funciones->ShowCartelera();
         
     }
 

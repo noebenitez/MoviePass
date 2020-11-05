@@ -1,175 +1,173 @@
 <?php
 
 namespace Controllers;
+
+use \Exception as Exception;
 use DAO\FilmsDAODB as FilmsDAO;
 use DAO\GenresDAODB as GenresDAO;
 
 class FilmsController {
 
+    private $filmsDAO;
+    private $genresDAO;
+
+    public function __construct(){
+
+        $this->filmsDAO = new FilmsDAO();
+        $this->genresDAO = new GenresDAO();
+    }
 
     public function getAll() {
 
-        $daosFilms = new FilmsDAO();
-        $films = $daosFilms->GetAll();
-
-
-        if($_SESSION['esAdmin'] == false)
-    {
-        if($_SESSION['log'] == false) {
-            require_once(ROOT . '/Views/header-login.php');
-            require_once(ROOT . '/Views/nav-principal.php');
-        }else{
-            require_once(ROOT . '/Views/header.php');
-            require_once(ROOT . '/Views/nav-user.php');
-        }
-    }
-
-    if($_SESSION['esAdmin'] == true)
-    {
-        require_once(ROOT . '/Views/header.php');
-        require_once(ROOT . '/Views/nav-admin.php');
-
-    }
+        try{
+            
+            $films = $this->filmsDAO->GetAll();
         
-            $daosGenres = new GenresDAO();
-            $genres = $daosGenres->GetAll();
+            if($_SESSION['log'] == false) {
+    
+                require_once(ROOT . '/Views/header-login.php');
+                require_once(ROOT . '/Views/nav-principal.php');
+            }else{
+    
+                if($_SESSION['esAdmin'] == false){
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-user.php');
+                }else{
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
+                }
+            }   
 
-            $daosFilms = new FilmsDAO();
-            $rangoFechas = $daosFilms->getRangoFechas();
+            $genres = $this->genresDAO->GetAll();
+            $rangoFechas = $this->filmsDAO->getRangoFechas();
+            require_once(ROOT . '/Views/film-list.php');
+            require_once(ROOT . '/Views/footer.php');
 
-        require_once(ROOT . '/Views/film-list.php');
-        require_once(ROOT . '/Views/footer.php');
+        }catch(Exception $ex){
 
+            HomeController::ShowErrorView("Error al obtener el listado de peliculas.", $ex->getMessage(), "Home/Index/");
+        }
     }
 
     public function getInfo($id) {
 
+        try{
+            
+            if($_SESSION['log'] == false) {
+        
+                require_once(ROOT . '/Views/header-login.php');
+                require_once(ROOT . '/Views/nav-principal.php');
+            }else{
     
+                if($_SESSION['esAdmin'] == false){
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-user.php');
+                }else{
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
+                }
+            }   
+    
+            $genres = $this->genresDAO->GetAll();
+            $films = $this->filmsDAO->GetAll();
+            require_once(ROOT . '/Views/film-info.php');
+            require_once(ROOT . '/Views/footer.php');
 
-        if($_SESSION['esAdmin'] == false)
-    {
-        if($_SESSION['log'] == false) {
-            require_once(ROOT . '/Views/header-login.php');
-            require_once(ROOT . '/Views/nav-principal.php');
-        }else{
-        require_once(ROOT . '/Views/header.php');
-        require_once(ROOT . '/Views/nav-user.php');
+        }catch(Exception $ex){
+
+            HomeController::ShowErrorView("Error al obtener la información de la película.", $ex->getMessage(), "Home/Index/");
         }
-    }
-
-    if($_SESSION['esAdmin'] == true)
-    {
-        require_once(ROOT . '/Views/header.php');
-        require_once(ROOT . '/Views/nav-admin.php');
-
-    }
-
-        $daosGenres = new GenresDAO();
-
-        $genres = $daosGenres->GetAll();
-
-        $filmsDAO = new FilmsDAO();
-
-        $films = $filmsDAO->GetAll();
-
-        require_once(ROOT . '/Views/film-info.php');
-
-        require_once(ROOT . '/Views/footer.php');
 
     }
 
     public function getFilmsByGenres($id) {
 
+        try{
 
-        if($_SESSION['esAdmin'] == false)
-        {
             if($_SESSION['log'] == false) {
+            
                 require_once(ROOT . '/Views/header-login.php');
                 require_once(ROOT . '/Views/nav-principal.php');
             }else{
-                require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-user.php');
-            }
-        }
     
-        if($_SESSION['esAdmin'] == true)
-        {
-            require_once(ROOT . '/Views/header.php');
-            require_once(ROOT . '/Views/nav-admin.php');
+                if($_SESSION['esAdmin'] == false){
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-user.php');
+                }else{
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
+                }
+            } 
     
+            $genres = $this->genresDAO->GetAll();
+            $films = $this->filmsDAO->GetAll();
+    
+            require_once(ROOT . '/Views/film-by-genre.php');
+            require_once(ROOT . '/Views/footer.php');
+
+        }catch (Exception $ex){
+
+            HomeController::ShowErrorView("Error al obtener la información de las peliculas.", $ex->getMessage(), "Home/Index/");
         }
-
-        $daosGenres = new GenresDAO();
-
-        $genres = $daosGenres->GetAll();
-
-       $daosFilms = new FilmsDAO();
-
-       $films = $daosFilms->GetAll();
-
-        require_once(ROOT . '/Views/film-by-genre.php');
-
-        require_once(ROOT . '/Views/footer.php');
 
     }
 
     public function getFilmsByDate($date){
 
+        try{
 
-        if($_SESSION['esAdmin'] == false)
-        {
             if($_SESSION['log'] == false) {
+                
                 require_once(ROOT . '/Views/header-login.php');
                 require_once(ROOT . '/Views/nav-principal.php');
             }else{
-                require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-user.php');
-            }
-        }
     
-        if($_SESSION['esAdmin'] == true)
-        {
-            require_once(ROOT . '/Views/header.php');
-            require_once(ROOT . '/Views/nav-admin.php');
+                if($_SESSION['esAdmin'] == false){
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-user.php');
+                }else{
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
+                }
+            } 
     
+            $filmsDate = $this->filmsDAO->getByDate($date);
+            require_once(ROOT . '/Views/film-by-date.php');
+            require_once(ROOT . '/Views/footer.php');
+
+        }catch(Exception $ex){
+
+            HomeController::ShowErrorView("Error al obtener las películas por fecha.", $ex->getMessage(), "Home/Index/");
         }
-
-        $daosFilms = new FilmsDAO();
-
-        $filmsDate = $daosFilms->getByDate($date);
-
-        require_once(ROOT . '/Views/film-by-date.php');
-
-        require_once(ROOT . '/Views/footer.php');
     }
 
     public function getInfoFuncion($id) {
 
+        try{
+
+            require_once(ROOT . '/Views/header.php');
+            require_once(ROOT . '/Views/nav-admin.php');
     
-        require_once(ROOT . '/Views/header.php');
-        require_once(ROOT . '/Views/nav-admin.php');
+            $genres = $this->genresDAO->GetAll();
+            $films = $this->filmsDAO->GetAll();
+    
+            require_once(ROOT . '/Views/film-info-funcion.php');
+            require_once(ROOT . '/Views/footer.php');
 
-        $daosGenres = new GenresDAO();
+        }catch(Exception $ex){
 
-        $genres = $daosGenres->GetAll();
-
-       $daosFilms = new FilmsDAO();
-
-       $films = $daosFilms->GetAll();
-
-        require_once(ROOT . '/Views/film-info-funcion.php');
-
-        require_once(ROOT . '/Views/footer.php');
+            HomeController::ShowErrorView("Error al obtener la información de la película", $ex->getMessage(), "Home/Index/");
+        }
 
     }
 
-    public function refresh(){
+    public function refresh(){  //Hay que mejorar
         $daosFilms = new FilmsDAO();
         $daosFilms->refrescarDB();
         
     }
 
-    public function getGeneros($idFilm){
+    public function getGeneros($idFilm){  //Hay que mejorar
         $daosFilms = new FilmsDAO();
         $daosFilms->getGeneros($idFilm);
     }

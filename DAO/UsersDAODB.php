@@ -52,13 +52,7 @@ namespace DAO;
                 
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $valuesArray);
-
-                /* $getId = "SELECT id_usuario FROM ". $this->tableName . " WHERE email_usuario = " . $user->getEmail(). ";";
-                $this->connection = Connection::GetInstance();
-                $resultSet = $this->connection->Execute($getId);
-
-                $row = $resultSet[0];
-                return $row["id_usuario"]; */
+                
             }
             catch(Exception $ex)
             {
@@ -168,26 +162,16 @@ namespace DAO;
 
         public function read($email, $pass)
         {   
-            $query ="SELECT * FROM " . $this->tableName . " WHERE email_usuario = '" . $email. "' and password_usuario= '".$pass."';";
-            
             try
             {
                 
+            $query ="SELECT * FROM " . $this->tableName . " WHERE email_usuario = '" . $email. "' and password_usuario= '".$pass."';";
+            
                 $this->connection = Connection::GetInstance();
                 $resultSet = $this->connection->Execute($query);
                 
                 if (!empty($resultSet))
                 {
-                    /*$user = new User();
-                    $user->setId($resultSet["id_usuario"]);
-                    $user->setNombre($resultSet["nombre_usuario"]);
-                    $user->setApellido($resultSet["apellido_usuario"]);
-                    $user->setDni($resultSet["dni_usuario"]);
-                    $user->setEmail($resultSet["email_usuario"]);
-                    $user->setPassword($resultSet["password_usuario"]);
-                    $user->setAdmin($resultSet["admin_usuario"]);
-                    $user->setIdFB($resultSet["id_fb_usuario"]);
-                    return $user;*/
                     return $this->mapear($resultSet);
                 }
 

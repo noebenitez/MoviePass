@@ -59,7 +59,7 @@
         </div>
         <div class="form-group col-md-8">
           <label for="nroTarjeta">Nro. de Tarjeta</label>
-          <input type="number" class="form-control" name="nroTarjeta" placeholder="" min="0" max="9999999999999999" required>
+          <input type="number" class="form-control" name="nroTarjeta" placeholder="" min="1000000000000000" max="9999999999999999" required>
         </div>
       </div>
 

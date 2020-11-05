@@ -26,82 +26,91 @@ class TicketController {
         $this->filmsDAO = new FilmsDAO();
     }
 
-        public function ShowTicketList($idUser){
+    public function ShowTicketList($idUser){
 
-            if($_SESSION['esAdmin'] == false)
-        {
+        try{
+            
+            if($_SESSION['esAdmin'] == false){
+    
                 require_once(ROOT . '/Views/header.php');
                 require_once(ROOT . '/Views/nav-user.php');
-        }
-
-        if($_SESSION['esAdmin'] == true)
-        {
-            require_once(ROOT . '/Views/header.php');
-            require_once(ROOT . '/Views/nav-admin.php');
-        }
-
-        $tickets = $this->ticketDAO->GetAll();
-
-        require_once(ROOT . '/Views/ticket-list.php');
-        require_once(ROOT . '/Views/footer.php');
+            }else{
+            
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
+            }
+    
+            $tickets = $this->ticketDAO->GetAll();
+    
+            require_once(ROOT . '/Views/ticket-list.php');
+            require_once(ROOT . '/Views/footer.php');
         
-        }
-        
+        }catch (Exception $ex){
 
-        public function ShowTicketDetails($id){
+            HomeController::ShowErrorView("Error al obtener la información de las entradas.", $ex->getMessage(), "Home/Index/");
+        }
+
+    }
+    
+
+    public function ShowTicketDetails($id){
+
+        try{
 
             if($_SESSION['esAdmin'] == false)
             {
-                    require_once(ROOT . '/Views/header.php');
-                    require_once(ROOT . '/Views/nav-user.php');
-            }
-    
-            if($_SESSION['esAdmin'] == true)
-            {
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-user.php');
+            }else{
                 require_once(ROOT . '/Views/header.php');
                 require_once(ROOT . '/Views/nav-admin.php');
             }
             
             $ticketController = new \Controllers\TicketController(); 
-
             $ticket = $this->ticketDAO->GetOne($id);
             
             require_once(ROOT . '/Views/ticket.php');
             require_once(ROOT . '/Views/footer.php');
 
+        }catch (Exception $ex){
+
+            HomeController::ShowErrorView("Error al obtener la información de la entrada.", $ex->getMessage(), "Ticket/ShowTicketList/");
         }
 
 
-        public function GetQRCode($value){
-            
-            //set it to writable location, a place for temp generated PNG files
-            $PNG_TEMP_DIR = dirname(__FILE__).DIRECTORY_SEPARATOR.'qrcodes'.DIRECTORY_SEPARATOR;
+    }
 
-            //html PNG location prefix
-            $PNG_WEB_DIR = 'qrcodes/';
 
-            require_once "phpqrcode/qrlib.php";    
+    public function GetQRCode($value){
+        
+        //set it to writable location, a place for temp generated PNG files
+        $PNG_TEMP_DIR = dirname(__FILE__).DIRECTORY_SEPARATOR.'qrcodes'.DIRECTORY_SEPARATOR;
 
-            //ofcourse we need rights to create temp dir
-            if (!file_exists($PNG_TEMP_DIR)){
-                mkdir($PNG_TEMP_DIR);}
+        //html PNG location prefix
+        $PNG_WEB_DIR = 'qrcodes/';
 
-            //$filename = $PNG_TEMP_DIR.'qr-ticket.png';
+        require_once "phpqrcode/qrlib.php";    
 
-            $matrixPointSize = 10;
-            $errorCorrectionLevel = 'L';
+        //ofcourse we need rights to create temp dir
+        if (!file_exists($PNG_TEMP_DIR)){
+            mkdir($PNG_TEMP_DIR);}
 
-            $idTicket = 1;
+        //$filename = $PNG_TEMP_DIR.'qr-ticket.png';
 
-            $image = 'qr-ticket-'.md5($idTicket.'-'.$errorCorrectionLevel.'-'.$matrixPointSize).'.png';
+        $matrixPointSize = 10;
+        $errorCorrectionLevel = 'L';
 
-            $filename = $PNG_TEMP_DIR.$image;
+        $idTicket = 1;
 
-            QRcode::png($value, $filename, $errorCorrectionLevel, $matrixPointSize, 2); 
+        $image = 'qr-ticket-'.md5($idTicket.'-'.$errorCorrectionLevel.'-'.$matrixPointSize).'.png';
 
-            //echo '<img src="../Controllers/' . $PNG_WEB_DIR . $filename . '" width="150px" alt="qr-ticket" />'; 
+        $filename = $PNG_TEMP_DIR.$image;
 
-          return $image;
-        }
+        QRcode::png($value, $filename, $errorCorrectionLevel, $matrixPointSize, 2); 
+
+        //echo '<img src="../Controllers/' . $PNG_WEB_DIR . $filename . '" width="150px" alt="qr-ticket" />'; 
+
+        return $image;
+    }
 
 }

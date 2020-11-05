@@ -1,6 +1,7 @@
 <?php
     namespace Controllers;
 
+    use \Exception as Exception;
     use DAO\RoomDAODB as RoomDAO;
     use DAO\CinemaDAODB as CinemaDAO;
     use Models\Cinema as Cinema;
@@ -19,49 +20,64 @@
 
         public function ShowAddView(){
 
-            require_once(ROOT . '/views/header.php');
-        
-            require_once(ROOT . '/views/nav-admin.php');
+            try{
 
-            $cinemaList = $this->cinemaDAO->GetAll();
+                require_once(ROOT . '/views/header.php');
+                require_once(ROOT . '/views/nav-admin.php');
+    
+                $cinemaList = $this->cinemaDAO->GetAll();
+                $roomList = $this->roomDAO->GetAll();
+    
+                require_once(VIEWS_PATH."add-room.php");
+                require_once(ROOT . '/views/footer.php');
 
-            $roomList = $this->roomDAO->GetAll();
+            }catch(Exception $ex){
 
-            require_once(VIEWS_PATH."add-room.php");
+                HomeController::ShowErrorView("Error al obtener la información de los cines y salas.", $ex->getMessage(), "Room/ShowListView/");
+            }
 
-            require_once(ROOT . '/views/footer.php');
 
         }
 
         public function ShowListView() {
 
-            require_once(ROOT . '/views/header.php');
-        
-            require_once(ROOT . '/views/nav-admin.php');
+            try{
 
-            $cinemaList = $this->cinemaDAO->GetAll();
+                require_once(ROOT . '/views/header.php');
+                require_once(ROOT . '/views/nav-admin.php');
+    
+                $cinemaList = $this->cinemaDAO->GetAll();
+                $roomList = $this->roomDAO->GetAll();
+    
+                require_once(VIEWS_PATH."room-list.php");
+                require_once(ROOT . '/views/footer.php');
 
-            $roomList = $this->roomDAO->GetAll();
+            }catch (Exception $ex){
 
-            require_once(VIEWS_PATH."room-list.php");
-
-            require_once(ROOT . '/views/footer.php');
+                HomeController::ShowErrorView("Error al obtener la información de los cines y salas.", $ex->getMessage(), "Home/Index/");
+            }
         }
+
 
         
         public function ShowEditView($id){
 
-            require_once(ROOT . '/views/header.php');
-        
-            require_once(ROOT . '/views/nav-admin.php');
+            try{
 
-            $room = $this->roomDAO->GetOne($id);
+                require_once(ROOT . '/views/header.php');
+                require_once(ROOT . '/views/nav-admin.php');
+    
+                $room = $this->roomDAO->GetOne($id);
+                $cinema = $this->cinemaDAO->GetOne($room->getIdCine());
+    
+                require_once(VIEWS_PATH)."edit-room.php";
+                require_once(ROOT . '/views/footer.php');
 
-            $cinema = $this->cinemaDAO->GetOne($room->getIdCine());
+            }catch (Exception $ex){
 
-            require_once(VIEWS_PATH)."edit-room.php";
+                HomeController::ShowErrorView("Error al obtener la información de la sala.", $ex->getMessage(), "Room/ShowListView/");
+            }
 
-            require_once(ROOT . '/views/footer.php');
         }
 
         public function Add($idCine, $nombre, $capacidad, $valorEntrada){
@@ -72,35 +88,51 @@
             $room->setIdCine($idCine);
             $room->setValorEntrada($valorEntrada);
 
-            $this->roomDAO->Add($room);
-            $this->cinemaDAO->updateCapacidadCine($idCine, $this->roomDAO->capacidadCine($idCine));
-            $this->ShowListView(); 
+            try{
+
+                $this->roomDAO->Add($room);
+                $this->cinemaDAO->updateCapacidadCine($idCine, $this->roomDAO->capacidadCine($idCine));
+                $this->ShowListView(); 
+
+            }catch (Exception $ex){
+
+                HomeController::ShowErrorView("No pudo guardarse la nueva sala.", $ex->getMessage(), "Room/ShowAddView/");
+            }
+
         }
 
         public function ShowRemoveView($id){
 
-            require_once(ROOT . '/Views/header.php');
-        
-            require_once(ROOT . '/Views/nav-admin.php');
+            try{
 
-            $room = $this->roomDAO->GetOne($id);
-            $cinema = $this->cinemaDAO->GetOne($room->getIdCine());
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
+    
+                $room = $this->roomDAO->GetOne($id);
+                $cinema = $this->cinemaDAO->GetOne($room->getIdCine());
+    
+                require_once(VIEWS_PATH)."remove-room.php";
+                require_once(ROOT . '/Views/footer.php');
 
-            require_once(VIEWS_PATH)."remove-room.php";
+            }catch (Exception $ex){
 
-            require_once(ROOT . '/Views/footer.php');
+                HomeController::ShowErrorView("Error al obtener la información de la sala.", $ex->getMessage(), "Room/ShowListView/");
+            }
+
         }
 
         public function Remove($id){
 
-            $room = $this->roomDAO->getOne($id);
-            $this->roomDAO->Remove($id);
-            $this->cinemaDAO->updateCapacidadCine($room->getIdCine(), $this->roomDAO->capacidadCine($room->getIdCine()));
-            $this->ShowListView();
-        }
+            try{
+                $room = $this->roomDAO->getOne($id);
+                $this->roomDAO->Remove($id);
+                $this->cinemaDAO->updateCapacidadCine($room->getIdCine(), $this->roomDAO->capacidadCine($room->getIdCine()));
+                $this->ShowListView();
 
-        public function RemovePorCine($idCine){
-            $this->roomDAO->RemovePorCine($idCine);
+            }catch (Exception $ex){
+
+                HomeController::ShowErrorView("No pudo borrarse correctamente la sala seleccionada.", $ex->getMessage(), "Room/ShowListView/");
+            }
         }
 
 
@@ -113,15 +145,29 @@
             $room->setCapacidad($capacidad);
             $room->setValorEntrada($valorEntrada);
 
-            $this->roomDAO->Edit($room);
-            $this->cinemaDAO->updateCapacidadCine($idCine, $this->roomDAO->capacidadCine($idCine));
-            $this->ShowListView();
+            try{
+
+                $this->roomDAO->Edit($room);
+                $this->cinemaDAO->updateCapacidadCine($idCine, $this->roomDAO->capacidadCine($idCine));
+                $this->ShowListView();
+                
+            }catch (Exception $ex){
+
+                HomeController::ShowErrorView("La información de la sala no pudo actualizarse.", $ex->getMessage(), "Room/ShowListView/");
+            }
+            
 
         }
 
         public function nombrePorId($id){
 
-            return $this->roomDAO->nombrePorId($id);
+            try{
+                return $this->roomDAO->nombrePorId($id);
+
+            }catch (Exception $ex){
+
+                HomeController::ShowErrorView("No pudo obtenerse el nombre de la sala.", $ex->getMessage(), "Home/Index/");
+            }
         }
 
         public function GetAll(){

@@ -135,13 +135,20 @@
 
         public function peliculaEnCartelera($id){
 
-            $funciones = $this->GetAll();
-            foreach ($funciones as $funcion){
-                if ($funcion->getIdFilm() == $id){
-                    return true;
+            try{
+                
+                $funciones = $this->GetAll();
+                foreach ($funciones as $funcion){
+                    if ($funcion->getIdFilm() == $id){
+                        return true;
+                    }
                 }
+                return false;
+
+            }catch(Exception $ex){
+
+                throw $ex;
             }
-            return false;
         }
 
         public function getByDate($date){

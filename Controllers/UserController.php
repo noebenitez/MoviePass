@@ -2,55 +2,73 @@
 
 namespace Controllers;
 
+use \Exception as Exception;
 use DAO\UsersDAODB as UsersDAO;
 use Models\User as User;
 
 class UserController {
 
+    private $usersDAO;
+
+    public function __construct(){
+
+        $this->usersDAO = new UsersDAO();
+    }
+
     public function perfil($id){
 
-        require_once(ROOT . '/views/header.php');
+        try{
 
-        $usersDAO = new UsersDAO();
+            require_once(ROOT . '/views/header.php');
+            $user = $this->usersDAO->GetOne($id);
+    
+            if ($_SESSION['esAdmin'] == true){
+    
+                require_once(ROOT . '/views/nav-admin.php');
+            
+            }else{
+    
+                require_once(ROOT . '/views/nav-user.php');
+    
+            }
+    
+            require_once(ROOT . '/views/perfil-user.php');
+            require_once(ROOT . '/views/footer.php');
 
-        $user = $usersDAO->GetOne($id);
+        }catch(Exception $ex){
 
-        if ($_SESSION['esAdmin'] == true){
-
-        require_once(ROOT . '/views/nav-admin.php');
-        
-        }else{
-
-        require_once(ROOT . '/views/nav-user.php');
-
+            HomeController::ShowErrorView("Error al obtener la información del usuario.", $e->getMessage(), "Home/Index/");
         }
-
-        require_once(ROOT . '/views/perfil-user.php');
         
-        require_once(ROOT . '/views/footer.php');
+
     }
 
     public function ShowEditView($id) {
 
-        require_once(ROOT . '/views/header.php');
+        try{
 
-        $usersDAO = new UsersDAO();
+            require_once(ROOT . '/views/header.php');
+    
+            $user = $this->usersDAO->GetOne($id);
+    
+            if ($_SESSION['esAdmin'] == true){
+    
+                require_once(ROOT . '/views/nav-admin.php');
+            
+            }else{
+    
+                require_once(ROOT . '/views/nav-user.php');
+    
+            }
+    
+            require_once(ROOT . '/views/edit-user.php');
+            require_once(ROOT . '/views/footer.php');
 
-        $user = $usersDAO->GetOne($id);
+        }catch(Exception $ex){
 
-        if ($_SESSION['esAdmin'] == true){
-
-        require_once(ROOT . '/views/nav-admin.php');
-        
-        }else{
-
-        require_once(ROOT . '/views/nav-user.php');
-
+            HomeController::ShowErrorView("Error al obtener la información del usuario.", $e->getMessage(), "Home/Index/");
         }
 
-        require_once(ROOT . '/views/edit-user.php');
-        
-        require_once(ROOT . '/views/footer.php');
     }
 
     public function Edit($id, $nombre, $apellido, $dni, $email, $pass, $admin, $idFB){
@@ -65,17 +83,22 @@ class UserController {
         $user->setAdmin($admin);
         $user->setIdFB($idFB);
 
-        $usersDAO = new UsersDAO();
+        try{
 
-        $usersDAO->Edit($user);
+            $this->usersDAO->Edit($user);
+    
+            $_SESSION['log'] = true;
+            $_SESSION['id'] = $user->getId();
+            $_SESSION['name'] = $user->getNombre();
+            $_SESSION['email'] = $user->getEmail();
+            $_SESSION['esAdmin'] = $user->getAdmin();
+    
+            $this->perfil($id);
 
-        $_SESSION['log'] = true;
-        $_SESSION['id'] = $user->getId();
-        $_SESSION['name'] = $user->getNombre();
-        $_SESSION['email'] = $user->getEmail();
-        $_SESSION['esAdmin'] = $user->getAdmin();
+        }catch(Exception $ex){
 
-        $this->perfil($id);
+            HomeController::ShowErrorView("La información del usuario no pudo ser actualizada.", $e->getMessage(), "Home/Index/");
+        }
 
     }
 }

@@ -23,7 +23,6 @@
                 $parameters["idFuncion"] = $compra->getIdFuncion();
 
                 $this->connection = Connection::GetInstance();
-
                 $this->connection->ExecuteNonQuery($query, $parameters);
                 
             }

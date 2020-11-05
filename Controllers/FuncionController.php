@@ -1,6 +1,7 @@
 <?php
     namespace Controllers;
 
+    use \Exception as Exception;
     use Models\Funcion as Funcion;
     use DAO\FuncionDAODB as FuncionDAO;
     use Models\Film as Film;
@@ -16,6 +17,7 @@
         private $roomDAO;
         private $filmDAO;
         private $cinemaDAO;
+        private $genresDAO;
 
         public function __construct(){
 
@@ -23,97 +25,116 @@
             $this->roomDAO = new RoomDAO();
             $this->filmDAO = new FilmsDAO();
             $this->cinemaDAO = new CinemaDAO();
-
+            $this->genresDAO = new GenresDAO();
         }
 
 
         public function ShowAddView($idFilm){
 
-            require_once(ROOT . '/Views/header.php');
-        
-            require_once(ROOT . '/Views/nav-admin.php');
+            try{
 
-            $cinemaController = new CinemaController();
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
+    
+                $cinemaController = new CinemaController();
+                $film = $this->filmDAO->GetOne($idFilm);
+                $duracionFilm = $this->filmDAO->getDuracion($idFilm);
+                $rooms = $this->roomDAO->GetAll();
+    
+                require_once(VIEWS_PATH."add-funcion.php");
+                require_once(ROOT . '/Views/footer.php');
 
-            $film = $this->filmDAO->GetOne($idFilm);
+            }catch(Exception $ex){
 
-            $duracionFilm = $this->filmDAO->getDuracion($idFilm);
+                HomeController::ShowErrorView("Error al obtener la información de la función.", $ex->getMessage(), "Films/getAll/");
+            }
 
-            $rooms = $this->roomDAO->GetAll();
-
-            require_once(VIEWS_PATH."add-funcion.php");
-
-            require_once(ROOT . '/Views/footer.php');
 
         }
 
 
         public function ShowListView() {
 
-            require_once(ROOT . '/Views/header.php');
-        
-            require_once(ROOT . '/Views/nav-admin.php');
+            try{
 
-            $filmList = $this->filmDAO->GetAll();
-
-            $funcionList = $this->funcionDAO->GetAll();
-            $films = array();
-
-            foreach($filmList as $film){
-                if ($this->peliculaEnCartelera($film->getId())){
-                    array_push($films, $film);
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
+    
+                $filmList = $this->filmDAO->GetAll();
+                $funcionList = $this->funcionDAO->GetAll();
+                $films = array();
+    
+                foreach($filmList as $film){
+                    if ($this->peliculaEnCartelera($film->getId())){
+                        array_push($films, $film);
+                    }
                 }
+    
+                require_once(VIEWS_PATH."funcion-list.php");
+                require_once(ROOT . '/Views/footer.php');
+
+            }catch (Exception $ex){
+
+                HomeController::ShowErrorView("Error al obtener la información de las funciones.", $ex->getMessage(), "Home/Index/");
             }
 
-            require_once(VIEWS_PATH."funcion-list.php");
-
-            require_once(ROOT . '/Views/footer.php');
         }
 
         
         public function ShowEditView($id){
 
-            require_once(ROOT . '/Views/header.php');
-        
-            require_once(ROOT . '/Views/nav-admin.php');
+            try{
 
-            $cinemaController = new CinemaController();
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
+    
+                $cinemaController = new CinemaController();
+                $rooms = $this->roomDAO->GetAll();
+                $funcion = $this->funcionDAO->GetOne($id);
+                $film = $this->filmDAO->GetOne($funcion->getIdFilm());
+    
+                require_once(VIEWS_PATH)."edit-funcion.php";
+                require_once(ROOT . '/Views/footer.php');
 
-            $rooms = $this->roomDAO->GetAll();
+            }catch(Exeption $ex){
 
-            $funcion = $this->funcionDAO->GetOne($id);
+                HomeController::ShowErrorView("Error al obtener la información de la función.", $ex->getMessage(), "Funcion/ShowListView/");
+            }
 
-            $film = $this->filmDAO->GetOne($funcion->getIdFilm());
-
-            require_once(VIEWS_PATH)."edit-funcion.php";
-
-            require_once(ROOT . '/Views/footer.php');
         }
 
         public function ShowRemoveView($id){
+            
+            try{
 
-            require_once(ROOT . '/Views/header.php');
-        
-            require_once(ROOT . '/Views/nav-admin.php');
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
+    
+                $funcion = $this->funcionDAO->GetOne($id);
+                $film = $this->filmDAO->GetOne($funcion->getIdFilm());
+                $room = $this->roomDAO->GetOne($funcion->getIdSala());
+                $cinema = $this->cinemaDAO->GetOne($room->getIdCine());
+    
+                require_once(VIEWS_PATH)."remove-funcion.php";
+                require_once(ROOT . '/Views/footer.php');
 
-            $funcion = $this->funcionDAO->GetOne($id);
-            $film = $this->filmDAO->GetOne($funcion->getIdFilm());
-            $room = $this->roomDAO->GetOne($funcion->getIdSala());
+            }catch(Exception $ex){
 
-            $cinema = $this->cinemaDAO->GetOne($room->getIdCine());
-
-            require_once(VIEWS_PATH)."remove-funcion.php";
-
-            require_once(ROOT . '/Views/footer.php');
+                HomeController::ShowErrorView("Error al obtener la información de la función.", $ex->getMessage(), "Funcion/ShowListView/");
+            }
         }
 
         public function Remove($id){
-            $this->funcionDAO->Remove($id);
-            $this->ShowListView();
-        }
 
-        public function RemovePorSala($idSala){
-            $this->funcionDAO->RemovePorSala($idSala);
+            try{
+
+                $this->funcionDAO->Remove($id);
+                $this->ShowListView();
+
+            }catch (Exception $ex){
+
+                HomeController::ShowErrorView("La función no pudo ser eliminada.", $ex->getMessage(), "Funcion/ShowListView/");
+            }
         }
 
         public function Edit($id, $idFilm, $idSala, $fecha, $hora, $duracion, $entradasVendidas){
@@ -127,8 +148,15 @@
             $funcion->setDuracion($duracion);
             $funcion->setEntradasVendidas($entradasVendidas);
 
-           $this->funcionDAO->Edit($funcion);
-            $this->ShowListView();
+            try{
+
+                $this->funcionDAO->Edit($funcion);
+                $this->ShowListView();
+
+            }catch(Exception $ex){
+                
+                HomeController::ShowErrorView("No puedo actualizarse la información de la función.", $ex->getMessage(), "Funcion/ShowListView/");
+            }
 
         }
 
@@ -142,130 +170,139 @@
             $funcion->setDuracion($duracion);
             $funcion->setEntradasVendidas(0);
 
-            if($this->funcionDAO->verificarHora($funcion)){
+            try{
+
+                if($this->funcionDAO->verificarHora($funcion)){
+                    throw new Exception("La función ingresada se superpone con otra en la misma fecha y sala.");
+                }
 
                 $this->funcionDAO->Add($funcion);
                 $this->ShowListView();
+    
+            }catch(Exception $ex){
 
-            }else{
-
-                echo "<script> if(confirm('Error. La película se interpone con otra función.'));";
-                echo "</script>";
-                $this->ShowAddView($idFilm);
-
+                HomeController::ShowErrorView("No pudo agregarse la función.", $ex->getMessage(), "Films/getAll/");
             }
-        }
 
-
-        public function GetAll(){
-            return $this->funcionDAO->GetAll();
         }
 
 
         public function peliculaEnCartelera($id){
-            return $this->funcionDAO->peliculaEnCartelera($id);
+
+            try{
+                return $this->funcionDAO->peliculaEnCartelera($id);
+
+            }catch(Exception $ex){
+
+                HomeController::ShowErrorView("Error al obtener las películas en cartelera.", $ex->getMessage(), "Home/Index/");
+            }
         }
 
         public function entradasDisponibles($idFilm){
 
-            $funciones = $this->funcionDAO->getFuncionesPorPelicula($idFilm);
-            if (!empty($funciones)){
+            try{
 
-                foreach ($funciones as $funcion){
-                    
-                    $room = $this->roomDAO->getOne($funcion->getIdSala());
-
-                    if ($funcion->getEntradasVendidas() == $room->getCapacidad()){
-
-                        return false;
+                $funciones = $this->funcionDAO->getFuncionesPorPelicula($idFilm);
+                if (!empty($funciones)){
+    
+                    foreach ($funciones as $funcion){
+                        
+                        $room = $this->roomDAO->getOne($funcion->getIdSala());
+    
+                        if ($funcion->getEntradasVendidas() == $room->getCapacidad()){
+    
+                            return false;
+                        }
                     }
                 }
+                return true;
+
+            }catch(Exception $ex){
+
+                HomeController::ShowErrorView("Error al verificar si existen entradas disponibles.", $ex->getMessage(), "Home/Index");
             }
-            return true;
         }
 
         public function ShowCartelera(){
 
+            try{
 
-            if($_SESSION['log'] == false){
+                if($_SESSION['log'] == false){
                     require_once(ROOT . '/Views/header-login.php'); 
                     require_once(ROOT . '/Views/nav-principal.php');
-            }
-
-
-            if($_SESSION['log'] == true){
-                require_once(ROOT . '/Views/header.php'); 
-             if( $_SESSION['esAdmin'] == true){
-                    require_once(ROOT . '/Views/nav-admin.php');
-            }else{
-                   require_once(ROOT . '/Views/nav-user.php');
-             }
-            }
-
-            $allFilms = $this->filmDAO->GetAll();
-            $films = array();
-
-            foreach($allFilms as $film){
-                if ($this->peliculaEnCartelera($film->getId()) && $this->entradasDisponibles($film->getId())){
-                    array_push($films, $film);
-                }
-            }
-
-            $daosGenres = new GenresDAO();
-            $genres = $daosGenres->GetAll();
-
-            $daosFilms = new FilmsDAO();
-            $rangoFechas = $daosFilms->getRangoFechas();
-
-            require_once(VIEWS_PATH)."cartelera.php";
-
-            require_once(ROOT . '/Views/footer.php');
-
-        }
-
-        public function getFilmsByGenres($id) {
-
-                if($_SESSION['log'] == false) {
-                    require_once(ROOT . '/Views/header-login.php');
-                    require_once(ROOT . '/Views/nav-principal.php');
                 }else{
-                    require_once(ROOT . '/Views/header.php');
-
-                    if ($_SESSION['esAdmin'] == true){
-
+                    require_once(ROOT . '/Views/header.php'); 
+                    
+                    if( $_SESSION['esAdmin'] == true){
                         require_once(ROOT . '/Views/nav-admin.php');
                     }else{
                         require_once(ROOT . '/Views/nav-user.php');
                     }
                 }
     
-            $daosGenres = new GenresDAO();
+                $allFilms = $this->filmDAO->GetAll();
+                $films = array();
     
-            $genres = $daosGenres->GetAll();
-
-            $daosFilms = new FilmsDAO();
-
-           $daosFunciones = new FuncionDAO();
-    
-           $funciones = $daosFunciones->GetAll();
-
-           $allFilms = $this->filmDAO->GetAll();
-            $films = array();
-
-            foreach($allFilms as $film){
-                if ($this->peliculaEnCartelera($film->getId())){
-                    array_push($films, $film);
+                foreach($allFilms as $film){
+                    if ($this->peliculaEnCartelera($film->getId()) && $this->entradasDisponibles($film->getId())){
+                        array_push($films, $film);
+                    }
                 }
+    
+                $genres = $this->genresDAO->GetAll();
+                $rangoFechas = $this->filmDAO->getRangoFechas();
+                require_once(VIEWS_PATH)."cartelera.php";
+                require_once(ROOT . '/Views/footer.php');
+
+            }catch(Exception $ex){
+
+                HomeController::ShowErrorView("Error al obtener las películas de la cartelera.", $ex->getMessage(), "Home/Index");
             }
+
+        }
+
+        public function getFilmsByGenres($id) {
+
+            try{
+
+                if($_SESSION['log'] == false) {
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                }else{
+                    require_once(ROOT . '/Views/header.php');
     
-            require_once(ROOT . '/Views/film-by-genre-funcion.php');
+                    if ($_SESSION['esAdmin'] == true){
+                        require_once(ROOT . '/Views/nav-admin.php');
+                    }else{
+                        require_once(ROOT . '/Views/nav-user.php');
+                    }
+                }
     
-            require_once(ROOT . '/Views/footer.php');
+                $genres = $this->genresDAO->GetAll();
+                $funciones = $this->funcionDAO->GetAll();
+                $allFilms = $this->filmDAO->GetAll();
+                $films = array();
     
+                foreach($allFilms as $film){
+                    if ($this->peliculaEnCartelera($film->getId())){
+                        array_push($films, $film);
+                    }
+                }
+        
+                require_once(ROOT . '/Views/film-by-genre-funcion.php');
+                require_once(ROOT . '/Views/footer.php');
+        
+
+            }catch(Exception $ex){
+
+                HomeController::ShowErrorView("Error al obtener las películas por género.", $ex->getMessage(), "Home/Index/");
+            }
         }
     
         public function getFilmsByDate($date){
-    
+            
+            try{
+
                 if($_SESSION['log'] == false) {
                     require_once(ROOT . '/Views/header-login.php');
                     require_once(ROOT . '/Views/nav-principal.php');
@@ -273,14 +310,15 @@
                     require_once(ROOT . '/Views/header.php');
                     require_once(ROOT . '/Views/nav-user.php');
                 }
-    
-            $daosFuncion = new FuncionDAO();
-    
-            $films = $daosFuncion->getByDate($date);
-    
-            require_once(ROOT . '/Views/film-by-date-funcion.php');
-    
-            require_once(ROOT . '/Views/footer.php');
+        
+                $films = $this->funcionDAO->getByDate($date);
+                require_once(ROOT . '/Views/film-by-date-funcion.php');
+                require_once(ROOT . '/Views/footer.php');
+
+            }catch(Exception $ex){
+
+                HomeController::ShowErrorView("Error al obtener las películas por fecha.", $ex->getMessage(), "Home/Index/");
+            }
         }
 
     }
