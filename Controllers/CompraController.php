@@ -38,7 +38,7 @@ class CompraController {
         try{
             $film = $this->filmsDAO->GetOne($idFilm);
 
-            $funciones = $this->funcionDAO->getFuncionesPorPelicula($idFilm);
+            $funciones = $this->funcionDAO->getFuncionesFuturas($idFilm);
                 
             if($_SESSION['esAdmin'] == false)
             {
@@ -128,11 +128,24 @@ class CompraController {
             
             try{
 
-                $tarjeta = new \Models\TarjetaDeCredito($nroTarjeta, $empresa, $codSeguridad, $vencimiento, $titular, $_SESSION['id']);
+                $tarjeta = new \Models\TarjetaDeCredito();
+            
+                $tarjeta->setNroTarjeta($nroTarjeta);
+                $tarjeta->setEmpresa($empresa);
+                $tarjeta->setCodSeguridad($codSeguridad);
+                $tarjeta->setVencimiento($vencimiento);
+                $tarjeta->setTitular($titular);
+                $tarjeta->setIdUsuario($_SESSION['id']);
 
                 $this->tarjetaDAO->Add($tarjeta);
                
-                $compra = new \Models\Compra($$this->tarjetaDAO->getIdByNroTarjeta($nroTarjeta), $cantidad, $total, $_SESSION['id'], $idFuncion);
+                $compra = new \Models\Compra();
+    
+                $compra->setIdTarjeta($this->tarjetaDAO->getIdByNroTarjeta($nroTarjeta));
+                $compra->setCantidadEntradas($cantidad);
+                $compra->setValorTotal($total);
+                $compra->setIdUsuario($_SESSION['id']);
+                $compra->setIdFuncion($idFuncion);
         
                 $this->compraDAO->Add($compra);
     

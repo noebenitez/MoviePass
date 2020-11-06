@@ -133,6 +133,7 @@ select * from cines;
 select * from salas;
 select * from tarjetasCredito;
 select * from peliculaxgenero;
+select * from usuarios;
 
 
 DELETE pg
@@ -155,4 +156,12 @@ WHERE f.id_pelicula IS NULL;
 
 insert into funciones (fecha, horario_funcion, id_sala, id_pelicula, duracion, entradas_vendidas) values ("2020-11-04", "10:22:00", 2, 590223, 444, 0); 
 
-select * from funciones where funciones.fecha > curdate();
+select * from funciones where id_pelicula = 337401 and fecha > curdate();
+
+SELECT p.id, p.poster, p.adultos, p.descripcion, p.fecha_estreno, p.titulo_original, p.titulo, p.idioma_original, p.fondo, p.popularidad, p.cantidad_votos, p.video, p.puntuacion
+FROM peliculas p
+INNER JOIN funciones f
+ON p.id = f.id_pelicula
+WHERE f.fecha > curdate();
+
+select * from generos where id = 12;

@@ -1,9 +1,7 @@
 <br>
-<?php
-        foreach($genres as $genre){ 
-          if($genre->getId() == $id){?>
-<h2>FILTRO POR GENERO &#160;"<?php echo $genre->getNombre() ?>"</h2>
-        <?php }} ?>
+
+<h2>FILTRO POR GENERO &#160;"<?php echo $genreName ?>"</h2>
+
 <br>
 
         <div id="peliculas" class="row col-12">

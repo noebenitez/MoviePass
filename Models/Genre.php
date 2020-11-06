@@ -7,9 +7,9 @@ class Genre {
     private $nombre;
     private $id;
 
-    function __constructor() {
-        $this->nombre = '';
-        $this->id = 0;
+    function __construct ($nombre = null, $id = null) {
+        $this->nombre = $nombre;
+        $this->id = $id;
 
     }
 

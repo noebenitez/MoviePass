@@ -74,7 +74,7 @@
             {
                 $funcionList = array();
 
-                $query = "SELECT * FROM " . $this->tableName . "WHERE id_pelicula = " . $idFilm . " fecha > curdate()";
+                $query = "SELECT * FROM " . $this->tableName . " WHERE id_pelicula = " . $idFilm . " AND fecha > curdate()";
 
                 $this->connection = Connection::GetInstance();
 

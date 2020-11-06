@@ -73,7 +73,7 @@
       <div class="form-row">
         <div class="form-group col-md-8">
           <label for="vencimiento">Vencimiento</label>
-          <input type="month" class="form-control" name="vencimiento" placeholder="" required>
+          <input type="month" class="form-control" name="vencimiento" placeholder="" min= <?= date("Y-m") ?> required>
         </div>
         <div class="form-group col-md-4">
           <label for="codSeguridad">CVV/CVC</label>

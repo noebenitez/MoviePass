@@ -59,17 +59,9 @@
 
                 require_once(ROOT . '/Views/header.php');
                 require_once(ROOT . '/Views/nav-admin.php');
-    
-                $filmList = $this->filmDAO->GetAll();
-                $funcionList = $this->funcionDAO->GetAll();
-                $films = array();
-    
-                foreach($filmList as $film){
-                    if ($this->peliculaEnCartelera($film->getId())){
-                        array_push($films, $film);
-                    }
-                }
-    
+
+                $films = $this->filmDAO->getFilmsConFunciones();
+                
                 require_once(VIEWS_PATH."funcion-list.php");
                 require_once(ROOT . '/Views/footer.php');
 
@@ -240,15 +232,8 @@
                     }
                 }
     
-                $allFilms = $this->filmDAO->GetAll();
-                $films = array();
-    
-                foreach($allFilms as $film){
-                    if ($this->peliculaEnCartelera($film->getId()) && $this->entradasDisponibles($film->getId())){
-                        array_push($films, $film);
-                    }
-                }
-    
+                $films = $this->filmDAO->getFilmsCartelera();  //Solo trae las que tienen funciones futuras
+
                 $genres = $this->genresDAO->GetAll();
                 $rangoFechas = $this->filmDAO->getRangoFechas();
                 require_once(VIEWS_PATH)."cartelera.php";
@@ -277,17 +262,11 @@
                         require_once(ROOT . '/Views/nav-user.php');
                     }
                 }
-    
-                $genres = $this->genresDAO->GetAll();
-                $funciones = $this->funcionDAO->GetAll();
-                $allFilms = $this->filmDAO->GetAll();
-                $films = array();
-    
-                foreach($allFilms as $film){
-                    if ($this->peliculaEnCartelera($film->getId())){
-                        array_push($films, $film);
-                    }
-                }
+
+                $genre = $this->genresDAO->GetOne($id);
+                $genreName = $genre->getNombre();
+                var_dump($genre);
+                $films = $this->filmDAO->getFilmsCartelera();
         
                 require_once(ROOT . '/Views/film-by-genre-funcion.php');
                 require_once(ROOT . '/Views/footer.php');
