@@ -91,7 +91,7 @@
 
             try{
                 $this->connection = Connection::GetInstance();
-                $resultSet = $this->connection->ExecuteNonQuery($query, $parameters);
+                $this->connection->ExecuteNonQuery($query, $parameters);
 
             } catch (Exception $ex){ 
                 throw $ex;
@@ -109,7 +109,7 @@
             
             try{
                 $this->connection = Connection::GetInstance();
-                $resultSet = $this->connection->ExecuteNonQuery($query, $parameters);
+                $this->connection->ExecuteNonQuery($query, $parameters);
 
             } catch (Exception $ex){ 
                 throw $ex;

@@ -16,7 +16,7 @@ class GenresDAODB {
 
         try
         {
-            $query = "INSERT INTO ".$this->tableName." (id, nombre) VALUES (:id, :nombre);";
+            $query = "INSERT IGNORE INTO ".$this->tableName." (id, nombre) VALUES (:id, :nombre);";
             
             $parameters["id"] = $genre->getId();
             $parameters["nombre"] = $genre->getNombre();
@@ -64,7 +64,11 @@ class GenresDAODB {
                 $genre->setNombre($valuesArray['name']);
                 $genre->setId($valuesArray['id']);
 
-                $this->Add($genre);
+                try{
+                    $this->Add($genre);
+                }catch(Exception $ex){
+                    throw $ex;
+                }
              }
         }
         

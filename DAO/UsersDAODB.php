@@ -213,7 +213,7 @@ namespace DAO;
 
             try{
                 $this->connection = Connection::GetInstance();
-                $resultSet = $this->connection->ExecuteNonQuery($query, $valuesArray);
+                $this->connection->ExecuteNonQuery($query, $valuesArray);
 
             } catch (Exception $ex){ 
                 throw $ex;

@@ -22,14 +22,14 @@
 
             try{
 
-                require_once(ROOT . '/views/header.php');
-                require_once(ROOT . '/views/nav-admin.php');
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
     
                 $cinemaList = $this->cinemaDAO->GetAll();
                 $roomList = $this->roomDAO->GetAll();
     
                 require_once(VIEWS_PATH."add-room.php");
-                require_once(ROOT . '/views/footer.php');
+                require_once(ROOT . '/Views/footer.php');
 
             }catch(Exception $ex){
 
@@ -43,14 +43,14 @@
 
             try{
 
-                require_once(ROOT . '/views/header.php');
-                require_once(ROOT . '/views/nav-admin.php');
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
     
                 $cinemaList = $this->cinemaDAO->GetAll();
                 $roomList = $this->roomDAO->GetAll();
     
                 require_once(VIEWS_PATH."room-list.php");
-                require_once(ROOT . '/views/footer.php');
+                require_once(ROOT . '/Views/footer.php');
 
             }catch (Exception $ex){
 
@@ -64,14 +64,14 @@
 
             try{
 
-                require_once(ROOT . '/views/header.php');
-                require_once(ROOT . '/views/nav-admin.php');
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
     
                 $room = $this->roomDAO->GetOne($id);
                 $cinema = $this->cinemaDAO->GetOne($room->getIdCine());
     
                 require_once(VIEWS_PATH)."edit-room.php";
-                require_once(ROOT . '/views/footer.php');
+                require_once(ROOT . '/Views/footer.php');
 
             }catch (Exception $ex){
 

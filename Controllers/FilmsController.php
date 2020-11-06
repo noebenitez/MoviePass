@@ -23,20 +23,19 @@ class FilmsController {
             
             $films = $this->filmsDAO->GetAll();
         
-            if($_SESSION['log'] == false) {
-    
-                require_once(ROOT . '/Views/header-login.php');
-                require_once(ROOT . '/Views/nav-principal.php');
-            }else{
-    
-                if($_SESSION['esAdmin'] == false){
-                    require_once(ROOT . '/Views/header.php');
-                    require_once(ROOT . '/Views/nav-user.php');
+            if($_SESSION['esAdmin'] == false){
+
+                if($_SESSION['log'] == false) {
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
                 }else{
                     require_once(ROOT . '/Views/header.php');
-                    require_once(ROOT . '/Views/nav-admin.php');
+                    require_once(ROOT . '/Views/nav-user.php');
                 }
-            }   
+            }else{
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
+            }  
 
             $genres = $this->genresDAO->GetAll();
             $rangoFechas = $this->filmsDAO->getRangoFechas();
@@ -53,23 +52,22 @@ class FilmsController {
 
         try{
             
-            if($_SESSION['log'] == false) {
-        
-                require_once(ROOT . '/Views/header-login.php');
-                require_once(ROOT . '/Views/nav-principal.php');
-            }else{
-    
-                if($_SESSION['esAdmin'] == false){
-                    require_once(ROOT . '/Views/header.php');
-                    require_once(ROOT . '/Views/nav-user.php');
+            if($_SESSION['esAdmin'] == false){
+
+                if($_SESSION['log'] == false) {
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
                 }else{
                     require_once(ROOT . '/Views/header.php');
-                    require_once(ROOT . '/Views/nav-admin.php');
+                    require_once(ROOT . '/Views/nav-user.php');
                 }
-            }   
+            }else{
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
+            }  
     
-            $genres = $this->genresDAO->GetAll();
-            $films = $this->filmsDAO->GetAll();
+            $film = $this->filmsDAO->GetOne($id);
+            $genres = $this->genresDAO->getAll();
             require_once(ROOT . '/Views/film-info.php');
             require_once(ROOT . '/Views/footer.php');
 
@@ -84,23 +82,22 @@ class FilmsController {
 
         try{
 
-            if($_SESSION['log'] == false) {
-            
-                require_once(ROOT . '/Views/header-login.php');
-                require_once(ROOT . '/Views/nav-principal.php');
-            }else{
-    
-                if($_SESSION['esAdmin'] == false){
-                    require_once(ROOT . '/Views/header.php');
-                    require_once(ROOT . '/Views/nav-user.php');
+            if($_SESSION['esAdmin'] == false){
+
+                if($_SESSION['log'] == false) {
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
                 }else{
                     require_once(ROOT . '/Views/header.php');
-                    require_once(ROOT . '/Views/nav-admin.php');
+                    require_once(ROOT . '/Views/nav-user.php');
                 }
+            }else{
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
             } 
     
             $genres = $this->genresDAO->GetAll();
-            $films = $this->filmsDAO->GetAll();
+            $films = $this->filmsDAO->getByGenre($id);
     
             require_once(ROOT . '/Views/film-by-genre.php');
             require_once(ROOT . '/Views/footer.php');
@@ -116,21 +113,20 @@ class FilmsController {
 
         try{
 
-            if($_SESSION['log'] == false) {
-                
-                require_once(ROOT . '/Views/header-login.php');
-                require_once(ROOT . '/Views/nav-principal.php');
-            }else{
-    
-                if($_SESSION['esAdmin'] == false){
-                    require_once(ROOT . '/Views/header.php');
-                    require_once(ROOT . '/Views/nav-user.php');
+            if($_SESSION['esAdmin'] == false){
+
+                if($_SESSION['log'] == false) {
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
                 }else{
                     require_once(ROOT . '/Views/header.php');
-                    require_once(ROOT . '/Views/nav-admin.php');
+                    require_once(ROOT . '/Views/nav-user.php');
                 }
-            } 
-    
+            }else{
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
+            }
+
             $filmsDate = $this->filmsDAO->getByDate($date);
             require_once(ROOT . '/Views/film-by-date.php');
             require_once(ROOT . '/Views/footer.php');
@@ -149,7 +145,7 @@ class FilmsController {
             require_once(ROOT . '/Views/nav-admin.php');
     
             $genres = $this->genresDAO->GetAll();
-            $films = $this->filmsDAO->GetAll();
+            $film = $this->filmsDAO->GetOne($id);
     
             require_once(ROOT . '/Views/film-info-funcion.php');
             require_once(ROOT . '/Views/footer.php');
@@ -161,14 +157,14 @@ class FilmsController {
 
     }
 
-    public function refresh(){  //Hay que mejorar
-        $daosFilms = new FilmsDAO();
-        $daosFilms->refrescarDB();
-        
-    }
+    public function refresh(){
+        try{
+            $this->filmsDAO->refreshDB();
+            echo "Entro acá.";
+        }catch(Exception $ex){
 
-    public function getGeneros($idFilm){  //Hay que mejorar
-        $daosFilms = new FilmsDAO();
-        $daosFilms->getGeneros($idFilm);
+            HomeController::ShowErrorView("Ocurrió un error al refrescar la base de datos.", $ex->getMessage(), "Home/Index");
+        }
+        
     }
 }

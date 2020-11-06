@@ -34,13 +34,47 @@
             }
         }
 
-        public function GetAll(){
+        public function GetAll(){  //Todas las funciones incluyendo pasadas
             
             try
             {
                 $funcionList = array();
 
                 $query = "SELECT * FROM ".$this->tableName;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $funcion = new Funcion();
+                    $funcion->setId($row["id_funcion"]);
+                    $funcion->setFecha($row["fecha"]);
+                    $funcion->setHora($row["horario_funcion"]);
+                    $funcion->setIdSala($row["id_sala"]);
+                    $funcion->setIdFilm($row["id_pelicula"]);
+                    $funcion->setDuracion($row["duracion"]);
+                    $funcion->setEntradasVendidas($row["entradas_vendidas"]);
+                    
+                    array_push($funcionList, $funcion);
+                }
+
+                return $funcionList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function getFuncionesFuturas($idFilm){ //Solo funciones que no se dieron
+            
+            try
+            {
+                $funcionList = array();
+
+                $query = "SELECT * FROM " . $this->tableName . "WHERE id_pelicula = " . $idFilm . " fecha > curdate()";
 
                 $this->connection = Connection::GetInstance();
 
@@ -95,7 +129,7 @@
 
             try{
                 $this->connection = Connection::GetInstance();
-                $resultSet = $this->connection->ExecuteNonQuery($query, $parameters);
+                $this->connection->ExecuteNonQuery($query, $parameters);
 
             } catch (Exception $ex){ 
                 throw $ex;
@@ -115,7 +149,7 @@
 
             try{
                 $this->connection = Connection::GetInstance();
-                $resultSet = $this->connection->ExecuteNonQuery($query, $parameters);
+                $this->connection->ExecuteNonQuery($query, $parameters);
 
             } catch (Exception $ex){ 
                 throw $ex;
@@ -209,7 +243,7 @@
             $query = "UPDATE " . $this->tableName . " SET entradas_vendidas = entradas_vendidas + " . $cant . " WHERE id_funcion = " . $idFuncion;
             try{
                 $this->connection = Connection::GetInstance();
-                $resultSet = $this->connection->ExecuteNonQuery($query);
+                $this->connection->ExecuteNonQuery($query);
 
             } catch (Exception $ex){ 
                 throw $ex;

@@ -86,20 +86,6 @@
 
                 HomeController::ShowErrorView("Error al agregar el cine.", $ex->getMessage(), "Cinema/ShowAddView/");
             }
-            
-            
-            /* if ($this->validate($cinema)){  //Valida que no exista otro cine con la misma dirección
-                
-                $this->cinemaDAO->Add($cinema);
-                $this->ShowListView();
-
-            }else{
-
-                echo "<script> if(confirm('Error. Ya existe un cine con la dirección ingresada.'));";
-                echo "</script>";
-                $this->ShowAddView();
-
-            } */
         }
 
         public function ShowRemoveView($id){
@@ -153,29 +139,9 @@
             }
             $this->cinemaDAO->Edit($cinema);
             $this->ShowListView();
-            
 
-            /* if ($this->validate($cinema)){  //Valida que no exista otro cine con la misma dirección
-                
-                $this->cinemaDAO->Edit($cinema);
-                $this->ShowListView();
-
-           }else{
-
-                echo "<script> if(confirm('Error. Ya existe un cine con la dirección ingresada.'));";
-                echo "</script>";
-                $this->ShowListView();
-
-            } */
         }
-
-        public function validate($cinema){
-            
-            if ($this->cinemaDAO->direccionRepetida($cinema)){
-                return false;
-            }
-            return true;
-        }
+        
 
         public function nombrePorId($id){
 

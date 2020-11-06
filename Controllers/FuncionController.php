@@ -198,7 +198,7 @@
             }
         }
 
-        public function entradasDisponibles($idFilm){
+        public function entradasDisponibles($idFilm){ //Para mostrar en cartelera solo si la película tiene alguna de sus funciones disponibles
 
             try{
 

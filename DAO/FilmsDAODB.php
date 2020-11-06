@@ -4,6 +4,7 @@
     use \Exception as Exception;
     use Models\Film as Film;    
     use DAO\Connection as Connection;
+    use DAO\GenresDAODB as GenresDAO;
 
     class FilmsDAODB{
 
@@ -14,7 +15,7 @@
 
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (id, poster, adultos, descripcion, fecha_estreno, titulo_original, titulo, idioma_original, fondo, popularidad, cantidad_votos, video, puntuacion) VALUES (:id, :poster, :adultos, :descripcion, :fecha_estreno, :titulo_original, :titulo, :idioma_original, :fondo, :popularidad, :cantidad_votos, :video, :puntuacion);";
+                $query = "INSERT IGNORE INTO ".$this->tableName." (id, poster, adultos, descripcion, fecha_estreno, titulo_original, titulo, idioma_original, fondo, popularidad, cantidad_votos, video, puntuacion) VALUES (:id, :poster, :adultos, :descripcion, :fecha_estreno, :titulo_original, :titulo, :idioma_original, :fondo, :popularidad, :cantidad_votos, :video, :puntuacion);";
                 
                 $parameters["id"] = $film->getId();
                 $parameters["poster"] = $film->getPoster();
@@ -40,8 +41,41 @@
             }
         }
 
+        private function removeFilmsSinFuncionesDePeliculaxgenero(){  //Elimina de la tabla peliculaxgeneros las filas que sean de las peliculas sin funciones
+            
+            $query = 
+                    "DELETE pg
+                    FROM peliculaxgenero pg
+                    LEFT JOIN funciones f
+                    ON pg.id_pelicula = f.id_pelicula
+                    WHERE f.id_pelicula IS NULL";
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query);
 
-        public function refrescarDB(){
+            } catch (Exception $ex){ 
+                throw $ex;
+            }
+        }
+
+        private function removeFilmsSinFuncionesDePeliculas(){  //Elimina de la tabla peliculas las filas que sean de las peliculas sin funciones
+            
+            $query = 
+                    "DELETE p
+                    FROM " . $this->tableName . " p
+                    LEFT JOIN funciones f
+                    ON p.id = f.id_pelicula
+                    WHERE f.id_pelicula IS NULL";
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query);
+
+            } catch (Exception $ex){ 
+                throw $ex;
+            }
+        }
+
+        private function APItoDB(){
 
             if($jsonContent = file_get_contents(PELICULAS)){
 
@@ -65,11 +99,30 @@
                     $film->setVideo($valuesArray['video']);
                     $film->setPuntuacion($valuesArray['vote_average']);
                     
-                    $this->Add($film);
-                    $this->addGeneros($film->getId(), $valuesArray['genre_ids']);
+                    try{
+                        
+                        $this->Add($film);
+                        $this->addGeneros($film->getId(), $valuesArray['genre_ids']);
 
+                    }catch(Exception $ex){
+                        throw $ex;
+                    }
                 }
+            }
         }
+
+        public function refreshDB(){
+            
+            try{
+                $this->removeFilmsSinFuncionesDePeliculaxgenero(); //Se eliminan de la tabla peliculaxgeneros las filas que sean de las peliculas sin funciones
+                $this->removeFilmsSinFuncionesDePeliculas();  //Se eliminan de la tabla peliculaxgeneros las filas que sean de las peliculas sin funciones
+                $genresDAO = new GenresDAO();
+                $genresDAO->cargarGeneros();
+                $this->APItoDB();  //Se traen desde la API las peliculas del get now_playing
+            }catch (Exception $ex){
+                throw $ex;
+            }
+            
         }
 
         public function GetAll(){
@@ -136,6 +189,51 @@
             }
         }
 
+        public function getByGenre($idGenre){
+
+            $query = 
+                "SELECT p.id, p.poster, p.adultos, p.descripcion, p.fecha_estreno, p.titulo_original, p.titulo, p.idioma_original, p.fondo, p.popularidad, p.cantidad_votos, p.video, p.puntuacion
+                FROM ". $this->tableName . " p
+                INNER JOIN peliculaxgenero pg
+                ON p.id = pg.id_pelicula
+                WHERE pg.id_genero = " . $idGenre;
+
+            try{
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query);
+
+                if (!empty($resultSet)){
+
+                    $films = array();
+                    
+                    foreach ($resultSet as $row)
+                    {                
+                        $film = new Film();
+                        $film->setPoster($row['poster']);
+                        $film->setAdultos($row['adultos']);
+                        $film->setDescripcion($row['descripcion']);
+                        $film->setFechaEstreno($row['fecha_estreno']);
+                        $film->setId($row['id']);
+                        $film->setTitulo($row['titulo']);
+                        $film->setIdiomaOriginal($row['idioma_original']);
+                        $film->setTituloOriginal($row['titulo_original']);
+                        $film->setFondo($row['fondo']);
+                        $film->setPopularidad($row['popularidad']);
+                        $film->setCantidadVotos($row['cantidad_votos']);
+                        $film->setVideo($row['video']);
+                        $film->setPuntuacion($row['puntuacion']);
+                    
+                        array_push($films, $film);
+                    }
+
+                    return $films;
+                }
+
+            } catch (Exception $ex){ 
+                throw $ex;
+            }
+        }
+
 
         protected function mapear($value){
 
@@ -160,17 +258,44 @@
         }
     
         public function getByDate($date){
-    
-            $arrayFecha = array();
-            $films = $this->GetAll();
-            foreach ($films as $film){
-    
-                if ($film->getFechaEstreno() == $date){
-    
-                    array_push($arrayFecha, $film);
+            
+            $query = "SELECT * FROM " . $this->tableName . " WHERE fecha_estreno = :date";
+            $parameters["date"] = $date;
+
+            try{
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query, $parameters);
+
+                if (!empty($resultSet)){
+
+                    $films = array();
+                    
+                    foreach ($resultSet as $row)
+                    {                
+                        $film = new Film();
+                        $film->setPoster($row['poster']);
+                        $film->setAdultos($row['adultos']);
+                        $film->setDescripcion($row['descripcion']);
+                        $film->setFechaEstreno($row['fecha_estreno']);
+                        $film->setId($row['id']);
+                        $film->setTitulo($row['titulo']);
+                        $film->setIdiomaOriginal($row['idioma_original']);
+                        $film->setTituloOriginal($row['titulo_original']);
+                        $film->setFondo($row['fondo']);
+                        $film->setPopularidad($row['popularidad']);
+                        $film->setCantidadVotos($row['cantidad_votos']);
+                        $film->setVideo($row['video']);
+                        $film->setPuntuacion($row['puntuacion']);
+                    
+                        array_push($films, $film);
+                    }
+
+                    return $films;
                 }
+
+            } catch (Exception $ex){ 
+                throw $ex;
             }
-            return $arrayFecha;
         }
 
         public function addGeneros($idFilm, $generos){
@@ -178,7 +303,7 @@
             if(!empty($generos)){
 
                 try{
-                    $query = "INSERT INTO peliculaxGenero (id_pelicula, id_genero) VALUES (:idFilm, :id_genero);";
+                    $query = "INSERT IGNORE INTO peliculaxGenero (id_pelicula, id_genero) VALUES (:idFilm, :id_genero);";
                     
                     foreach($generos as $genero){
                         

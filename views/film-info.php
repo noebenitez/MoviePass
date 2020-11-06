@@ -2,11 +2,6 @@
 <h2>INFORMACION</h2>
 <br>
 
-<?php
-        foreach($films as $film){
-		if($film->getId() == $id) {
-?>
-
  <div class="card flex-row flex-wrap">
         <div class="card-header border-0 col-4">
             <?php if (empty($film->getPoster())) { ?>
@@ -55,12 +50,6 @@ break;
 <br><br>
         </div>
     </div> 
- 
-<?php
-		}
-	}
-    ?>
-
 
 
 

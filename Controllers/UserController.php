@@ -19,21 +19,21 @@ class UserController {
 
         try{
 
-            require_once(ROOT . '/views/header.php');
+            require_once(ROOT . '/Views/header.php');
             $user = $this->usersDAO->GetOne($id);
     
             if ($_SESSION['esAdmin'] == true){
     
-                require_once(ROOT . '/views/nav-admin.php');
+                require_once(ROOT . '/Views/nav-admin.php');
             
             }else{
     
-                require_once(ROOT . '/views/nav-user.php');
+                require_once(ROOT . '/Views/nav-user.php');
     
             }
     
-            require_once(ROOT . '/views/perfil-user.php');
-            require_once(ROOT . '/views/footer.php');
+            require_once(ROOT . '/Views/perfil-user.php');
+            require_once(ROOT . '/Views/footer.php');
 
         }catch(Exception $ex){
 
@@ -47,22 +47,22 @@ class UserController {
 
         try{
 
-            require_once(ROOT . '/views/header.php');
+            require_once(ROOT . '/Views/header.php');
     
             $user = $this->usersDAO->GetOne($id);
     
             if ($_SESSION['esAdmin'] == true){
     
-                require_once(ROOT . '/views/nav-admin.php');
+                require_once(ROOT . '/Views/nav-admin.php');
             
             }else{
     
-                require_once(ROOT . '/views/nav-user.php');
+                require_once(ROOT . '/Views/nav-user.php');
     
             }
     
-            require_once(ROOT . '/views/edit-user.php');
-            require_once(ROOT . '/views/footer.php');
+            require_once(ROOT . '/Views/edit-user.php');
+            require_once(ROOT . '/Views/footer.php');
 
         }catch(Exception $ex){
 

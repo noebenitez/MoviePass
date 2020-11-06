@@ -8,7 +8,6 @@ class Film {
     private $adultos;
     private $descripcion;
     private $fechaEstreno;
-    private $generos;
     private $id;
     private $tituloOriginal;
     private $titulo;
@@ -19,13 +18,13 @@ class Film {
     private $video; //está como video, es un booleano, calculo será si tiene o no trailer
     private $puntuacion; 
 
-    function __construct($poster = '', $adultos = false, $descripcion = '', $fechaEstreno = '', $id = 0, $titulo = '', $idiomaOriginal = '', $fondo = '', $popularidad = 0, $cantidadVotos = 0, $video = false, $puntuacion = 0) {
+    function __construct($poster = '', $adultos = false, $descripcion = '', $fechaEstreno = '', $id = 0, $tituloOriginal = '', $titulo = '', $idiomaOriginal = '', $fondo = '', $popularidad = 0, $cantidadVotos = 0, $video = false, $puntuacion = 0) {
         $this->poster = $poster;
         $this->adultos = $adultos;
         $this->descripcion = $descripcion;
         $this->fechaEstreno = $fechaEstreno;
-        $this->generos = array();
         $this->id = $id;
+        $this->tituloOriginal = $tituloOriginal;
         $this->titulo = $titulo;
         $this->idiomaOriginal = $idiomaOriginal;
         $this->fondo = $fondo;
@@ -65,14 +64,6 @@ class Film {
 
     public function setFechaEstreno($value) {
         $this->fechaEstreno = $value;
-    }
-
-    public function getGeneros() {
-        return $this->generos;
-    }
-
-    public function setGeneros($value) {
-        $this->generos = $value;
     }
 
     public function getId() {

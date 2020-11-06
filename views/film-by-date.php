@@ -4,8 +4,9 @@
 
         <div id="peliculas" class="row col-12">
 
-<?php
-        foreach($filmsDate as $film){
+<?php 
+    if (!empty($filmsDate)){
+      foreach($filmsDate as $film){
 			 ?>
 
 <div class="card col-3">
@@ -39,7 +40,8 @@
 
 
 <?php
-	    }
+      }
+    }
 ?>
 <br><br>
 </div>

@@ -32,9 +32,7 @@ class LoginController {
         
                 if( $_SESSION['esAdmin'] == true){
                     $films = new FilmsController();
-                   /*  $films->refresh(); */
                     $genres = new \DAO\GenresDAODB();
-                    /* $genres->cargarGeneros(); */
                     $films->getAll();
                 }else{
                     $cartelera = new FuncionController();
@@ -42,16 +40,13 @@ class LoginController {
                 }
             }else{
     
-                echo "<script> if(confirm('Error. Usuario o contraseña incorrecto.'));";
-                echo "</script>";
-                $home = new HomeController();
-                $home->Index();
+                throw new Exception("El usuario y la contraseña no coinciden.");
     
             }
             
         }catch (Exception $ex){
 
-            HomeController::ShowErrorView("Error al leer el usuario.", $ex->getMessage(), "Home/Index/");
+            HomeController::ShowErrorView("Error al iniciar sesión.", $ex->getMessage(), "Home/Index/");
         }
         
     }
@@ -72,13 +67,13 @@ class LoginController {
 
     public function signinView() {
 
-        require_once(ROOT . '/views/header-login.php');
+        require_once(ROOT . '/Views/header-login.php');
 
-        require_once(ROOT . '/views/nav-principal.php');
+        require_once(ROOT . '/Views/nav-principal.php');
 
-        require_once(ROOT . '/views/signin.php');
+        require_once(ROOT . '/Views/signin.php');
         
-        require_once(ROOT . '/views/footer.php');
+        require_once(ROOT . '/Views/footer.php');
     
     }
 

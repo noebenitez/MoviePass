@@ -3,7 +3,6 @@
 <br>
 
 <?php
-        foreach($films as $film){
 		if($film->getId() == $id) {
 ?>
 
@@ -60,7 +59,6 @@ break;
  
 <?php
 		}
-	}
     ?>
 
 
