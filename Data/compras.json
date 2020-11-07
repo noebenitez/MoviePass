@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "nroTarjeta": "567899000000",
+        "cantidad": "2",
+        "total": "200",
+        "idUsuario": "3",
+        "idFuncion": "4"
+    },
+    {
+        "id": 2,
+        "nroTarjeta": "4567788999999",
+        "cantidad": "1",
+        "total": "200",
+        "idUsuario": "1",
+        "idFuncion": "6"
+    },
+    {
+        "id": 3,
+        "nroTarjeta": "421311112222",
+        "cantidad": "1",
+        "total": "200",
+        "idUsuario": "2",
+        "idFuncion": "1"
+    }
+]
