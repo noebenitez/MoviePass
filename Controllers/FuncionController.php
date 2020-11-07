@@ -164,7 +164,7 @@
 
             try{
 
-                if($this->funcionDAO->verificarHora($funcion)){
+                if(!$this->funcionDAO->verificarHora($funcion)){
                     throw new Exception("La función ingresada se superpone con otra en la misma fecha y sala.");
                 }
 

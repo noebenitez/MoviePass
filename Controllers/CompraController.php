@@ -11,6 +11,9 @@ use DAO\RoomDAODB as RoomDAO;
 use DAO\CinemaDAODB as CinemaDAO;
 use DAO\FilmsDAODB as FilmsDAO;
 use DAO\FuncionDAODB as FuncionDAO;
+use Controllers\phpmailer\PHPMailer as PHPMailer;
+use Controllers\phpmailer\SMTP as SMTP;
+
 
 class CompraController {
 
@@ -67,6 +70,7 @@ class CompraController {
         
             HomeController::ShowErrorView("Error al mostrar la pantalla de compra.", $ex->getMessage(), "Funcion/ShowCartelera/");
         }
+        
     }
     
 
@@ -151,6 +155,8 @@ class CompraController {
     
                 $this->funcionDAO->actualizarEntradasVendidas($idFuncion, $cantidad);
             
+                $ticketList = array();
+
                 for($i=0; $i<$cantidad; $i++){
     
                     $ticket = new Ticket();
@@ -160,24 +166,100 @@ class CompraController {
                     $ticket->setIdUsuario($_SESSION['id']);
                     $ticket->setIdFuncion($compra->getIdFuncion());
                     $ticket->setQR('Ticket Nro.: '.$ticket->getId().' - Funcion ID: '.$ticket->getIdFuncion().' - Asiento: '.$ticket->getAsiento());
-    
+                    
+                    array_push($ticketList, $ticket);
                     $this->ticketDAO->Add($ticket);
                 }
     
+                $this->enviarMail($email, $ticketList);
                 $ticketController = new TicketController();
                 $ticketController->ShowTicketList($_SESSION['id']);
 
-            }catch(Exception $ex){
 
-                HomeController::ShowErrorView("Hubo un error y no pudo completarse la compra.", $ex->getMessage(), "Compra/BuyTicket/" . $idFilm);
+            }catch(Exception $ex){
+                
+                HomeController::ShowErrorView("Hubo un error y no pudo completarse la compra." . $_SESSION['id'], $ex->getMessage(), "Compra/BuyTicket/" . $idFilm);
             }
             
             
 
         }
 
-        public function enviarMail(){
+        public function enviarMail($email, $ticketList){
 
+            // Instantiation and passing `true` enables exceptions
+            $mail = new PHPMailer(true);
+
+            try {
+                //Server settings
+                $mail->SMTPDebug = SMTP::DEBUG_OFF;                         // Disable verbose debug output
+                $mail->isSMTP();                                            // Envia usando SMTP
+                $mail->Host       = 'in-v3.mailjet.com';                    //  Host del SMTP server por donde se manda el mail
+                $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+                $mail->Username   = '8ad2921988c640aaf0e8327181f97278';     // SMTP username
+                $mail->Password   = 'e205ef69710fee7ef88c1cc2adb55aa9';     // SMTP password
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+                $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+                
+                //Destinatarios
+                $mail->setFrom('metodologialaboratorio2020@gmail.com', 'MoviePass');
+                $mail->addAddress($email);     // Se pueden agregar más de uno repitiendo esta línea
+                
+               
+                // Content
+                $mail->isHTML(true);           // Set email format to HTML
+                $mail->Subject = 'Tickets';
+                
+                $ticketController = new TicketController();
+                $bodyhtml = "";
+                $bodyplain = "";
+
+                foreach($ticketList as $ticket){
+
+                    $funcion = $this->funcionDAO->GetOne($ticket->getIdFuncion());
+                    $film = $this->filmsDAO->GetOne($funcion->getIdFilm());
+                    $room = $this->roomDAO->GetOne($funcion->getIdSala());
+                    
+                    //Se arma el body con todas las entradas
+                    $bodyhtml = $bodyhtml .
+                        "<div>
+                            <div><br>
+        
+                                <h3>" . $film->getTitulo() . "</h3>
+                                <h5>#". $ticket->getId() ."</h5>
+                                <br>
+                                <p><b>Funci&oacute;n:</b> &#160;" .$this->cinemaDAO->nombrePorId($room->getIdCine()) . " - " . $room->getNombre() . " - " . $funcion->getFecha() . " - " . $funcion->getHora() ."</p>
+                                <p><b>Asiento:</b> &#160;". $ticket->getAsiento() ."</p>
+                                <p><b>Valor:</b> &#160;$". $ticket->getValorUnitario(). "</p>
+                                <br>
+                            </div>
+                        </div>
+                        <hr>";
+                        
+                        
+                    $bodyplain = $bodyplain .
+                        "\n Película: ". $film->getTitulo() .
+                        "\n #ID ticket: " . $ticket->getId() .
+                        "\n Función: ". $this->cinemaDAO->nombrePorId($room->getIdCine()) . " - " . $room->getNombre() . " - " . $funcion->getFecha() . " - " . $funcion->getHora() .
+                        "\n Asiento: " . $ticket->getAsiento();
+                        "\n Valor: " . $ticket->getValorUnitario();
+                        "\n -----------------------------------------------------------------------------";
+                       
+                    
+                    //Para adjuntar archivos, se adjunta el código QR
+                    $mail->addAttachment(ROOT."/Controllers/qrcodes/" . $ticketController->GetQRCode($ticket->getQR()));
+                }
+
+                $mail->Body = $bodyhtml;            //Body en html 
+                
+                $mail->AltBody = $bodyplain;        //Body para mails no-html
+
+                $mail->send();
+                
+            } catch (Exception $e) {
+                
+                throw $e;
+            }
 
         }
 

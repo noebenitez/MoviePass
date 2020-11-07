@@ -17,8 +17,6 @@ class LoginController {
 
     public function init($email, $pass) {
 
-     header('Cache-Control: no cache'); //Evita el error de cache por reenvío de formulario
-
         try{
             $user = $this->usersDAO->read($email, $pass);
 
@@ -90,7 +88,8 @@ class LoginController {
 
         try{
             
-            $this->$usersDAO->Add($user);
+            $this->usersDAO->Add($user);
+            $user = $this->usersDAO->read($email, $pass);
     
             $_SESSION['log'] = true;
             $_SESSION['id'] = $idUser;
@@ -98,8 +97,8 @@ class LoginController {
             $_SESSION['email'] = $email;
             $_SESSION['esAdmin'] = false;
     
-            $films = new FilmsController();
-            $films->getAll();
+            $cartelera = new FuncionController();
+            $cartelera->ShowCartelera();
 
         }catch(Exception $ex){
 

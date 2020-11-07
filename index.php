@@ -27,6 +27,8 @@
 	 */
 	Autoload::start();
 
+	header('Cache-Control: no cache'); //Evita el error de cache por reenvío de formulario
+
 	$request = new Request();
 
 	Router::direccionar($request);

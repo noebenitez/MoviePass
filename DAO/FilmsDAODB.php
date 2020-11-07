@@ -171,7 +171,7 @@
 
                 $filmList = array();
                 $query =
-                        "SELECT p.id, p.poster, p.adultos, p.descripcion, p.fecha_estreno, p.titulo_original, p.titulo, p.idioma_original, p.fondo, p.popularidad, p.cantidad_votos, p.video, p.puntuacion
+                        "SELECT DISTINCT p.id, p.poster, p.adultos, p.descripcion, p.fecha_estreno, p.titulo_original, p.titulo, p.idioma_original, p.fondo, p.popularidad, p.cantidad_votos, p.video, p.puntuacion
                         FROM " . $this->tableName . " p
                         INNER JOIN funciones f
                         ON p.id = f.id_pelicula";
@@ -214,7 +214,7 @@
 
                 $filmList = array();
                 $query =
-                        "SELECT p.id, p.poster, p.adultos, p.descripcion, p.fecha_estreno, p.titulo_original, p.titulo, p.idioma_original, p.fondo, p.popularidad, p.cantidad_votos, p.video, p.puntuacion
+                        "SELECT DISTINCT p.id, p.poster, p.adultos, p.descripcion, p.fecha_estreno, p.titulo_original, p.titulo, p.idioma_original, p.fondo, p.popularidad, p.cantidad_votos, p.video, p.puntuacion
                         FROM " . $this->tableName . " p
                         INNER JOIN funciones f
                         ON p.id = f.id_pelicula
