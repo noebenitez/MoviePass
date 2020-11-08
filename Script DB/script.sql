@@ -37,8 +37,6 @@ create table salas (
 			constraint fk_sala_cine foreign key (id_cine) references cines(id_cine) on delete cascade
 			);
             
-            alter table salas drop foreign key fk_sala_cine;
-            alter table salas add constraint fk_sala_cine foreign key (id_cine) references cines(id_cine) on delete cascade;
 			
 create table peliculas (
 			id int unsigned not null,
@@ -99,6 +97,9 @@ create table tickets (
             constraint fk_tickets_usuario foreign key (id_usuario) references usuarios(id_usuario),
             constraint fk_tickets_funcion foreign key (id_funcion) references funciones(id_funcion)
             );
+
+ALTER TABLE tickets ADD id_compra int unsigned;
+ALTER TABLE tickets ADD CONSTRAINT fk_tickets_compra foreign KEY (id_compra) references compras(id);
             
             
 create table tarjetasCredito (
@@ -125,34 +126,13 @@ create table compras (
             constraint fk_compras_usuario foreign key (id_usuario) references usuarios(id_usuario),
             constraint fk_compras_funcion foreign key (id_funcion) references funciones(id_funcion)
 			);
-            
-select * from tickets;
-select * from peliculas;
-select * from funciones;
-select * from cines;
-select * from salas;
-select * from tarjetasCredito;
-select * from peliculaxgenero;
 
 
-DELETE pg
-FROM peliculaxgenero pg
-LEFT JOIN funciones f
-ON pg.id_pelicula = f.id_pelicula
-WHERE f.id_pelicula IS NULL;
-
-DELETE p
-FROM peliculas p
-LEFT JOIN funciones f
-ON p.id = f.id_pelicula
-WHERE f.id_pelicula IS NULL;
-
-SELECT p.id, p.poster, p.adultos, p.descripcion, p.fecha_estreno, p.titulo_original, p.titulo, p.idioma_original, p.fondo, p.popularidad, p.cantidad_votos, p.video, p.puntuacion
-FROM peliculas p
-LEFT JOIN funciones f
-ON p.id = f.id_pelicula
-WHERE f.id_pelicula IS NULL;
-
-insert into funciones (fecha, horario_funcion, id_sala, id_pelicula, duracion, entradas_vendidas) values ("2020-11-04", "10:22:00", 2, 590223, 444, 0); 
-
-select * from funciones where funciones.fecha > curdate();
+create table descuentos (
+		id int unsigned auto_increment,
+		porcentaje int unsigned not null,
+		dia varchar(50),
+		cantidad_entradas int unsigned not null, 
+		descripcion varchar(50),
+		constraint pk_compras primary key (id)
+);

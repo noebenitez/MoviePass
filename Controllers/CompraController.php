@@ -11,6 +11,9 @@ use DAO\RoomDAODB as RoomDAO;
 use DAO\CinemaDAODB as CinemaDAO;
 use DAO\FilmsDAODB as FilmsDAO;
 use DAO\FuncionDAODB as FuncionDAO;
+use Controllers\phpmailer\PHPMailer as PHPMailer;
+use Controllers\phpmailer\SMTP as SMTP;
+
 
 class CompraController {
 
@@ -38,7 +41,7 @@ class CompraController {
         try{
             $film = $this->filmsDAO->GetOne($idFilm);
 
-            $funciones = $this->funcionDAO->getFuncionesPorPelicula($idFilm);
+            $funciones = $this->funcionDAO->getFuncionesFuturas($idFilm);
                 
             if($_SESSION['esAdmin'] == false)
             {
@@ -67,6 +70,7 @@ class CompraController {
         
             HomeController::ShowErrorView("Error al mostrar la pantalla de compra.", $ex->getMessage(), "Funcion/ShowCartelera/");
         }
+        
     }
     
 
@@ -82,7 +86,14 @@ class CompraController {
                     throw new \Exception ("El número de tarjeta no pertenece a Visa o MasterCard");
                 }
     
-                $total = $precioUnitario * $cantidad;
+                $descuentoController = new DescuentoController();
+                $descuento = $descuentoController->comprobarDescuento($cantidad);
+ 
+                if($descuento){
+                    $total = ($precioUnitario * $cantidad) - ((($precioUnitario * $cantidad) * $descuento) / 100);
+                }else{
+                    $total = $precioUnitario * $cantidad;
+                }
                 
                 $film = $this->filmsDAO->GetOne($idFilm);
     
@@ -128,16 +139,34 @@ class CompraController {
             
             try{
 
-                $tarjeta = new \Models\TarjetaDeCredito($nroTarjeta, $empresa, $codSeguridad, $vencimiento, $titular, $_SESSION['id']);
+                $tarjeta = new \Models\TarjetaDeCredito();
+            
+                $tarjeta->setNroTarjeta($nroTarjeta);
+                $tarjeta->setEmpresa($empresa);
+                $tarjeta->setCodSeguridad($codSeguridad);
+                $tarjeta->setVencimiento($vencimiento);
+                $tarjeta->setTitular($titular);
+                $tarjeta->setIdUsuario($_SESSION['id']);
 
                 $this->tarjetaDAO->Add($tarjeta);
                
-                $compra = new \Models\Compra($$this->tarjetaDAO->getIdByNroTarjeta($nroTarjeta), $cantidad, $total, $_SESSION['id'], $idFuncion);
+                $compra = new \Models\Compra();
+    
+                $compra->setIdTarjeta($this->tarjetaDAO->getIdByNroTarjeta($nroTarjeta));
+                $compra->setCantidadEntradas($cantidad);
+                $compra->setValorTotal($total);
+                $compra->setIdUsuario($_SESSION['id']);
+                $compra->setIdFuncion($idFuncion);
         
                 $this->compraDAO->Add($compra);
+
+                //conseguir el ultimo id compra
+                $idCompra = $this->compraDAO->lastId();
+
+                //var_dump($idCompra);
     
                 $this->funcionDAO->actualizarEntradasVendidas($idFuncion, $cantidad);
-            
+
                 for($i=0; $i<$cantidad; $i++){
     
                     $ticket = new Ticket();
@@ -146,25 +175,108 @@ class CompraController {
                     $ticket->setAsiento($this->ticketDAO->nroAsiento($idFuncion));
                     $ticket->setIdUsuario($_SESSION['id']);
                     $ticket->setIdFuncion($compra->getIdFuncion());
-                    $ticket->setQR('Ticket Nro.: '.$ticket->getId().' - Funcion ID: '.$ticket->getIdFuncion().' - Asiento: '.$ticket->getAsiento());
-    
+                    $ticket->setIdCompra($idCompra);
+
                     $this->ticketDAO->Add($ticket);
                 }
     
+                $this->enviarMail($email, $idCompra);
                 $ticketController = new TicketController();
-                $ticketController->ShowTicketList($_SESSION['id']);
+                $ticketController->ShowTicketList($_SESSION['id']); 
+
 
             }catch(Exception $ex){
-
-                HomeController::ShowErrorView("Hubo un error y no pudo completarse la compra.", $ex->getMessage(), "Compra/BuyTicket/" . $idFilm);
+                
+                HomeController::ShowErrorView("Hubo un error y no pudo completarse la compra." . $_SESSION['id'], $ex->getMessage(), "Compra/BuyTicket/" . $idFilm);
             }
             
             
 
         }
 
-        public function enviarMail(){
+        public function enviarMail($email, $idCompra){
 
+            // Instantiation and passing `true` enables exceptions
+            $mail = new PHPMailer(true);
+
+            try {
+                //Server settings
+                $mail->SMTPDebug = SMTP::DEBUG_OFF;                         // Disable verbose debug output
+                $mail->isSMTP();                                            // Envia usando SMTP
+                $mail->Host       = 'in-v3.mailjet.com';                    //  Host del SMTP server por donde se manda el mail
+                $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+                $mail->Username   = '8ad2921988c640aaf0e8327181f97278';     // SMTP username
+                $mail->Password   = 'e205ef69710fee7ef88c1cc2adb55aa9';     // SMTP password
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+                $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+                
+                //Destinatarios
+                $mail->setFrom('metodologialaboratorio2020@gmail.com', 'MoviePass');
+                $mail->addAddress($email);     // Se pueden agregar más de uno repitiendo esta línea
+                
+               
+                // Content
+                $mail->isHTML(true);           // Set email format to HTML
+                $mail->Subject = 'Tickets';
+                
+                $ticketController = new TicketController();
+
+                $ticketList = $ticketController->getTicketsXcompra($idCompra);
+
+                $bodyhtml = '<div style="border: 1px solid #E2E2E2; border-radius: 5px; background-color: #1f1f1f; text-align: center;"><img src="'.IMAGES.'logo.png" width="30%" style="margin: 30px;" /></div><br>';
+
+                $bodyplain = "MOVIEPASS";
+
+                $QRcode = "";
+
+                foreach($ticketList as $ticket){
+
+                    $funcion = $this->funcionDAO->GetOne($ticket->getIdFuncion());
+                    $film = $this->filmsDAO->GetOne($funcion->getIdFilm());
+                    $room = $this->roomDAO->GetOne($funcion->getIdSala());
+                    
+                    //Se arma el body con todas las entradas
+                    $bodyhtml = $bodyhtml .
+                        '
+                        <div style="border: 1px solid #E2E2E2; border-radius: 5px; padding: 30px; background-color: #f1f1f1;">
+                            <h1 style="color: #B40808;">' . $film->getTitulo() . '</h1>
+                            <h3 style="color: grey;"><b>Ticket #'. $ticket->getId() .'</b></h3>
+                            <p style="color: grey;"><b>Funci&oacute;n:</b> &#160;' .$this->cinemaDAO->nombrePorId($room->getIdCine()) . ' - ' . $room->getNombre() . ' - ' . $funcion->getFecha() . ' - ' . $funcion->getHora() .'</p>
+                            <p style="color: grey;"><b>Asiento:</b> &#160;'. $ticket->getAsiento() .'</p>
+                            <p style="color: grey;"><b>Valor:</b> &#160;$'. $ticket->getValorUnitario(). '</p>
+                            <small style="color: grey;">* C&oacute;digo QR adjunto.</small><br>
+                        </div>
+                        <br>';
+                        
+                        
+                    $bodyplain = $bodyplain .
+                        "\n -----------------------------------------------------------------------------".
+                        "\n Película: ". $film->getTitulo() .
+                        "\n #ID ticket: " . $ticket->getId() .
+                        "\n Función: ". $this->cinemaDAO->nombrePorId($room->getIdCine()) . " - " . $room->getNombre() . " - " . $funcion->getFecha() . " - " . $funcion->getHora() .
+                        "\n Asiento: " . $ticket->getAsiento();
+                        "\n Valor: " . $ticket->getValorUnitario();
+                        "\n -----------------------------------------------------------------------------";
+                       
+                        $QRcode = $QRcode. '/ ' . $ticket->getQR() . ' /';
+                    
+                }
+
+                $bodyhtml = $bodyhtml . '<hr><div style="text-align: center;"><p style="color: grey;">MoviePass 2020 - Grupo 8 - TUP - UTN FRMDP</p></div>';
+
+                //Para adjuntar archivos, se adjunta el código QR
+                $mail->addAttachment(ROOT."/Controllers/qrcodes/" . $ticketController->GetQRCode($QRcode));
+
+                $mail->Body = $bodyhtml;            //Body en html 
+                
+                $mail->AltBody = $bodyplain;        //Body para mails no-html
+
+                $mail->send();
+                
+            } catch (Exception $e) {
+                
+                throw $e;
+            }
 
         }
 

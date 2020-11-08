@@ -80,6 +80,30 @@ class TicketController {
 
     }
 
+    public function getTicketsXcompra($idCompra){
+
+        try{
+
+        $tickets = $this->ticketDAO->GetAll();
+
+        $ticketsXcompra = array();
+
+        foreach($tickets as $ticket){
+
+            if($ticket->getIdCompra() == $idCompra){
+                array_push($ticketsXcompra, $ticket);
+            }
+
+        }
+
+        return $ticketsXcompra;
+
+        }catch (Exception $ex){
+
+             HomeController::ShowErrorView("Error al obtener la información de las entradas.", $ex->getMessage(), "Ticket/ShowTicketList/");
+        }
+    }
+    
 
     public function GetQRCode($value){
         

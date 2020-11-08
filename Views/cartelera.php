@@ -11,7 +11,9 @@
 
  <?php
         foreach($films as $film){
-    ?>
+          if($this->entradasDisponibles($film->getId())){
+
+  ?>
 
   <div class="card col-3">
 <br>
@@ -43,7 +45,7 @@
 
 
 <?php
-        }
+        } }
     ?>
 
  <br><br>

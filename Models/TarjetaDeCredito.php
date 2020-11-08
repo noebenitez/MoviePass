@@ -12,13 +12,14 @@
         private $titular;
         private $idUsuario;
 
-        public function __construct($id = null, $nroTarjeta = null, $empresa= null, $codSeguridad = null, $vencimiento = null, $titular = null){
-            $this->id = 0;
-            $this->nroTarjeta = 0;  
-            $this->empresa = '';
-            $this->codSeguridad = 0;
-            $this->vencimiento = '';
-            $this->titular = '';
+        public function __construct($id = null, $nroTarjeta = null, $empresa= null, $codSeguridad = null, $vencimiento = null, $titular = null, $idUsuario = null){
+            $this->id = $id;
+            $this->nroTarjeta = $nroTarjeta; 
+            $this->empresa = $empresa;
+            $this->codSeguridad = $codSeguridad;
+            $this->vencimiento = $vencimiento;
+            $this->titular = $titular;
+            $this->idUsuario = $idUsuario;
             
         }
 

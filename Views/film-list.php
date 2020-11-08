@@ -2,8 +2,8 @@
 <div class="d-flex justify-content-between">
     <h2>PELICULAS DISPONIBLES</h2>
     <div class="col-md-2">
-    <button href="<?= FRONT_ROOT ?>Films/refresh/" class="btn btn-outline-danger"><i class="fa fa-refresh" aria-hidden="true"></i>&#160;&#160;&#160;Actualizar</button>
-    <a href="<?php echo FRONT_ROOT ?>Films/refresh/" class="btn btn-outline-danger"><i class="fa fa-refresh"></i>&#160;&#160;Actualizar</a>&#160;&#160;
+  
+    <a href="<?php echo FRONT_ROOT ?>Films/refresh/" class="btn btn-outline-danger"><i class="fa fa-refresh"></i>&#160;&#160;&#160;Actualizar</a>
     </div>
 </div>
 <?php require_once(ROOT . '/Views/filter.php'); ?>

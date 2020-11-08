@@ -10,6 +10,7 @@
         private $qr;
         private $idUsuario;
         private $idFuncion;
+        private $idCompra;
 
         public function __construct($id = 0, $valorUnitario = 0, $asiento = "", $qr = "", $idUsuario = 0, $idFuncion = 0){
 
@@ -68,6 +69,14 @@
 
         public function getIdFuncion(){
             return $this->idFuncion;
+        }
+
+        public function setIdCompra($idCompra){
+            $this->idCompra = $idCompra;
+        }
+
+        public function getIdCompra(){
+            return $this->idCompra;
         }
     }
 

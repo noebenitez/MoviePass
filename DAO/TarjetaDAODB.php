@@ -19,7 +19,7 @@
                 $parameters["nroTarjeta"] = $tarjeta->getNroTarjeta();
                 $parameters["empresa"] = $tarjeta->getEmpresa();
                 $parameters["codSeguridad"] = $tarjeta->getCodSeguridad();
-                $parameters["vencimiento"] = $tarjeta->getVencimiento();
+                $parameters["vencimiento"] = date("Y-m-d", strtotime($tarjeta->getVencimiento()));
                 $parameters["titular"] = $tarjeta->getTitular();
                 $parameters["idUsuario"] = $tarjeta->getIdUsuario();
 

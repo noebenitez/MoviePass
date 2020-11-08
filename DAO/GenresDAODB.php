@@ -31,26 +31,6 @@ class GenresDAODB {
         }
     }
 
-    private function RetrieveData()
-    {
-        $this->genresArray = array();
-
-            if($jsonContent = file_get_contents(GENEROS)){
-
-            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-            foreach($arrayToDecode['genres'] as $valuesArray)
-             {
-                $genre = new \models\Genre();
-
-                $genre->setNombre($valuesArray['name']);
-                $genre->setId($valuesArray['id']);
-
-                array_push($this->genresArray, $genre);
-             }
-            }
-    }
-
     public function cargarGeneros(){ //De la api a la bd, sería necesario una única vez
         
         if($jsonContent = file_get_contents(GENEROS)){
@@ -101,6 +81,37 @@ class GenresDAODB {
         {
             throw $ex;
         }
+    }
+
+    public function GetOne($id){
+
+        $query = "SELECT * FROM " . $this->tableName . " WHERE id = :id";
+        $parameters["id"] = $id;
+
+        try{
+            $this->connection = Connection::GetInstance();
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (!empty($resultSet)){
+                return $this->mapear($resultSet);
+            }else{
+                return false;
+            }
+            
+        } catch (Exception $ex){ 
+            throw $ex;
+        }
+        
+    }
+
+    protected function mapear($value){
+
+        $value = is_array($value) ? $value : [];
+        $resp = array_map(function($p){
+            return new Genre($p["nombre"], $p["id"]);
+        }, $value);
+
+        return count($resp) > 1 ? $resp : $resp["0"];
     }
 
 }

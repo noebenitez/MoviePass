@@ -23,9 +23,10 @@
     </tr>
   </thead>
   <tbody>   
-  <?php foreach ($funcionList as $funcion){ 
-        if($funcion->getIdFilm() == $film->getId()){
-            $room = $this->roomDAO->GetOne($funcion->getIdSala());
+  <?php 
+        $funcionList = $this->funcionDAO->getFuncionesPorPelicula($film->getId());
+        foreach ($funcionList as $funcion){ 
+          $room = $this->roomDAO->GetOne($funcion->getIdSala());
     ?>
             <tr>
               <td> <?php echo $this->cinemaDAO->nombrePorId($room->getIdCine()) . ' - ' . $room->getNombre(); ?> </td>
@@ -39,7 +40,7 @@
               </td>
             </tr>
 
-            <?php } } ?>
+            <?php } ?>
   </tbody>
 </table>
 <hr><br>

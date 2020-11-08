@@ -14,7 +14,7 @@
         <form class="form-inline" method="post" action="<?=FRONT_ROOT ?>Funcion/getFilmsByDate">
         <div class="form-group">
             <label class="">FECHA DE FUNCION: &#160;</label>
-            <input type="date" name="date" class="form-control" min= <?= $rangoFechas['minimum'] ?>  >
+            <input type="date" name="date" class="form-control" min= <?= date("Y-m-d") ?> >
            </div>&#160;
             <button type="submit" class="btn btn-danger">Filtrar</button>
         </form>

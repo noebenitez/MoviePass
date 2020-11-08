@@ -6,10 +6,9 @@
     if($ticket->getIdUsuario() == $idUser){ 
      
         $funcion = $this->funcionDAO->GetOne($ticket->getIdFuncion());
-        $film = $this->filmsDAO->GetOne($funcion->getIdFilm());
-
-                ?>
- <div class="card flex-row flex-wrap">
+       $film = $this->filmsDAO->GetOne($funcion->getIdFilm());
+?>
+<div class="card flex-row flex-wrap">
         <div class="card-header border-0 col-1">
   <?php if (empty($film->getPoster())) { ?>
   <img class="card-img-top" src="<?php echo IMAGES ?>not-available.jpg" alt="Card image cap">

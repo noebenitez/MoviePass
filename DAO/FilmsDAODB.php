@@ -166,6 +166,92 @@
             }
         }
 
+        public function getFilmsConFunciones(){
+            try{
+
+                $filmList = array();
+                $query =
+                        "SELECT DISTINCT p.id, p.poster, p.adultos, p.descripcion, p.fecha_estreno, p.titulo_original, p.titulo, p.idioma_original, p.fondo, p.popularidad, p.cantidad_votos, p.video, p.puntuacion
+                        FROM " . $this->tableName . " p
+                        INNER JOIN funciones f
+                        ON p.id = f.id_pelicula";
+                        
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                
+                foreach ($resultSet as $row)
+                {   
+                    $film = new Film();
+                    $film->setPoster($row['poster']);
+                    $film->setAdultos($row['adultos']);
+                    $film->setDescripcion($row['descripcion']);
+                    $film->setFechaEstreno($row['fecha_estreno']);
+                    $film->setId($row['id']);
+                    $film->setTitulo($row['titulo']);
+                    $film->setIdiomaOriginal($row['idioma_original']);
+                    $film->setTituloOriginal($row['titulo_original']);
+                    $film->setFondo($row['fondo']);
+                    $film->setPopularidad($row['popularidad']);
+                    $film->setCantidadVotos($row['cantidad_votos']);
+                    $film->setVideo($row['video']);
+                    $film->setPuntuacion($row['puntuacion']);
+
+                    array_push($filmList, $film);
+                }
+                return $filmList;
+
+            }catch(Exception $ex){
+                throw $ex;
+            }
+
+        }
+
+        public function getFilmsCartelera(){ //Solo películas que tienen funciones en fechas futuras
+
+            try{
+
+                $filmList = array();
+                $query =
+                        "SELECT DISTINCT p.id, p.poster, p.adultos, p.descripcion, p.fecha_estreno, p.titulo_original, p.titulo, p.idioma_original, p.fondo, p.popularidad, p.cantidad_votos, p.video, p.puntuacion
+                        FROM " . $this->tableName . " p
+                        INNER JOIN funciones f
+                        ON p.id = f.id_pelicula
+                        WHERE f.fecha > curdate()";
+                        
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                
+                foreach ($resultSet as $row)
+                {   
+                    $film = new Film();
+                    $film->setPoster($row['poster']);
+                    $film->setAdultos($row['adultos']);
+                    $film->setDescripcion($row['descripcion']);
+                    $film->setFechaEstreno($row['fecha_estreno']);
+                    $film->setId($row['id']);
+                    $film->setTitulo($row['titulo']);
+                    $film->setIdiomaOriginal($row['idioma_original']);
+                    $film->setTituloOriginal($row['titulo_original']);
+                    $film->setFondo($row['fondo']);
+                    $film->setPopularidad($row['popularidad']);
+                    $film->setCantidadVotos($row['cantidad_votos']);
+                    $film->setVideo($row['video']);
+                    $film->setPuntuacion($row['puntuacion']);
+
+                    array_push($filmList, $film);
+                }
+                return $filmList;
+
+            }catch(Exception $ex){
+                throw $ex;
+            }
+        }
+    
+
         public function GetOne($id){
             
             try{

@@ -14,22 +14,44 @@
 
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (valor_unitario, asiento, qr, id_usuario, id_funcion) VALUES (:valorUnitario, :asiento, :qr, :idUsuario, :idFuncion);";
+                $query = "INSERT INTO ".$this->tableName." (valor_unitario, asiento, id_usuario, id_funcion, id_compra) VALUES (:valorUnitario, :asiento, :idUsuario, :idFuncion, :idCompra);";
                 
                 $parameters["valorUnitario"] = $ticket->getValorUnitario();
                 $parameters["asiento"] = $ticket->getAsiento();
-                $parameters["qr"] = $ticket->getQR();
+                //$parameters["qr"] = $ticket->getQR();
                 $parameters["idUsuario"] = $ticket->getIdUsuario();
                 $parameters["idFuncion"] = $ticket->getIdFuncion();
+                $parameters["idCompra"] = $ticket->getIdCompra();
 
                 $this->connection = Connection::GetInstance();
 
                 $this->connection->ExecuteNonQuery($query, $parameters);
+
+                $this->agregarQR($ticket);
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
+        }
+
+        public function agregarQR($ticket){
+
+            $idTicket = $this->lastId();
+
+            $qr = 'Ticket Nro.: '.$idTicket.' - Funcion ID: '.$ticket->getIdFuncion().' - Asiento: '.$ticket->getAsiento();
+
+            $query = "UPDATE " . $this->tableName . " SET qr = :qr WHERE id = " . $idTicket;
+            $parameters["qr"] = $qr;
+            
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters);
+
+            } catch (Exception $ex){ 
+                throw $ex;
+            }
+
         }
 
         public function GetAll(){
@@ -53,6 +75,7 @@
                     $ticket->setQR($row["qr"]);
                     $ticket->setIdUsuario($row["id_usuario"]);
                     $ticket->setIdFuncion($row["id_funcion"]);
+                    $ticket->setIdCompra($row["id_compra"]);
 
                     array_push($ticketList, $ticket);
                 }
@@ -90,7 +113,7 @@
 
             $value = is_array($value) ? $value : [];
             $resp = array_map(function($p){
-                return new Ticket($p["id"], $p["valor_unitario"], $p["asiento"], $p["qr"], $p["id_usuario"], $p["id_funcion"]);
+                return new Ticket($p["id"], $p["valor_unitario"], $p["asiento"], $p["qr"], $p["id_usuario"], $p["id_funcion"], $p["id_compra"]);
             }, $value);
 
             return count($resp) > 1 ? $resp : $resp["0"];
@@ -118,6 +141,25 @@
                 return false;
             }
         }
+
+        public function lastId(){
+
+            try{
+                $query = "SELECT MAX(id) AS id FROM " . $this->tableName;
+    
+                $this->connection = Connection::GetInstance();
+    
+                $resultSet = $this->connection->Execute($query);
+    
+                }
+                catch(Exception $ex)
+                {
+                    throw $ex;
+                }
+    
+               return $resultSet[0]['id'];
+            }
+        
 
     }
 
