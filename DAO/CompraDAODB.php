@@ -97,6 +97,24 @@
         }
 
 
+        public function lastId(){
+
+            try{
+            $query = "SELECT MAX(id) AS id FROM " . $this->tableName;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query);
+
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+
+           return $resultSet[0]['id'];
+        }
+
     }
 
 ?>

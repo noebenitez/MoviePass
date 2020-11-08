@@ -20,6 +20,8 @@
       <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Cinema/ShowAddView">Agregar Cine</a>
       <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Room/ShowListView">Listado de Salas</a>
       <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Room/ShowAddView">Agregar Salas</a>
+      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Descuento/ShowListView">Listado de Descuentos</a>
+      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Descuento/ShowAddView">Agregar Descuentos</a>
       <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Funcion/ShowListView">Listado de Funciones</a>
   </li>
   <li class="nav-item dropdown">

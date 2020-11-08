@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "porcentaje": "25",
+        "entradasMinimas": "2",
+        "dia": "Tuesday",
+        "descripcion": "Descuento del sitio"
+    },
+    {
+        "id": 2,
+        "porcentaje": "25",
+        "entradasMinimas": "2",
+        "dia": "Wednesday",
+        "descripcion": "Descuento del sitio"
+    },
+    {
+        "id": 3,
+        "porcentaje": "25",
+        "entradasMinimas": "2",
+        "dia": "Saturday",
+        "descripcion": "Descuento del sitio"
+    }
+]

@@ -24,20 +24,17 @@
 
           <div class="form-row">
 
-            <div class="form-group col-md-8">
+            <div class="form-group col-md-6">
               <label for="nombreSala">Nombre</label>
               <input type="text" class="form-control" name="nombre" pattern="[A-Za-z0-9\s]+" title="Únicamente letras y números" required>
             </div>
 
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
               <label for="capacidad">Capacidad</label>
               <input type="number" class="form-control" name="capacidad" min="0" required>
             </div>
-          </div>
 
-          <div class="form-row">   
-
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-3">
               <label for="capacidad">Valor Entrada</label>
               <input type="number" class="form-control" name="valorEntrada" min="0" required>
             </div>

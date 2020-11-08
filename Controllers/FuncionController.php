@@ -265,7 +265,7 @@
 
                 $genre = $this->genresDAO->GetOne($id);
                 $genreName = $genre->getNombre();
-                var_dump($genre);
+                //var_dump($genre);
                 $films = $this->filmDAO->getFilmsCartelera();
         
                 require_once(ROOT . '/Views/film-by-genre-funcion.php');

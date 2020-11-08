@@ -43,7 +43,7 @@
     <label for="cantidad" ><b>Cantidad:</b> &#160;<?php echo $cantidad ?></label>
   </div>
   <div class="form-group col-md-4">
-    <label for="total" ><b>Total:</b> &#160;<?php echo $total ?></label>
+    <label for="total" ><b>Total: </b> &#160;$&#160;<?php echo $total ?> &#160;<?php if($descuento){ echo '<span class="badge badge-secondary">-'.$descuento.'%</span>';} ?></label>
   </div>
   </div> 
 

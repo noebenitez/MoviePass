@@ -32,6 +32,7 @@
             }
 
             require_once(ROOT . '/Views/error-view.php');
+            require_once(ROOT . '/Views/footer.php');
 
         }
     }

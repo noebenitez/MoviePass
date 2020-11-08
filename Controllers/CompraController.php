@@ -86,7 +86,14 @@ class CompraController {
                     throw new \Exception ("El número de tarjeta no pertenece a Visa o MasterCard");
                 }
     
-                $total = $precioUnitario * $cantidad;
+                $descuentoController = new DescuentoController();
+                $descuento = $descuentoController->comprobarDescuento($cantidad);
+ 
+                if($descuento){
+                    $total = ($precioUnitario * $cantidad) - ((($precioUnitario * $cantidad) * $descuento) / 100);
+                }else{
+                    $total = $precioUnitario * $cantidad;
+                }
                 
                 $film = $this->filmsDAO->GetOne($idFilm);
     
@@ -152,10 +159,13 @@ class CompraController {
                 $compra->setIdFuncion($idFuncion);
         
                 $this->compraDAO->Add($compra);
+
+                //conseguir el ultimo id compra
+                $idCompra = $this->compraDAO->lastId();
+
+                //var_dump($idCompra);
     
                 $this->funcionDAO->actualizarEntradasVendidas($idFuncion, $cantidad);
-            
-                $ticketList = array();
 
                 for($i=0; $i<$cantidad; $i++){
     
@@ -165,15 +175,14 @@ class CompraController {
                     $ticket->setAsiento($this->ticketDAO->nroAsiento($idFuncion));
                     $ticket->setIdUsuario($_SESSION['id']);
                     $ticket->setIdFuncion($compra->getIdFuncion());
-                    $ticket->setQR('Ticket Nro.: '.$ticket->getId().' - Funcion ID: '.$ticket->getIdFuncion().' - Asiento: '.$ticket->getAsiento());
-                    
-                    array_push($ticketList, $ticket);
+                    $ticket->setIdCompra($idCompra);
+
                     $this->ticketDAO->Add($ticket);
                 }
     
-                $this->enviarMail($email, $ticketList);
+                $this->enviarMail($email, $idCompra);
                 $ticketController = new TicketController();
-                $ticketController->ShowTicketList($_SESSION['id']);
+                $ticketController->ShowTicketList($_SESSION['id']); 
 
 
             }catch(Exception $ex){
@@ -185,7 +194,7 @@ class CompraController {
 
         }
 
-        public function enviarMail($email, $ticketList){
+        public function enviarMail($email, $idCompra){
 
             // Instantiation and passing `true` enables exceptions
             $mail = new PHPMailer(true);
@@ -211,8 +220,14 @@ class CompraController {
                 $mail->Subject = 'Tickets';
                 
                 $ticketController = new TicketController();
-                $bodyhtml = "";
-                $bodyplain = "";
+
+                $ticketList = $ticketController->getTicketsXcompra($idCompra);
+
+                $bodyhtml = '<div style="border: 1px solid #E2E2E2; border-radius: 5px; background-color: #1f1f1f; text-align: center;"><img src="'.IMAGES.'logo.png" width="30%" style="margin: 30px;" /></div><br>';
+
+                $bodyplain = "MOVIEPASS";
+
+                $QRcode = "";
 
                 foreach($ticketList as $ticket){
 
@@ -222,22 +237,20 @@ class CompraController {
                     
                     //Se arma el body con todas las entradas
                     $bodyhtml = $bodyhtml .
-                        "<div>
-                            <div><br>
-        
-                                <h3>" . $film->getTitulo() . "</h3>
-                                <h5>#". $ticket->getId() ."</h5>
-                                <br>
-                                <p><b>Funci&oacute;n:</b> &#160;" .$this->cinemaDAO->nombrePorId($room->getIdCine()) . " - " . $room->getNombre() . " - " . $funcion->getFecha() . " - " . $funcion->getHora() ."</p>
-                                <p><b>Asiento:</b> &#160;". $ticket->getAsiento() ."</p>
-                                <p><b>Valor:</b> &#160;$". $ticket->getValorUnitario(). "</p>
-                                <br>
-                            </div>
+                        '
+                        <div style="border: 1px solid #E2E2E2; border-radius: 5px; padding: 30px; background-color: #f1f1f1;">
+                            <h1 style="color: #B40808;">' . $film->getTitulo() . '</h1>
+                            <h3 style="color: grey;"><b>Ticket #'. $ticket->getId() .'</b></h3>
+                            <p style="color: grey;"><b>Funci&oacute;n:</b> &#160;' .$this->cinemaDAO->nombrePorId($room->getIdCine()) . ' - ' . $room->getNombre() . ' - ' . $funcion->getFecha() . ' - ' . $funcion->getHora() .'</p>
+                            <p style="color: grey;"><b>Asiento:</b> &#160;'. $ticket->getAsiento() .'</p>
+                            <p style="color: grey;"><b>Valor:</b> &#160;$'. $ticket->getValorUnitario(). '</p>
+                            <small style="color: grey;">* C&oacute;digo QR adjunto.</small><br>
                         </div>
-                        <hr>";
+                        <br>';
                         
                         
                     $bodyplain = $bodyplain .
+                        "\n -----------------------------------------------------------------------------".
                         "\n Película: ". $film->getTitulo() .
                         "\n #ID ticket: " . $ticket->getId() .
                         "\n Función: ". $this->cinemaDAO->nombrePorId($room->getIdCine()) . " - " . $room->getNombre() . " - " . $funcion->getFecha() . " - " . $funcion->getHora() .
@@ -245,10 +258,14 @@ class CompraController {
                         "\n Valor: " . $ticket->getValorUnitario();
                         "\n -----------------------------------------------------------------------------";
                        
+                        $QRcode = $QRcode. '/ ' . $ticket->getQR() . ' /';
                     
-                    //Para adjuntar archivos, se adjunta el código QR
-                    $mail->addAttachment(ROOT."/Controllers/qrcodes/" . $ticketController->GetQRCode($ticket->getQR()));
                 }
+
+                $bodyhtml = $bodyhtml . '<hr><div style="text-align: center;"><p style="color: grey;">MoviePass 2020 - Grupo 8 - TUP - UTN FRMDP</p></div>';
+
+                //Para adjuntar archivos, se adjunta el código QR
+                $mail->addAttachment(ROOT."/Controllers/qrcodes/" . $ticketController->GetQRCode($QRcode));
 
                 $mail->Body = $bodyhtml;            //Body en html 
                 

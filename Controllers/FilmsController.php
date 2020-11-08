@@ -160,7 +160,8 @@ class FilmsController {
     public function refresh(){
         try{
             $this->filmsDAO->refreshDB();
-            echo "Entro acá.";
+            $this->getAll();
+            
         }catch(Exception $ex){
 
             HomeController::ShowErrorView("Ocurrió un error al refrescar la base de datos.", $ex->getMessage(), "Home/Index");

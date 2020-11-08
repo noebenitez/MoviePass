@@ -52,6 +52,7 @@
                 $valuesArray["qr"] = $ticket->getQR();
                 $valuesArray["idUsuario"] = $ticket->getIdUsuario();
                 $valuesArray["idFuncion"] = $ticket->getIdFuncion();
+                $valuesArray["idCompra"] = $ticket->getIdCompra();
 
                 array_push($arrayToEncode, $valuesArray);
             }
@@ -81,6 +82,7 @@
                     $ticket->setQR($valuesArray["qr"]);
                     $ticket->setIdUsuario($valuesArray["idUsuario"]);
                     $ticket->setIdFuncion($valuesArray["idFuncion"]);
+                    $ticket->setIdCompra($valuesArray["idCompra"]);
 
                     array_push($this->ticketList, $ticket);
                 }

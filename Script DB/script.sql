@@ -37,8 +37,6 @@ create table salas (
 			constraint fk_sala_cine foreign key (id_cine) references cines(id_cine) on delete cascade
 			);
             
-            alter table salas drop foreign key fk_sala_cine;
-            alter table salas add constraint fk_sala_cine foreign key (id_cine) references cines(id_cine) on delete cascade;
 			
 create table peliculas (
 			id int unsigned not null,
@@ -99,6 +97,9 @@ create table tickets (
             constraint fk_tickets_usuario foreign key (id_usuario) references usuarios(id_usuario),
             constraint fk_tickets_funcion foreign key (id_funcion) references funciones(id_funcion)
             );
+
+ALTER TABLE tickets ADD id_compra int unsigned;
+ALTER TABLE tickets ADD CONSTRAINT fk_tickets_compra foreign KEY (id_compra) references compras(id);
             
             
 create table tarjetasCredito (
@@ -125,12 +126,13 @@ create table compras (
             constraint fk_compras_usuario foreign key (id_usuario) references usuarios(id_usuario),
             constraint fk_compras_funcion foreign key (id_funcion) references funciones(id_funcion)
 			);
-            
-select * from tickets;
-select * from peliculas;
-select * from funciones;
-select * from cines;
-select * from salas;
-select * from tarjetasCredito;
-select * from peliculaxgenero;
-select * from usuarios;
+
+
+create table descuentos (
+		id int unsigned auto_increment,
+		porcentaje int unsigned not null,
+		dia varchar(50),
+		cantidad_entradas int unsigned not null, 
+		descripcion varchar(50),
+		constraint pk_compras primary key (id)
+);
