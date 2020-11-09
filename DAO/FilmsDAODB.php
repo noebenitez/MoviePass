@@ -409,7 +409,7 @@
         public function getGeneros($idFilm){
             
             $genres = array();
-            $query = "SELECT id_genero FROM peliculaxGenero WHERE id_pelicula = ".$idFilm;
+            $query = "SELECT id_genero FROM peliculaxgenero WHERE id_pelicula = ".$idFilm;
 
             try{
 
