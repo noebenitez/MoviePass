@@ -4,7 +4,7 @@ namespace DAO;
 
 //include("config/constants.php");
 
-class Films {
+class FilmsDAO {
 
     private $filmsArray;
 

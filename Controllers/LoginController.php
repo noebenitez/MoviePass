@@ -5,6 +5,7 @@ namespace Controllers;
 use \Exception as Exception;
 use DAO\UsersDAODB as UsersDAO;
 use Models\User as User;
+use DAO\GenresDAODB as GenresDAO;
 
 class LoginController {
 
@@ -30,7 +31,7 @@ class LoginController {
         
                 if( $_SESSION['esAdmin'] == true){
                     $films = new FilmsController();
-                    $genres = new \DAO\GenresDAODB();
+                    $genres = new GenresDAO();
                     $films->getAll();
                 }else{
                     $cartelera = new FuncionController();

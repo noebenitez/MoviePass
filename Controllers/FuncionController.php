@@ -32,16 +32,24 @@
         public function ShowAddView($idFilm){
 
             try{
+                if($_SESSION["esAdmin"] == false){
+                    
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
+                    
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
+        
+                    $cinemaController = new CinemaController();
+                    $film = $this->filmDAO->GetOne($idFilm);
+                    $duracionFilm = $this->filmDAO->getDuracion($idFilm);
+                    $rooms = $this->roomDAO->GetAll();
+        
+                    require_once(VIEWS_PATH."add-funcion.php");
 
-                require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-admin.php');
-    
-                $cinemaController = new CinemaController();
-                $film = $this->filmDAO->GetOne($idFilm);
-                $duracionFilm = $this->filmDAO->getDuracion($idFilm);
-                $rooms = $this->roomDAO->GetAll();
-    
-                require_once(VIEWS_PATH."add-funcion.php");
+                }
                 require_once(ROOT . '/Views/footer.php');
 
             }catch(Exception $ex){
@@ -56,13 +64,21 @@
         public function ShowListView() {
 
             try{
-
-                require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-admin.php');
-
-                $films = $this->filmDAO->getFilmsConFunciones();
+                if($_SESSION["esAdmin"] == false){
+                    
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
                 
-                require_once(VIEWS_PATH."funcion-list.php");
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
+    
+                    $films = $this->filmDAO->getFilmsConFunciones();
+                    
+                    require_once(VIEWS_PATH."funcion-list.php");
+                
+                }
                 require_once(ROOT . '/Views/footer.php');
 
             }catch (Exception $ex){
@@ -76,16 +92,22 @@
         public function ShowEditView($id){
 
             try{
-
-                require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-admin.php');
-    
-                $cinemaController = new CinemaController();
-                $rooms = $this->roomDAO->GetAll();
-                $funcion = $this->funcionDAO->GetOne($id);
-                $film = $this->filmDAO->GetOne($funcion->getIdFilm());
-    
-                require_once(VIEWS_PATH)."edit-funcion.php";
+                if($_SESSION["esAdmin"] == false){
+                    
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
+        
+                    $cinemaController = new CinemaController();
+                    $rooms = $this->roomDAO->GetAll();
+                    $funcion = $this->funcionDAO->GetOne($id);
+                    $film = $this->filmDAO->GetOne($funcion->getIdFilm());
+        
+                    require_once(VIEWS_PATH)."edit-funcion.php";
+                }
                 require_once(ROOT . '/Views/footer.php');
 
             }catch(Exeption $ex){
@@ -98,16 +120,22 @@
         public function ShowRemoveView($id){
             
             try{
-
-                require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-admin.php');
-    
-                $funcion = $this->funcionDAO->GetOne($id);
-                $film = $this->filmDAO->GetOne($funcion->getIdFilm());
-                $room = $this->roomDAO->GetOne($funcion->getIdSala());
-                $cinema = $this->cinemaDAO->GetOne($room->getIdCine());
-    
-                require_once(VIEWS_PATH)."remove-funcion.php";
+                if($_SESSION["esAdmin"] == false){
+                    
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
+        
+                    $funcion = $this->funcionDAO->GetOne($id);
+                    $film = $this->filmDAO->GetOne($funcion->getIdFilm());
+                    $room = $this->roomDAO->GetOne($funcion->getIdSala());
+                    $cinema = $this->cinemaDAO->GetOne($room->getIdCine());
+        
+                    require_once(VIEWS_PATH)."remove-funcion.php";
+                }
                 require_once(ROOT . '/Views/footer.php');
 
             }catch(Exception $ex){

@@ -15,7 +15,7 @@
             </select>
         </div>
         
-        <a href="<?php echo FRONT_ROOT ?>Compra/recaudacionTotalFilm/ <?php echo $film->getId() ?>" class="btn btn-danger col-2">Recaudación total</a>
+            <a href="<?php echo FRONT_ROOT ?>Compra/recaudacionTotalFilm/ <?php echo $film->getId() ?>" class="btn btn-danger col-2">Recaudación total</a>
         
         </div>
         <br>
@@ -35,6 +35,7 @@
         </div>
 
             <button type="submit" class="btn btn-danger">Recaudación entre fechas</button>
+            
 
      </div>
  </form>

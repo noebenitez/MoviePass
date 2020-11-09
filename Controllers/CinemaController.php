@@ -16,28 +16,42 @@
         }
 
         public function ShowAddView() {
+
+            if ($_SESSION["esAdmin"] == false){
+                require_once(ROOT . '/Views/header-login.php');
+                require_once(ROOT . '/Views/nav-principal.php');
+                require_once(ROOT . '/Views/login.php');
+            }else{
+
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
+                require_once(VIEWS_PATH."add-cinema.php");
+            }
+    
+                require_once(ROOT . '/Views/footer.php');
             
-            require_once(ROOT . '/Views/header.php');
-        
-            require_once(ROOT . '/Views/nav-admin.php');
-
-            require_once(VIEWS_PATH."add-cinema.php");
-
-            require_once(ROOT . '/Views/footer.php');
         
         }
 
         public function ShowListView() {
 
             try{
+
+                if($_SESSION["esAdmin"] == false){
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
+
+                    require_once(ROOT . '/Views/header.php');
                 
-                require_once(ROOT . '/Views/header.php');
-            
-                require_once(ROOT . '/Views/nav-admin.php');
-    
-                $cinemaList = $this->cinemaDAO->GetAll();
-    
-                require_once(VIEWS_PATH."cinema-list.php");
+                    require_once(ROOT . '/Views/nav-admin.php');
+        
+                    $cinemaList = $this->cinemaDAO->GetAll();
+        
+                    require_once(VIEWS_PATH."cinema-list.php");
+                }
+                
     
                 require_once(ROOT . '/Views/footer.php');
 
@@ -52,13 +66,21 @@
 
             try{
 
-                require_once(ROOT . '/Views/header.php');
-            
-                require_once(ROOT . '/Views/nav-admin.php');
-    
-                $cinema = $this->cinemaDAO->GetOne($id);
-    
-                require_once(VIEWS_PATH)."edit-cinema.php";
+                if($_SESSION["esAdmin"] == false){
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
+
+                    require_once(ROOT . '/Views/header.php');
+                
+                    require_once(ROOT . '/Views/nav-admin.php');
+        
+                    $cinema = $this->cinemaDAO->GetOne($id);
+        
+                    require_once(VIEWS_PATH)."edit-cinema.php";
+                }
+
     
                 require_once(ROOT . '/Views/footer.php');
 
@@ -91,14 +113,23 @@
         public function ShowRemoveView($id){
 
             try{
+                if ($_SESSION["esAdmin"] == false){
+                    
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
 
-                require_once(ROOT . '/Views/header.php');
-            
-                require_once(ROOT . '/Views/nav-admin.php');
-    
-                $cinema = $this->cinemaDAO->GetOne($id);
-    
-                require_once(VIEWS_PATH)."remove-cinema.php";
+                    require_once(ROOT . '/Views/header.php');
+                
+                    require_once(ROOT . '/Views/nav-admin.php');
+        
+                    $cinema = $this->cinemaDAO->GetOne($id);
+        
+                    require_once(VIEWS_PATH)."remove-cinema.php";
+
+                }
+
     
                 require_once(ROOT . '/Views/footer.php');
 

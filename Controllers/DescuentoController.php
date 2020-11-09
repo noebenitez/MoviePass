@@ -16,11 +16,17 @@
 
         public function ShowAddView(){
             try{
+                if($_SESSION["esAdmin"] == false){
+                    
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
 
-                require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-admin.php');
-
-                require_once(VIEWS_PATH."add-descuento.php");
+                    require_once(VIEWS_PATH."add-descuento.php");
+                }
                 require_once(ROOT . '/Views/footer.php');
 
             }catch(Exception $ex){
@@ -32,13 +38,20 @@
         public function ShowEditView($id){
 
             try{
-
-                require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-admin.php');
-    
-                $descuento = $this->descuentoDAO->GetOne($id);
-    
-                require_once(VIEWS_PATH)."edit-descuento.php";
+                if($_SESSION["esAdmin"] == false){
+                    
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
+                    
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
+        
+                    $descuento = $this->descuentoDAO->GetOne($id);
+        
+                    require_once(VIEWS_PATH)."edit-descuento.php";
+                }
                 require_once(ROOT . '/Views/footer.php');
 
             }catch(Exeption $ex){
@@ -51,13 +64,20 @@
         public function ShowRemoveView($id){
             
             try{
+                if($_SESSION["esAdmin"] == false){
+                    
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
 
-                require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-admin.php');
-    
-                $descuento = $this->descuentoDAO->GetOne($id);
-    
-                require_once(VIEWS_PATH)."remove-descuento.php";
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
+        
+                    $descuento = $this->descuentoDAO->GetOne($id);
+        
+                    require_once(VIEWS_PATH)."remove-descuento.php";
+                }
                 require_once(ROOT . '/Views/footer.php');
 
             }catch(Exception $ex){
@@ -83,13 +103,20 @@
         public function ShowListView(){
 
             try{
-
-                require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-admin.php');
-    
-                $descuentosList = $this->descuentoDAO->GetAll();
-    
-                require_once(VIEWS_PATH."descuentos-list.php");
+                if($_SESSION["esAdmin"] == false){
+                    
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
+                    
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
+        
+                    $descuentosList = $this->descuentoDAO->GetAll();
+        
+                    require_once(VIEWS_PATH."descuentos-list.php");
+                }
                 require_once(ROOT . '/Views/footer.php');
 
             }catch (Exception $ex){

@@ -299,12 +299,22 @@ class CompraController {
         
         public function ShowRecaudacionCinesView(){
             try{
-                require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-admin.php');
-                
-                $cinemaList = $this->cinemaDAO->GetAll();
-                
-                require_once(VIEWS_PATH."recaudacion-cine-filter.php");
+
+                if($_SESSION["esAdmin"] == false){
+                    
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
+
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
+                    
+                    $cinemaList = $this->cinemaDAO->GetAll();
+                    
+                    require_once(VIEWS_PATH."recaudacion-cine-filter.php");
+
+                }
                 require_once(ROOT . '/Views/footer.php');
                 
             }catch(Exception $ex){
@@ -316,13 +326,22 @@ class CompraController {
         public function recaudacionTotalCine($idCine){
 
             try{
-                require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-admin.php');
+                if($_SESSION["esAdmin"] == false){
+                    
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
 
-                $recaudacion = $this->compraDAO->recaudacionTotalCine($idCine);
-                $cinema = $this->cinemaDAO->getOne($idCine);
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
     
-                require_once(VIEWS_PATH."recaudacion-cine.php");
+                    $recaudacion = $this->compraDAO->recaudacionTotalCine($idCine);
+                    $cinema = $this->cinemaDAO->getOne($idCine);
+        
+                    require_once(VIEWS_PATH."recaudacion-cine.php");
+
+                }
                 require_once(ROOT . '/Views/footer.php');
 
             }catch(Exception $ex){
@@ -334,13 +353,22 @@ class CompraController {
         public function recaudacionCineEntreFechas($idCine, $desde, $hasta){
 
             try{
-                require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-admin.php');
+                if($_SESSION["esAdmin"] == false){
+                    
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
 
-                $recaudacion = $this->compraDAO->recaudacionCineEntreFechas($idCine, $desde, $hasta);
-                $cinema = $this->cinemaDAO->getOne($idCine);
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
     
-                require_once(VIEWS_PATH."recaudacion-cine.php");
+                    $recaudacion = $this->compraDAO->recaudacionCineEntreFechas($idCine, $desde, $hasta);
+                    $cinema = $this->cinemaDAO->getOne($idCine);
+        
+                    require_once(VIEWS_PATH."recaudacion-cine.php");
+
+                }
                 require_once(ROOT . '/Views/footer.php');
 
             }catch(Exception $ex){
@@ -351,12 +379,21 @@ class CompraController {
 
         public function ShowRecaudacionFilmView(){
             try{
-                require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-admin.php');
-                
-                $filmList = $this->filmsDAO->getFilmsConFunciones();
-                
-                require_once(VIEWS_PATH."recaudacion-film-filter.php");
+                if ($_SESSION["esAdmin"] == false){
+                    
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
+
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
+                    
+                    $filmList = $this->filmsDAO->getFilmsConFunciones();
+                    
+                    require_once(VIEWS_PATH."recaudacion-film-filter.php");
+
+                }
                 require_once(ROOT . '/Views/footer.php');
                 
             }catch(Exception $ex){
@@ -368,13 +405,21 @@ class CompraController {
         public function recaudacionTotalFilm($idFilm){
 
             try{
-                require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-admin.php');
+                if($_SESSION["esAdmin"] == false){
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
 
-                $recaudacion = $this->compraDAO->recaudacionTotalFilm($idFilm);
-                $film = $this->filmsDAO->GetOne($idFilm);
+                }else{
+                    
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
     
-                require_once(VIEWS_PATH."recaudacion-film.php");
+                    $recaudacion = $this->compraDAO->recaudacionTotalFilm($idFilm);
+                    $film = $this->filmsDAO->GetOne($idFilm);
+        
+                    require_once(VIEWS_PATH."recaudacion-film.php");
+                }
                 require_once(ROOT . '/Views/footer.php');
 
             }catch(Exception $ex){
@@ -386,13 +431,22 @@ class CompraController {
         public function recaudacionFilmEntreFechas($idFilm, $desde, $hasta){
 
             try{
-                require_once(ROOT . '/Views/header.php');
-                require_once(ROOT . '/Views/nav-admin.php');
+                if ($_SESSION["esAdmin"] == false){
+                    
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
 
-                $recaudacion = $this->compraDAO->recaudacionFilmEntreFechas($idFilm, $desde, $hasta);
-                $film = $this->filmsDAO->GetOne($idFilm);
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
     
-                require_once(VIEWS_PATH."recaudacion-film.php");
+                    $recaudacion = $this->compraDAO->recaudacionFilmEntreFechas($idFilm, $desde, $hasta);
+                    $film = $this->filmsDAO->GetOne($idFilm);
+        
+                    require_once(VIEWS_PATH."recaudacion-film.php");
+
+                }
                 require_once(ROOT . '/Views/footer.php');
 
             }catch(Exception $ex){

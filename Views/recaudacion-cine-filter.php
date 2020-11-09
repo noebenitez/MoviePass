@@ -15,14 +15,14 @@
             </select>
         </div>
        
-            <a href="<?php echo FRONT_ROOT ?>Compra/recaudacionTotalCine/ <?php echo $cinema->getId() ?>" class="btn btn-danger col-2">Recaudación total</a>
+        <a href="<?php echo FRONT_ROOT ?>Compra/recaudacionTotalCine/ <?php echo $cinema->getId() ?>" class="btn btn-danger col-2">Recaudación total</a>
         
-        </div>
-        <br>
-        <div class="form-row">
-
-            <div class="form-group col-md-4">
-                <label class="">Desde: &#160;</label>
+    </div>
+    <br>
+    <div class="form-row">
+        
+        <div class="form-group col-md-4">
+            <label class="">Desde: &#160;</label>
                 <input type="date" name="desde" class="form-control" required>
             </div>&#160;
 
@@ -33,7 +33,8 @@
             <br>
             
         </div>
-<!--  -->
+
+            <button type="submit" class="btn btn-danger">Recaudación entre fechas</button>
             <button type="submit" class="btn btn-danger">Recaudación entre fechas</button>
 
      </div>

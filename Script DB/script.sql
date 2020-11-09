@@ -36,7 +36,7 @@ create table salas (
 			constraint pk_sala primary key (id_sala),
 			constraint fk_sala_cine foreign key (id_cine) references cines(id_cine) on delete cascade
 			);
-            
+alter table salas drop column valor_entrada;
 			
 create table peliculas (
 			id int unsigned not null,
@@ -85,6 +85,7 @@ create table funciones (
             constraint fk_funciones_pelicula foreign key (id_pelicula) references peliculas(id),
             constraint unq_fecha_pelicula unique (fecha, id_pelicula)
             );
+alter table funciones add valor_entrada double unsigned;
             
 create table tickets (
 			id int unsigned auto_increment,
@@ -136,30 +137,3 @@ create table descuentos (
 		descripcion varchar(50),
 		constraint pk_compras primary key (id)
 );
-
-select * from peliculas;
-select * from compras
-inner join funciones
-on compras.id_funcion = funciones.id_funcion;
-select * from funciones;
-select * from salas;
-
-select sum(c.valor_total) as recaudacion
-from compras c
-inner join funciones f
-on c.id_funcion = f.id_funcion
-where f.id_pelicula = 337401
-and f.fecha > '2020-11-01'
-and f.fecha < '2020-11-28';
-
-select ifnull(sum(c.valor_total), 0) as recaudacion
-from compras c
-inner join funciones f
-on c.id_funcion = f.id_funcion
-inner join salas s
-on s.id_sala = f.id_sala
-where s.id_cine = 3
-and f.fecha > '2020-11-23'
-and f.fecha < '2020-11-29';
-
-show columns from usuarios;

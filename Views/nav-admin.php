@@ -24,7 +24,7 @@
       <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Descuento/ShowAddView">Agregar Descuentos</a>
       <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Funcion/ShowListView">Listado de Funciones</a>
       <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Compra/ShowRecaudacionCinesView">Recaudación por cine</a>
-      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Compra/ShowRecaudacionFilmView">Recaudación por película</a>
+
   </li>
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pel&iacute;culas</a>
@@ -32,6 +32,8 @@
       <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Films/getAll">Listado de Pel&iacute;culas</a>
      
       <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Funcion/ShowCartelera">Pel&iacute;culas en Cartelera</a>
+
+      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Compra/ShowRecaudacionFilmView">Recaudación por película</a>
 </div>
   </li>
 

@@ -4,7 +4,7 @@ namespace DAO;
 
 //include("config/constants.php");
 
-class Genres {
+class GenresDAO {
 
     private $genresArray;
 

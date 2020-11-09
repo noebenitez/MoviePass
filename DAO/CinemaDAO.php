@@ -54,10 +54,6 @@
             }
             $this->cinemaList = $newList;
             $this->SaveData();
-
-            $roomController = new \Controllers\RoomController();
-            $roomController->RemovePorCine($idRemove);
-
         }
 
         public function Edit(Cinema $cinemaActualizado){
@@ -171,6 +167,15 @@
                 }
             }
             return $capacidad;
+        }
+
+        public function updateCapacidadCine($idCine, $capacidad){
+            $this->RetrieveData();
+            foreach($this->cinemaList as $cinema){
+                if ($cinema->getId() == $idCine){
+                    $cinema->setCapacidad($capacidad);
+                }
+            }
         }
 
 

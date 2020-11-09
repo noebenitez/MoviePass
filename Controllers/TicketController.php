@@ -34,6 +34,7 @@ class TicketController {
     
                 require_once(ROOT . '/Views/header.php');
                 require_once(ROOT . '/Views/nav-user.php');
+                
             }else{
             
                 require_once(ROOT . '/Views/header.php');
