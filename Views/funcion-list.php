@@ -18,6 +18,7 @@
       <th scope="col">Fecha</th>
       <th scope="col">Hora</th>
       <th scope="col">Duraci&oacute;n</th>
+      <th scope="col">Valor Entrada</th>
       <th scope="col">Entradas Vendidas</th>
       <th scope="col">Opciones</th>
     </tr>
@@ -33,6 +34,7 @@
               <td> <?php echo $funcion->getFecha(); ?> </td>
               <td> <?php echo $funcion->getHora(); ?> </td>
               <td> <?php echo $funcion->getDuracion(); ?> </td>
+              <td> <?php echo $funcion->getValorEntrada(); ?> </td>
               <td> <?php echo $funcion->GetEntradasVendidas(); ?> </td>
               <td>
                 <button type="submit" name='edit' class="btn btn-danger" value="<?php echo $funcion->getId(); ?>" formaction="<?php FRONT_ROOT ?>../Funcion/ShowEditView"> Editar </button>

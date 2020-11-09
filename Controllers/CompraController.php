@@ -74,7 +74,7 @@ class CompraController {
     }
     
 
-        public function ShowConfirmView($idFilm, $idFuncion, $cantidad, $precioUnitario, $nroTarjeta, $titular, $vencimiento, $codSeguridad, $email){
+        public function ShowConfirmView($idFilm, $idFuncion, $cantidad, $nroTarjeta, $titular, $vencimiento, $codSeguridad, $email){
 
             try{
                 
@@ -88,6 +88,8 @@ class CompraController {
     
                 $descuentoController = new DescuentoController();
                 $descuento = $descuentoController->comprobarDescuento($cantidad);
+                $funcion = $this->funcionDAO->getOne($idFuncion);
+                $precioUnitario = $funcion->getValorEntrada();
  
                 if($descuento){
                     $total = ($precioUnitario * $cantidad) - ((($precioUnitario * $cantidad) * $descuento) / 100);
@@ -97,7 +99,6 @@ class CompraController {
                 
                 $film = $this->filmsDAO->GetOne($idFilm);
     
-                $funcion = $this->funcionDAO->getOne($idFuncion);
     
                 $room = $this->roomDAO->getOne($funcion->getIdSala());
     
@@ -211,7 +212,7 @@ class CompraController {
                 $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
                 
                 //Destinatarios
-                $mail->setFrom('metodologialaboratorio2020@gmail.com', 'MoviePass');
+                $mail->setFrom('moviepass@yopmail.com', 'MoviePass');
                 $mail->addAddress($email);     // Se pueden agregar más de uno repitiendo esta línea
                 
                
@@ -294,6 +295,112 @@ class CompraController {
                 HomeController::ShowErrorView("Error al obtener la cantidad de entradas disponibles.", $ex->getMessage(), "Home/Index/");
             }
         }
+
+        
+        public function ShowRecaudacionCinesView(){
+            try{
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
+                
+                $cinemaList = $this->cinemaDAO->GetAll();
+                
+                require_once(VIEWS_PATH."recaudacion-cine-filter.php");
+                require_once(ROOT . '/Views/footer.php');
+                
+            }catch(Exception $ex){
+                
+                HomeController::ShowErrorView("Error al cargar los cines.", $ex->getMessage(), "Home/Index/");
+            }
+        }
+        
+        public function recaudacionTotalCine($idCine){
+
+            try{
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
+
+                $recaudacion = $this->compraDAO->recaudacionTotalCine($idCine);
+                $cinema = $this->cinemaDAO->getOne($idCine);
+    
+                require_once(VIEWS_PATH."recaudacion-cine.php");
+                require_once(ROOT . '/Views/footer.php');
+
+            }catch(Exception $ex){
+
+                HomeController::ShowErrorView("Ocurrió un error al obtener la información del cine.", $ex->getMessage(), "Compra/ShowRecaudacionCinesView/");
+            }
+        }
+
+        public function recaudacionCineEntreFechas($idCine, $desde, $hasta){
+
+            try{
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
+
+                $recaudacion = $this->compraDAO->recaudacionCineEntreFechas($idCine, $desde, $hasta);
+                $cinema = $this->cinemaDAO->getOne($idCine);
+    
+                require_once(VIEWS_PATH."recaudacion-cine.php");
+                require_once(ROOT . '/Views/footer.php');
+
+            }catch(Exception $ex){
+
+                HomeController::ShowErrorView("Ocurrió un error al obtener la información del cine.", $ex->getMessage(), "Compra/ShowRecaudacionCinesView/");
+            }
+        }
+
+        public function ShowRecaudacionFilmView(){
+            try{
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
+                
+                $filmList = $this->filmsDAO->getFilmsConFunciones();
+                
+                require_once(VIEWS_PATH."recaudacion-film-filter.php");
+                require_once(ROOT . '/Views/footer.php');
+                
+            }catch(Exception $ex){
+                
+                HomeController::ShowErrorView("Error al cargar las películas.", $ex->getMessage(), "Home/Index/");
+            }
+        }
+
+        public function recaudacionTotalFilm($idFilm){
+
+            try{
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
+
+                $recaudacion = $this->compraDAO->recaudacionTotalFilm($idFilm);
+                $film = $this->filmsDAO->GetOne($idFilm);
+    
+                require_once(VIEWS_PATH."recaudacion-film.php");
+                require_once(ROOT . '/Views/footer.php');
+
+            }catch(Exception $ex){
+
+                HomeController::ShowErrorView("Ocurrió un error al obtener la información del cine.", $ex->getMessage(), "Compra/ShowRecaudacionCinesView/");
+            }
+        }
+
+        public function recaudacionFilmEntreFechas($idFilm, $desde, $hasta){
+
+            try{
+                require_once(ROOT . '/Views/header.php');
+                require_once(ROOT . '/Views/nav-admin.php');
+
+                $recaudacion = $this->compraDAO->recaudacionFilmEntreFechas($idFilm, $desde, $hasta);
+                $film = $this->filmsDAO->GetOne($idFilm);
+    
+                require_once(VIEWS_PATH."recaudacion-film.php");
+                require_once(ROOT . '/Views/footer.php');
+
+            }catch(Exception $ex){
+
+                HomeController::ShowErrorView("Ocurrió un error al obtener la información de la película.", $ex->getMessage(), "Compra/ShowRecaudacionCinesView/");
+            }
+        }
+
 
 
 }

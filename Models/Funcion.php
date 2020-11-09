@@ -10,10 +10,11 @@
         private $idSala;
         private $idFilm;
         private $duracion;
+        private $valorEntrada;
         private $entradasVendidas;
 
         
-        public function __construct ($id = null, $fecha = null, $hora = null, $idSala = null, $idFilm = null, $duracion= null, $entradasVendidas = 0){
+        public function __construct ($id = null, $fecha = null, $hora = null, $idSala = null, $idFilm = null, $duracion= null, $valorEntrada = null, $entradasVendidas = 0){
 
             $this->id = $id;
             $this->fecha = $fecha;
@@ -21,6 +22,7 @@
             $this->idSala = $idSala;
             $this->idFilm = $idFilm;
             $this->duracion = $duracion;
+            $this->valorEntrada = $valorEntrada;
             $this->entradasVendidas = $entradasVendidas;
         }
 
@@ -46,6 +48,10 @@
 
         public function setDuracion($duracion){
             $this->duracion = $duracion;
+        }
+
+        public function setValorEntrada($valorEntrada){
+            $this->valorEntrada = $valorEntrada;
         }
 
         public function setEntradasVendidas($entradasVendidas){
@@ -74,6 +80,10 @@
 
         public function getDuracion(){
             return $this->duracion;
+        }
+
+        public function getValorEntrada(){
+            return $this->valorEntrada;
         }
 
         public function getEntradasVendidas(){

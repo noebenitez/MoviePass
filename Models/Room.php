@@ -8,15 +8,13 @@
         private $nombre;
         private $capacidad;
         private $idCine;
-        private $valorEntrada;
 
-        public function __construct($id = null, $nombre = '', $capacidad = 0, $idCine = null, $valorEntrada = 0){
+        public function __construct($id = null, $nombre = '', $capacidad = 0, $idCine = null){
             
             $this->id = $id;
             $this->nombre = $nombre;
             $this->capacidad = $capacidad;
             $this->idCine = $idCine;
-            $this->valorEntrada = $valorEntrada;
         }
 
        public function setId($id){
@@ -34,10 +32,6 @@
         public function setIdCine($idCine){
             $this->idCine = $idCine;
         }
-
-        public function setValorEntrada($valorEntrada){
-            $this->valorEntrada = $valorEntrada;
-        }
             
         public function getId(){
             return $this->id;
@@ -54,11 +48,6 @@
         public function getIdCine(){
             return $this->idCine;
         }
-
-        public function getValorEntrada(){
-            return $this->valorEntrada;
-        }
-
     }
 
 

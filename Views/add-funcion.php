@@ -14,7 +14,7 @@
           <input type="hidden" name="idFilm" value=<?= $film->getId() ?> > 
 
           <div class="form-row">
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-8">
               <label for="room">Seleccionar la Sala</label>
               <select class="form-control" id="idSala" name="idSala" required>
               <?php 
@@ -25,14 +25,15 @@
                 <?php }} ?>
               </select>
             </div>
-          </div>
-
-          <div class="form-row">
 
             <div class="form-group col-md-4">
               <label for="fecha">Fecha</label>
               <input type="date" class="form-control" name="fecha" min= <?=date('Y-m-d')?> required>
             </div>
+
+          </div>
+
+          <div class="form-row">
 
             <div class="form-group col-md-4">
               <label for="hora">Hora</label>
@@ -42,6 +43,11 @@
             <div class="form-group col-md-4">
               <label for="duracion">Duración en Minutos</label>
               <input type="number" class="form-control" name="duracion" value="<?= $duracionFilm ?>" readonly>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label for="duracion">Valor Entrada</label>
+              <input type="number" class="form-control" name="valorEntrada" min = "0" required>
             </div>
 
           </div>

@@ -115,6 +115,122 @@
            return $resultSet[0]['id'];
         }
 
+        public function recaudacionTotalCine($idCine){
+            try{
+                $query =
+                    "SELECT IFNULL(SUM(c.valor_total),0) as recaudacion
+                    FROM compras c
+                    INNER JOIN funciones f
+                    ON c.id_funcion = f.id_funcion
+                    INNER JOIN salas s
+                    ON s.id_sala = f.id_sala
+                    WHERE s.id_cine = " . $idCine;
+
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query);
+
+                if (!empty($resultSet)){
+                    
+                    $row = $resultSet[0];
+                    return $row["recaudacion"];
+    
+                }else{
+                    return false;
+                } 
+            } catch (Exception $ex){ 
+                throw $ex;
+            }
+        }
+
+        public function recaudacionCineEntreFechas($idCine, $desde, $hasta){
+            try{
+                $query =
+                    "SELECT IFNULL(SUM(c.valor_total), 0) as recaudacion
+                    FROM compras c
+                    INNER JOIN funciones f
+                    ON c.id_funcion = f.id_funcion
+                    INNER JOIN salas s
+                    ON s.id_sala = f.id_sala
+                    WHERE s.id_cine = :idCine
+                    AND f.fecha > :desde
+                    AND f.fecha < :hasta";
+                
+                $parameters['idCine'] = $idCine;
+                $parameters['desde'] = $desde;
+                $parameters['hasta'] = $hasta;
+
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query, $parameters);
+
+                if (!empty($resultSet)){
+                    
+                    $row = $resultSet[0];
+                    return $row["recaudacion"];
+    
+                }else{
+                    return "false";
+                } 
+            } catch (Exception $ex){ 
+                throw $ex;
+            }
+        }
+
+        public function recaudacionTotalFilm($idFilm){
+            try{
+                $query =
+                    "SELECT IFNULL(SUM(c.valor_total),0) as recaudacion
+                    FROM compras c
+                    INNER JOIN funciones f
+                    ON c.id_funcion = f.id_funcion
+                    WHERE f.id_pelicula = " . $idFilm;
+
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query);
+
+                if (!empty($resultSet)){
+                    
+                    $row = $resultSet[0];
+                    return $row["recaudacion"];
+    
+                }else{
+                    return false;
+                } 
+            } catch (Exception $ex){ 
+                throw $ex;
+            } 
+        }
+
+        public function recaudacionFilmEntreFechas($idFilm, $desde, $hasta){
+            try{
+                $query =
+                    "SELECT IFNULL(SUM(c.valor_total),0) as recaudacion
+                    FROM compras c
+                    INNER JOIN funciones f
+                    ON c.id_funcion = f.id_funcion
+                    WHERE f.id_pelicula = :idFilm
+                    AND f.fecha > :desde
+                    AND f.fecha < :hasta";
+                
+                $parameters['idFilm'] = $idFilm;
+                $parameters['desde'] = $desde;
+                $parameters['hasta'] = $hasta;
+
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query, $parameters);
+
+                if (!empty($resultSet)){
+                    
+                    $row = $resultSet[0];
+                    return $row["recaudacion"];
+    
+                }else{
+                    return false;
+                } 
+            } catch (Exception $ex){ 
+                throw $ex;
+            }
+        }
+
     }
 
 ?>

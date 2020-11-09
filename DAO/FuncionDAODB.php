@@ -15,13 +15,14 @@
 
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (fecha, horario_funcion, id_sala, id_pelicula, duracion, entradas_vendidas) VALUES (:fecha, :horario_funcion, :id_sala, :id_pelicula, :duracion, :entradasVendidas);";
+                $query = "INSERT INTO ".$this->tableName." (fecha, horario_funcion, id_sala, id_pelicula, duracion, valor_entrada, entradas_vendidas) VALUES (:fecha, :horario_funcion, :id_sala, :id_pelicula, :duracion, :valorEntrada, :entradasVendidas);";
                 
                 $parameters["fecha"] = $funcion->getFecha();
                 $parameters["horario_funcion"] = $funcion->getHora();
                 $parameters["id_sala"] = $funcion->getIdSala();
                 $parameters["id_pelicula"] = $funcion->getIdFilm();
                 $parameters["duracion"] = $funcion->getDuracion();
+                $parameters["valorEntrada"] = $funcion->getValorEntrada();
                 $parameters["entradasVendidas"] = $funcion->getEntradasVendidas();
 
                 $this->connection = Connection::GetInstance();
@@ -55,6 +56,7 @@
                     $funcion->setIdSala($row["id_sala"]);
                     $funcion->setIdFilm($row["id_pelicula"]);
                     $funcion->setDuracion($row["duracion"]);
+                    $funcion->setValorEntrada($row["valor_entrada"]);
                     $funcion->setEntradasVendidas($row["entradas_vendidas"]);
                     
                     array_push($funcionList, $funcion);
@@ -89,6 +91,7 @@
                     $funcion->setIdSala($row["id_sala"]);
                     $funcion->setIdFilm($row["id_pelicula"]);
                     $funcion->setDuracion($row["duracion"]);
+                    $funcion->setValorEntrada($row["valor_entrada"]);
                     $funcion->setEntradasVendidas($row["entradas_vendidas"]);
                     
                     array_push($funcionList, $funcion);
@@ -138,13 +141,14 @@
 
         public function Edit(Funcion $funcionActualizado){
             
-            $query = "UPDATE " . $this->tableName . " SET fecha = :fecha, horario_funcion = :horario_funcion, id_sala = :id_sala, id_pelicula = :id_pelicula, duracion = :duracion, entradas_vendidas = :entradas_vendidas WHERE id_funcion = :id";
+            $query = "UPDATE " . $this->tableName . " SET fecha = :fecha, horario_funcion = :horario_funcion, id_sala = :id_sala, id_pelicula = :id_pelicula, duracion = :duracion, valor_entrada = :valor_entrada, entradas_vendidas = :entradas_vendidas WHERE id_funcion = :id";
             $parameters["id"] = $funcionActualizado->getId();
             $parameters["fecha"] = $funcionActualizado->getFecha();
             $parameters["horario_funcion"] = $funcionActualizado->getHora();
             $parameters["id_sala"] = $funcionActualizado->getIdSala();
             $parameters["id_pelicula"] = $funcionActualizado->getIdFilm();
             $parameters["duracion"] = $funcionActualizado->getDuracion();
+            $parameters["valor_entrada"] = $funcionActualizado->getValorEntrada();
             $parameters["entradas_vendidas"] = $funcionActualizado->getEntradasVendidas();
 
             try{
@@ -161,7 +165,7 @@
 
             $value = is_array($value) ? $value : [];
             $resp = array_map(function($p){
-                return new Funcion($p["id_funcion"], $p["fecha"], $p["horario_funcion"], $p["id_sala"], $p["id_pelicula"], $p["duracion"], $p["entradas_vendidas"]);
+                return new Funcion($p["id_funcion"], $p["fecha"], $p["horario_funcion"], $p["id_sala"], $p["id_pelicula"], $p["duracion"], $p["valor_entrada"], $p["entradas_vendidas"]);
             }, $value);
 
             return count($resp) > 1 ? $resp : $resp["0"];
@@ -225,6 +229,7 @@
                         $funcion->setIdSala($row["id_sala"]);
                         $funcion->setIdFilm($row["id_pelicula"]);
                         $funcion->setDuracion($row["duracion"]);
+                        $funcion->setValorEntrada($row["valor_entrada"]);
                         $funcion->setEntradasVendidas($row["entradas_vendidas"]);
 
                         array_push($funciones, $funcion);
@@ -274,6 +279,7 @@
                         $funcion->setIdSala($row["id_sala"]);
                         $funcion->setIdFilm($row["id_pelicula"]);
                         $funcion->setDuracion($row["duracion"]);
+                        $funcion->setValorEntrada($row["valor_entrada"]);
                         $funcion->setEntradasVendidas($row["entradas_vendidas"]);
 
                         array_push($funciones, $funcion);

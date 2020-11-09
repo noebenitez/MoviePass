@@ -80,13 +80,12 @@
 
         }
 
-        public function Add($idCine, $nombre, $capacidad, $valorEntrada){
+        public function Add($idCine, $nombre, $capacidad){
 
             $room = new Room();
             $room->setNombre($nombre);
             $room->setCapacidad($capacidad);
             $room->setIdCine($idCine);
-            $room->setValorEntrada($valorEntrada);
 
             try{
 
@@ -136,14 +135,13 @@
         }
 
 
-        public function Edit($id, $idCine, $nombre, $capacidad, $valorEntrada){
+        public function Edit($id, $idCine, $nombre, $capacidad){
 
             $room = new Room();
             $room->setId($id);
             $room->setIdCine($idCine);
             $room->setNombre($nombre);
             $room->setCapacidad($capacidad);
-            $room->setValorEntrada($valorEntrada);
 
             try{
 

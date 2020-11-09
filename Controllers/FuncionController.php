@@ -129,7 +129,7 @@
             }
         }
 
-        public function Edit($id, $idFilm, $idSala, $fecha, $hora, $duracion, $entradasVendidas){
+        public function Edit($id, $idFilm, $idSala, $fecha, $hora, $duracion, $valorEntrada, $entradasVendidas){
 
             $funcion = new Funcion();
             $funcion->setId($id);
@@ -138,6 +138,7 @@
             $funcion->setIdSala($idSala);
             $funcion->setIdFilm($idFilm);
             $funcion->setDuracion($duracion);
+            $funcion->setValorEntrada($valorEntrada);
             $funcion->setEntradasVendidas($entradasVendidas);
 
             try{
@@ -152,7 +153,7 @@
 
         }
 
-        public function Add($idFilm, $idSala, $fecha, $hora, $duracion){
+        public function Add($idFilm, $idSala, $fecha, $hora, $duracion, $valorEntrada){
 
             $funcion = new Funcion();
             $funcion->setIdFilm($idFilm);
@@ -160,6 +161,7 @@
             $funcion->setFecha($fecha);
             $funcion->setHora($hora);
             $funcion->setDuracion($duracion);
+            $funcion->setValorEntrada($valorEntrada);
             $funcion->setEntradasVendidas(0);
 
             try{

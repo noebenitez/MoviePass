@@ -27,21 +27,16 @@
          <?php foreach($funciones as $funcion){ 
           $room = $this->roomDAO->GetOne($funcion->getIdSala());?>
 
-            <option value="<?php echo $funcion->getId();?>"><?php echo $this->cinemaDAO->nombrePorId($room->getIdCine()) . " - " . $room->getNombre() . " - " . $funcion->getFecha() . " - " . $funcion->getHora() ?></option> 
+            <option value="<?php echo $funcion->getId();?>"><?php echo $this->cinemaDAO->nombrePorId($room->getIdCine()) . " - " . $room->getNombre() . " - " . $funcion->getFecha() . " - " . $funcion->getHora(). " - $" . $funcion->getValorEntrada() ?></option> 
           <?php  } ?>
 
         </select>
       </div>
 
       <div class="form-row">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-7">
           <label for="cantidad">Cantidad</label>
           <input type="number" class="form-control" name="cantidad" value="1">
-        </div>
-
-        <div class="form-group col-md-4">
-          <label for="total">Precio Unitario</label>
-          <input type="number" class="form-control" name="total" value="<?= $room->getValorEntrada() ?>" readonly>
         </div>
       </div> 
 

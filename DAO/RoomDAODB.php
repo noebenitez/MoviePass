@@ -14,12 +14,11 @@
 
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (nombre, capacidad, id_cine, valor_entrada) VALUES (:nombre, :capacidad, :id_cine, :valor_entrada);";
+                $query = "INSERT INTO ".$this->tableName." (nombre, capacidad, id_cine) VALUES (:nombre, :capacidad, :id_cine);";
                 
                 $parameters["nombre"] = $room->getNombre();
                 $parameters["capacidad"] = $room->getCapacidad();
                 $parameters["id_cine"] = $room->getIdCine();
-                $parameters["valor_entrada"] = $room->getValorEntrada();
 
                 $this->connection = Connection::GetInstance();
 
@@ -51,7 +50,6 @@
                     $room->setNombre($row["nombre"]);
                     $room->setCapacidad($row["capacidad"]);
                     $room->setIdCine($row["id_cine"]);
-                    $room->setValorEntrada($row["valor_entrada"]);
 
                     array_push($roomList, $room);
                 }
@@ -100,11 +98,10 @@
 
         public function Edit(Room $roomActualizado){
             
-            $query = "UPDATE " . $this->tableName . " SET nombre = :nombre, capacidad = :capacidad, id_cine = :id_cine, valor_entrada = :valor_entrada WHERE id_sala = :id";
+            $query = "UPDATE " . $this->tableName . " SET nombre = :nombre, capacidad = :capacidad, id_cine = :id_cine WHERE id_sala = :id";
             $parameters["nombre"] = $roomActualizado->getNombre();
             $parameters["capacidad"] = $roomActualizado->getCapacidad();
             $parameters["id_cine"] = $roomActualizado->getIdCine();
-            $parameters["valor_entrada"] = $roomActualizado->getValorEntrada();
             $parameters["id"] = $roomActualizado->getId();
             
             try{
@@ -121,7 +118,7 @@
 
             $value = is_array($value) ? $value : [];
             $resp = array_map(function($p){
-                return new Room($p["id_sala"], $p["nombre"], $p["capacidad"], $p["id_cine"], $p["valor_entrada"]);
+                return new Room($p["id_sala"], $p["nombre"], $p["capacidad"], $p["id_cine"]);
             }, $value);
 
             return count($resp) > 1 ? $resp : $resp["0"];
