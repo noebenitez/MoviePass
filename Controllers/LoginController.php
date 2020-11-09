@@ -122,6 +122,7 @@ class LoginController {
                 $user->setAdmin(false);
                 $user->setIdFB($idFB);
 
+
                 $idUser = $this->usersDAO->AddFB($user);
 
                 $_SESSION['log'] = true;
