@@ -204,15 +204,15 @@ class CompraController {
                 //Server settings
                 $mail->SMTPDebug = SMTP::DEBUG_OFF;                         // Disable verbose debug output
                 $mail->isSMTP();                                            // Envia usando SMTP
-                $mail->Host       = 'in-v3.mailjet.com';                    //  Host del SMTP server por donde se manda el mail
+                $mail->Host       = 'smtp.gmail.com';                       //  Host del SMTP server por donde se manda el mail
                 $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                $mail->Username   = '8ad2921988c640aaf0e8327181f97278';     // SMTP username
-                $mail->Password   = 'e205ef69710fee7ef88c1cc2adb55aa9';     // SMTP password
+                $mail->Username   = 'moviepassmet@gmail.com';               // SMTP username
+                $mail->Password   = 'Argentina&2020';                       // SMTP password
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
                 $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
                 
                 //Destinatarios
-                $mail->setFrom('moviepass@yopmail.com', 'MoviePass');
+                $mail->setFrom('moviepassmet@gmail.com', 'MoviePass');
                 $mail->addAddress($email);     // Se pueden agregar más de uno repitiendo esta línea
                 
                
