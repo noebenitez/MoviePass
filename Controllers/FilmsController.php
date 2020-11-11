@@ -50,17 +50,21 @@ class FilmsController {
         try{
             
             if($_SESSION['esAdmin'] == false){
+                if($_SESSION['log'] == false){
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                }else{
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-user.php');
+                }
 
-                require_once(ROOT . '/Views/header-login.php');
-                require_once(ROOT . '/Views/nav-principal.php');
-                require_once(ROOT . '/Views/login.php');
             }else{
                 require_once(ROOT . '/Views/header.php');
                 require_once(ROOT . '/Views/nav-admin.php');
                 
-                $film = $this->filmsDAO->GetOne($id);
-                $genres = $this->genresDAO->getAll();
             }  
+            $film = $this->filmsDAO->GetOne($id);
+            $genres = $this->genresDAO->getAll();
             require_once(ROOT . '/Views/film-info.php');
             require_once(ROOT . '/Views/footer.php');
 

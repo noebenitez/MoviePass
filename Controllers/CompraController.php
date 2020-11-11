@@ -188,7 +188,7 @@ class CompraController {
 
             }catch(Exception $ex){
                 
-                HomeController::ShowErrorView("Hubo un error y no pudo completarse la compra." . $_SESSION['id'], $ex->getMessage(), "Compra/BuyTicket/" . $idFilm);
+                HomeController::ShowErrorView("Hubo un error y no pudo completarse la compra.", $ex->getMessage(), "Compra/BuyTicket/" . $idFilm);
             }
             
             
