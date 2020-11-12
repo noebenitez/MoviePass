@@ -34,7 +34,7 @@
       </div>
 
       <div class="form-row">
-        <div class="form-group col-md-7">
+        <div class="form-group col-md-12">
           <label for="cantidad">Cantidad</label>
           <input type="number" class="form-control" name="cantidad" value="1">
         </div>

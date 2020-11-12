@@ -5,11 +5,11 @@
 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido/a <?php echo $_SESSION['name'] ?>!</a>
 <div class="dropdown-menu">
 <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>User/perfil/<?php echo $_SESSION['id'] ?>">Ver Perfil</a>
-      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Ticket/ShowTicketList/<?php echo $_SESSION['id'] ?>">Mis Entradas</a>
+      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Ticket/ShowTicketList/<?php echo $_SESSION['id'] ?>/pelicula">Mis Entradas</a>
      
 	<div class="dropdown-divider"></div>
 <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Login/logout">Cerrar Sesi&oacute;n</a>
-</div>
+</div> 
   </li>
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pel&iacute;culas</a>

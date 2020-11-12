@@ -204,10 +204,10 @@ class CompraController {
                 //Server settings
                 $mail->SMTPDebug = SMTP::DEBUG_OFF;                         // Disable verbose debug output
                 $mail->isSMTP();                                            // Envia usando SMTP
-                $mail->Host       = 'smtp.gmail.com';                       //  Host del SMTP server por donde se manda el mail
+                $mail->Host       = 'smtp.gmail.com';                    //  Host del SMTP server por donde se manda el mail
                 $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                $mail->Username   = 'moviepassmet@gmail.com';               // SMTP username
-                $mail->Password   = 'Argentina&2020';                       // SMTP password
+                $mail->Username   = 'moviepassmet@gmail.com';     // SMTP username
+                $mail->Password   = 'Argentina&2020';     // SMTP password
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
                 $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
                 
@@ -377,6 +377,15 @@ class CompraController {
             }
         }
 
+        public function recaudacionCine($idCine, $desde, $hasta){
+
+            if($desde == null && $hasta == null){
+                $this->recaudacionTotalCine($idCine);
+            }else{
+                $this->recaudacionCineEntreFechas($idCine, $desde, $hasta);
+            }
+        }
+
         public function ShowRecaudacionFilmView(){
             try{
                 if ($_SESSION["esAdmin"] == false){
@@ -455,6 +464,14 @@ class CompraController {
             }
         }
 
+        public function recaudacionFilm($idFilm, $desde, $hasta){
+
+            if($desde == null && $hasta == null){
+                $this->recaudacionTotalFilm($idFilm);
+            }else{
+                $this->recaudacionFilmEntreFechas($idFilm, $desde, $hasta);
+            }
+        }
 
 
 }

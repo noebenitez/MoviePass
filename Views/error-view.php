@@ -1,3 +1,7 @@
+<div>
+  <main class="hoc container clear"> 
+    <!-- main body -->
+    <div>
 <br>
 <h2>ERROR</h2>
 <br>
@@ -12,4 +16,6 @@
  </div>
  <br>
  </div>
-
+ </div>
+ </main>
+ </div>

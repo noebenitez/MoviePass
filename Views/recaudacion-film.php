@@ -1,10 +1,13 @@
-
+<div>
+  <main class="container clear"> 
+    <div> 
+      <div id="comments" >
 <br>
 <?php
     if(isset($desde) && isset($hasta)){
-        echo "<h2> Recaudación período " . $desde . " / " .$hasta . "</h2>";
+        echo "<h2> Recaudación Período " . $desde . " / " .$hasta . "</h2>";
     }else{
-        echo "<h2> Recaudación total </h2> ";
+        echo "<h2> Recaudación Total </h2> ";
     }
 ?>
 <br>
@@ -13,7 +16,7 @@
   <thead>
     <tr>
       <th scope="col">Nombre</th>
-      <th scope="col">Recaudación</th>
+      <th scope="col">Recaudaci&oacute;n</th>
     </tr>
   </thead> 
   <tbody> 
@@ -22,4 +25,9 @@
               <td> <?="$ " . $recaudacion ?></td>
             </tr>
   </tbody>
-</table>
+</table> 
+</div>
+    </div>
+  </main>
+</div>  
+           

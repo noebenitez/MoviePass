@@ -330,6 +330,143 @@
             }
         }
 
+        public function ShowDisponibilidadEntradasView(){
+
+            try{
+
+                if($_SESSION["esAdmin"] == false){
+                    
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
+
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
+                    
+                    $funcionesList = $this->funcionDAO->GetAll();
+
+                    $filmList = array();
+                    $cinemaList = array();
+
+                    foreach($funcionesList as $funcion){
+
+                        array_push($filmList, $funcion->getIdFilm());
+
+                        $room = $this->roomDAO->GetOne($funcion->getIdSala());
+
+                        array_push($cinemaList, $room->getIdCine());
+                    }
+                    
+                    $peliculas = array_unique($filmList);
+                    $cines = array_unique($cinemaList);
+                    
+                    require_once(VIEWS_PATH."entradas-filter.php");
+
+                } 
+                require_once(ROOT . '/Views/footer.php');
+                
+            }catch(Exception $ex){
+                
+                HomeController::ShowErrorView("Error al cargar las entradas.", $ex->getMessage(), "Funcion/ShowDisponibilidadEntradasView/");
+            }
+        }
+
+        public function disponibilidadEntradas($idCine, $idFilm){
+
+        try{
+            if($idFilm != "null" && $idCine == "null"){
+                $this->disponibilidadPorPelicula($idFilm);
+            }else if($idCine != "null" && $idFilm == "null"){
+                $this->disponibilidadPorCine($idCine);
+            }else{
+                throw new Exception('Debe seleccionar solo 1 opción.');
+            }
+
+        }catch(Exception $ex){
+                
+            HomeController::ShowErrorView("Error al cargar las funciones.", $ex->getMessage(), "Funcion/ShowDisponibilidadEntradasView/");
+        }
+
+        }
+
+        public function disponibilidadPorPelicula($idFilm){
+
+            try{
+
+                if($_SESSION["esAdmin"] == false){
+                    
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
+
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
+                    
+                    $funcionesList = $this->funcionDAO->GetAll();
+                    $funcionesXpelicula = array();
+
+                    $pelicula = $this->filmDAO->GetOne($idFilm);
+
+                    foreach($funcionesList as $funcion){
+                        if($funcion->getIdFilm() == $idFilm){
+                            array_push($funcionesXpelicula, $funcion);
+                        }
+                    }
+                    
+                    require_once(VIEWS_PATH."entradas-filter-film.php");
+
+                } 
+                require_once(ROOT . '/Views/footer.php');
+                
+            }catch(Exception $ex){
+                
+                HomeController::ShowErrorView("Error al cargar las funciones.", $ex->getMessage(), "Funcion/ShowDisponibilidadEntradasView/");
+            }
+        }
+
+        public function disponibilidadPorCine($idCine){
+
+            try{
+
+                if($_SESSION["esAdmin"] == false){
+                    
+                    require_once(ROOT . '/Views/header-login.php');
+                    require_once(ROOT . '/Views/nav-principal.php');
+                    require_once(ROOT . '/Views/login.php');
+                }else{
+
+                    require_once(ROOT . '/Views/header.php');
+                    require_once(ROOT . '/Views/nav-admin.php');
+                    
+                    $funcionesList = $this->funcionDAO->GetAll();
+                    $funcionesXcine = array();
+
+                    $nombreCine = $this->cinemaDAO->nombrePorId($idCine);
+
+                    foreach($funcionesList as $funcion){
+
+                        $room = $this->roomDAO->GetOne($funcion->getIdSala());
+
+                        if($room->getIdCine() == $idCine){
+                            array_push($funcionesXcine, $funcion);
+                        }
+                    }
+                    
+                    require_once(VIEWS_PATH."entradas-filter-cinema.php");
+
+                } 
+                require_once(ROOT . '/Views/footer.php');
+                
+            }catch(Exception $ex){
+                
+                HomeController::ShowErrorView("Error al cargar las funciones.", $ex->getMessage(), "Funcion/ShowDisponibilidadEntradasView/");
+            }
+            
+        }
+
+
     }
     
 ?>

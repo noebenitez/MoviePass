@@ -26,7 +26,8 @@ class TicketController {
         $this->filmsDAO = new FilmsDAO();
     }
 
-    public function ShowTicketList($idUser){
+
+    public function ShowTicketList($idUser, $value){
 
         try{
             
@@ -41,9 +42,45 @@ class TicketController {
                 require_once(ROOT . '/Views/nav-admin.php');
             }
     
-            $tickets = $this->ticketDAO->GetAll();
-    
-            require_once(ROOT . '/Views/ticket-list.php');
+            $ticketList = $this->ticketDAO->GetAll();
+
+            echo '<br>
+            <h2>MIS ENTRADAS</h2>
+            <br>
+            <div class="d-flex justify-content-center">
+            <div class="btn-group" role="group" aria-label="Basic example">';
+
+            switch ($value){
+                    case 'pelicula':
+                        echo '<a type="button" href="'.FRONT_ROOT.'Ticket/ShowTicketList/'.$_SESSION['id'].'/pelicula" class="btn btn-secondary">Ordenar por Pel&iacute;cula</a>
+                        <a type="button" href="'.FRONT_ROOT.'Ticket/ShowTicketList/'.$_SESSION['id'].'/fecha" class="btn btn-outline-secondary">Ordenar por Fecha</a>';
+                    break;
+                    case 'fecha':
+                        echo '<a type="button" href="'.FRONT_ROOT.'Ticket/ShowTicketList/'.$_SESSION['id'].'/pelicula" class="btn btn-outline-secondary">Ordenar por Pel&iacute;cula</a>
+                        <a type="button" href="'.FRONT_ROOT.'Ticket/ShowTicketList/'.$_SESSION['id'].'/fecha" class="btn btn-secondary">Ordenar por Fecha</a>';
+                    break;
+                 }
+                 
+            echo '</div>
+            </div> 
+            <br>
+            <div class="col-md-12">';
+
+            $ticketsUsuario = array();
+
+             foreach($ticketList as $ticket){
+                if($ticket->getIdUsuario() == $idUser){ 
+                    array_push($ticketsUsuario, $ticket);
+                }
+            }
+            
+            if($value == 'pelicula'){
+                $this->ordenarXpelicula($ticketsUsuario);
+            }else if($value == 'fecha'){
+                $this->ordenarXfecha($ticketsUsuario);
+            }
+
+            echo '</div>';
             require_once(ROOT . '/Views/footer.php');
         
         }catch (Exception $ex){
@@ -53,6 +90,74 @@ class TicketController {
 
     }
     
+
+    public function ordenarXpelicula($ticketList){
+
+        $peliculasTickets = array();
+
+        foreach($ticketList as $ticket){
+
+            $funcion = $this->funcionDAO->GetOne($ticket->getIdFuncion());
+
+            array_push($peliculasTickets, $funcion->getIdFilm());
+        }
+
+        $idPeliculas = array_unique($peliculasTickets);
+
+        foreach($idPeliculas as $idFilm){
+
+            $film = $this->filmsDAO->GetOne($idFilm);
+
+            echo '<div style="margin-bottom: 20px;"><h5>'.$film->getTitulo().'</h5></div>';
+
+            foreach($ticketList as $ticket){
+
+                $funcion = $this->funcionDAO->GetOne($ticket->getIdFuncion());
+
+                if($idFilm == $funcion->getIdFilm()){
+
+                    require(ROOT . '/Views/simple-ticket.php');
+    
+                }
+            }
+            echo '<br>';
+        }
+    }
+
+
+    public function ordenarXfecha($ticketList){
+        
+        $fechasTickets = array();
+
+        foreach($ticketList as $ticket){
+
+            $funcion = $this->funcionDAO->GetOne($ticket->getIdFuncion());
+
+            array_push($fechasTickets, $funcion->getFecha());
+        }
+
+        $fechas = array_unique($fechasTickets);
+
+        foreach($fechas as $fecha){
+
+            echo '<div style="margin-bottom: 20px;"><h5>'.date("d/m/y", strtotime($fecha)).'</h5></div>';
+
+            foreach($ticketList as $ticket){
+
+                $funcion = $this->funcionDAO->GetOne($ticket->getIdFuncion());
+
+                $film = $this->filmsDAO->GetOne($funcion->getIdFilm());
+
+                if($fecha == $funcion->getFecha()){
+
+                    require(ROOT . '/Views/simple-ticket.php');
+
+                }
+            }
+            echo '<br>';
+        }
+    }
+
 
     public function ShowTicketDetails($id){
 

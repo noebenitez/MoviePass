@@ -6,7 +6,7 @@
 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido/a <?php echo $_SESSION['name'] ?>!</a>
 <div class="dropdown-menu">
 <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>User/perfil/<?php echo $_SESSION['id'] ?>">Ver Perfil</a>
-      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Ticket/ShowTicketList/<?php echo $_SESSION['id'] ?>">Mis Entradas</a>
+      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Ticket/ShowTicketList/<?php echo $_SESSION['id'] ?>/pelicula">Mis Entradas</a>
       
 	<div class="dropdown-divider"></div>
 <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Login/logout">Cerrar Sesi&oacute;n</a>
@@ -20,20 +20,31 @@
       <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Cinema/ShowAddView">Agregar Cine</a>
       <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Room/ShowListView">Listado de Salas</a>
       <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Room/ShowAddView">Agregar Salas</a>
+  </li>
+
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Funciones</a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Funcion/ShowListView">Listado de Funciones</>
+      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Funcion/ShowDisponibilidadEntradasView">Disponibilidad de Entradas</a>
+      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Compra/ShowRecaudacionCinesView">Recaudaci&oacute;n por Cine</a>
+      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Compra/ShowRecaudacionFilmView">Recaudaci&oacute;n por Pel&iacute;cula</a>
+  </li>
+
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Descuentos</a>
+    <div class="dropdown-menu">
       <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Descuento/ShowListView">Listado de Descuentos</a>
       <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Descuento/ShowAddView">Agregar Descuentos</a>
-      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Funcion/ShowListView">Listado de Funciones</a>
-      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Compra/ShowRecaudacionCinesView">Recaudación por cine</a>
-
+      
   </li>
+
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pel&iacute;culas</a>
     <div class="dropdown-menu">
       <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Films/getAll">Listado de Pel&iacute;culas</a>
      
       <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Funcion/ShowCartelera">Pel&iacute;culas en Cartelera</a>
-
-      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Compra/ShowRecaudacionFilmView">Recaudación por película</a>
 </div>
   </li>
 

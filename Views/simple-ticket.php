@@ -1,13 +1,3 @@
-<br>
-<h2>MIS ENTRADAS</h2>
-<br>
-<?php foreach($tickets as $ticket){
-    
-    if($ticket->getIdUsuario() == $idUser){ 
-     
-        $funcion = $this->funcionDAO->GetOne($ticket->getIdFuncion());
-       $film = $this->filmsDAO->GetOne($funcion->getIdFilm());
-?>
 <div class="card flex-row flex-wrap">
         <div class="card-header border-0 col-1">
   <?php if (empty($film->getPoster())) { ?>
@@ -18,7 +8,7 @@
 <img class="card-img-top" src="<?php echo IMAGENES.$film->getPoster() ?>" alt="Card image cap">
 
 <?php } ?>
-
+ 
         </div>
         <div class="card-block px-2 col-10"><br>
         <div class="d-flex justify-content-between">
@@ -31,4 +21,3 @@
 <br>
         </div>
     </div> 
-    <?php } }  ?>
