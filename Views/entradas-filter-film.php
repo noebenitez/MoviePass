@@ -27,7 +27,7 @@
             $nombreCine = $this->cinemaDAO->nombrePorId($roomCine->getIdCine());
             ?>
             <tr>
-              <td> <?php echo $nombreCine . " - " . $roomCine->getNombre() . " - " . $funcionCine->getFecha() . " - " . $funcionCine->getHora() ?> </td>
+              <td> <?php echo $nombreCine . " - " . $roomCine->getNombre() . " - " . date("d/m/y", strtotime($funcionCine->getFecha())) . " - " . date("h:i A", strtotime($funcionCine->getHora())) ?> </td>
               <td> <?php echo $roomCine->getCapacidad() ?> </td>
               <td> <?php echo $funcionCine->getEntradasVendidas() ?> </td>
               <td> <?php echo $roomCine->getCapacidad()-$funcionCine->getEntradasVendidas() ?> </td>

@@ -31,8 +31,8 @@
     ?>
             <tr>
               <td> <?php echo $this->cinemaDAO->nombrePorId($room->getIdCine()) . ' - ' . $room->getNombre(); ?> </td>
-              <td> <?php echo $funcion->getFecha(); ?> </td>
-              <td> <?php echo $funcion->getHora(); ?> </td>
+              <td> <?php echo date("d/m/y", strtotime($funcion->getFecha())); ?> </td>
+              <td> <?php echo date("h:i A", strtotime($funcion->getHora())); ?> </td>
               <td> <?php echo $funcion->getDuracion(); ?> </td>
               <td> <?php echo $funcion->getValorEntrada(); ?> </td>
              <!-- <td> <?php echo $funcion->GetEntradasVendidas(); ?> </td>-->

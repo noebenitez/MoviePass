@@ -14,7 +14,7 @@
       <th scope="col">Porcentaje</th>
       <th scope="col">D&iacute;a</th>
       <th scope="col">Cantidad M&iacute;nima de Entradas</th>
-      <th scope="col">Descripci&oacute;n</th>
+      <th scope="col" style="max-width: 400px;">Descripci&oacute;n</th>
       <th scope="col">Opciones</th>
     </tr>
   </thead>
@@ -49,7 +49,7 @@
                } 
               ?> </td>
               <td> <?php echo $descuento->getCantidadMinima(); ?> </td>
-              <td> <?php echo $descuento->getDescripcion(); ?> </td>
+              <td style="max-width: 400px;"> <?php echo $descuento->getDescripcion(); ?> </td>
               
               <td>
                 <button type="submit" name='edit' class="btn btn-danger" value="<?php echo $descuento->getId(); ?>" formaction="<?php FRONT_ROOT ?>../Descuento/ShowEditView"> Editar </button>

@@ -80,12 +80,13 @@ create table funciones (
             id_pelicula int unsigned,
             duracion int unsigned,
             entradas_vendidas int unsigned,
+			valor_entrada double unsigned,
             constraint pk_funciones primary key (id_funcion),
             constraint fk_funciones_sala foreign key (id_sala) references salas(id_sala),
             constraint fk_funciones_pelicula foreign key (id_pelicula) references peliculas(id),
             constraint unq_fecha_pelicula unique (fecha, id_pelicula)
             );
-alter table funciones add valor_entrada double unsigned;
+
             
 create table tickets (
 			id int unsigned auto_increment,
@@ -96,12 +97,10 @@ create table tickets (
             id_funcion int unsigned not null,
             constraint pk_ticket primary key (id),
             constraint fk_tickets_usuario foreign key (id_usuario) references usuarios(id_usuario),
-            constraint fk_tickets_funcion foreign key (id_funcion) references funciones(id_funcion)
+            constraint fk_tickets_funcion foreign key (id_funcion) references funciones(id_funcion),
+			CONSTRAINT fk_tickets_compra foreign KEY (id_compra) references compras(id)
             );
 
-ALTER TABLE tickets ADD id_compra int unsigned;
-ALTER TABLE tickets ADD CONSTRAINT fk_tickets_compra foreign KEY (id_compra) references compras(id);
-            
             
 create table tarjetasCredito (
 			id int unsigned auto_increment,
@@ -134,6 +133,6 @@ create table descuentos (
 		porcentaje int unsigned not null,
 		dia varchar(50),
 		cantidad_entradas int unsigned not null, 
-		descripcion varchar(50),
+		descripcion varchar(100),
 		constraint pk_compras primary key (id)
 );

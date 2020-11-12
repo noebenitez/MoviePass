@@ -5,7 +5,7 @@
 <br>
 <?php
     if(isset($desde) && isset($hasta)){
-        echo "<h2> Recaudación Período " . $desde . " / " .$hasta . "</h2>";
+        echo "<h2> Recaudación Período " . date("d/m/y", strtotime($desde)) . " / " . date("d/m/y", strtotime($hasta)) . "</h2>";
     }else{
         echo "<h2> Recaudación Total </h2> ";
     }
@@ -17,7 +17,7 @@
     <tr>
       <th scope="col">Nombre</th>
       <th scope="col">Direcci&oacute;n</th>
-      <th scope="col">Capacidad Total</th>
+      <!--<th scope="col">Capacidad Total</th>-->
       <th scope="col">Recaudaci&oacute;n</th>
     </tr>
   </thead> 
@@ -25,7 +25,7 @@
             <tr>
               <td> <?= $cinema->getNombre(); ?> </td>
               <td> <?php echo $cinema->getCalle() . " " . $cinema->getAltura();?> </td>
-              <td> <?= $cinema->getCapacidad(); ?> </td>
+              <!--<td> $cinema->getCapacidad(); </td>-->
               <td> <?="$ " . $recaudacion ?></td>
             </tr>
   </tbody>

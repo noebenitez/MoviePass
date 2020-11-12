@@ -16,7 +16,7 @@
       <th scope="col">Direcci&oacute;n</th>
       <th scope="col">Hora de Apertura</th>
       <th scope="col">Hora de Cierre</th>
-      <th scope="col">Capacidad Total</th>
+      <!--<th scope="col">Capacidad Total</th>-->
       <th scope="col">Opciones</th>
     </tr>
   </thead> 
@@ -26,9 +26,9 @@
             <tr>
               <td> <?= $cinema->getNombre(); ?> </td>
               <td> <?php echo $cinema->getCalle() . " " . $cinema->getAltura();?> </td>
-              <td> <?= $cinema->getHoraApertura(); ?> </td>
-              <td> <?= $cinema->getHoraCierre(); ?> </td>
-              <td> <?= $cinema->getCapacidad(); ?> </td>
+              <td> <?= date("h:i A", strtotime($cinema->getHoraApertura())); ?> </td>
+              <td> <?= date("h:i A", strtotime($cinema->getHoraCierre())); ?> </td>
+              <!--<td>  $cinema->getCapacidad();  </td>-->
               <td>
                 <button type="submit" name='edit' class="btn btn-danger" value="<?= $cinema->getId()?>" formaction="<?= FRONT_ROOT ?> Cinema/ShowEditView"> Editar </button>
                 <button type="submit" name='remove' class="btn btn-secondary" value="<?= $cinema->getId()?>" formaction="<?=FRONT_ROOT ?> Cinema/ShowRemoveView"> Eliminar </button> 

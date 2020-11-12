@@ -41,7 +41,7 @@ break;
 		      <li class="breadcrumb-item"><a href="<?php echo FRONT_ROOT ?>Funcion/getFilmsByGenres/<?php echo $genre->getId() ?>" class="generos"><?php echo $genre->getNombre() ?></a></li> <?php
 }}}
  ?>&#160;&#160;|&#160; 
-<?php echo $film->getFechaEstreno() ?></p></ol>
+<?php echo date("d/m/y", strtotime($film->getFechaEstreno())) ?></p></ol>
     </nav>
 	    <p class="card-text"><?php echo $film->getDescripcion() ?></p>
 

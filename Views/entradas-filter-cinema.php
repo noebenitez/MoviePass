@@ -27,7 +27,7 @@
             $pelicula = $this->filmDAO->GetOne($funcionCine->getIdFilm());
             ?>
             <tr>
-              <td> <?php echo $pelicula->getTitulo() . " - " . $roomCine->getNombre() . " - " . $funcionCine->getFecha() . " - " . $funcionCine->getHora() ?> </td>
+              <td> <?php echo $pelicula->getTitulo() . " - " . $roomCine->getNombre() . " - " . date("d/m/y", strtotime($funcionCine->getFecha())) . " - " . date("h:i A", strtotime($funcionCine->getHora())) ?> </td>
               <td> <?php echo $roomCine->getCapacidad() ?> </td>
               <td> <?php echo $funcionCine->getEntradasVendidas() ?> </td>
               <td> <?php echo $roomCine->getCapacidad()-$funcionCine->getEntradasVendidas() ?> </td>

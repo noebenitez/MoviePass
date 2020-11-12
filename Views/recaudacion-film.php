@@ -5,7 +5,7 @@
 <br>
 <?php
     if(isset($desde) && isset($hasta)){
-        echo "<h2> Recaudación Período " . $desde . " / " .$hasta . "</h2>";
+        echo "<h2> Recaudación Período " . date("d/m/y", strtotime($desde)) . " / " . date("d/m/y", strtotime($hasta)) . "</h2>";
     }else{
         echo "<h2> Recaudación Total </h2> ";
     }

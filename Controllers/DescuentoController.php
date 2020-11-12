@@ -177,7 +177,7 @@
 
             foreach($descuentos as $desc){
                 if($cantidadEntradas >= $desc->getCantidadMinima() && date('l') == $desc->getDia()){
-                    return $desc->getPorcentaje();
+                    return $desc;
                 }
             }
             return false;

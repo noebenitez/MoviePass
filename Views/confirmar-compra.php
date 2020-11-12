@@ -35,7 +35,7 @@
     <?php
                 $room = $this->roomDAO->GetOne($funcion->getIdSala());      
       ?>
-        <label for="funcion"><b>Funci&oacute;n:</b> &#160;<?php echo $this->cinemaDAO->nombrePorId($room->getIdCine()) . " - " . $room->getNombre() . " - " . $funcion->getFecha() . " - " . $funcion->getHora() ?></label> 
+        <label for="funcion"><b>Funci&oacute;n:</b> &#160;<?php echo $this->cinemaDAO->nombrePorId($room->getIdCine()) . " - " . $room->getNombre() . " - " . date("d/m/y", strtotime($funcion->getFecha())) . " - " . date("h:i A", strtotime($funcion->getHora())) ?></label> 
         
   </div>
   <div class="form-row">
@@ -43,7 +43,8 @@
     <label for="cantidad" ><b>Cantidad:</b> &#160;<?php echo $cantidad ?></label>
   </div>
   <div class="form-group col-md-4">
-    <label for="total" ><b>Total: </b> &#160;$&#160;<?php echo $total ?> &#160;<?php if($descuento){ echo '<span class="badge badge-secondary">-'.$descuento.'%</span>';} ?></label>
+    <label for="total" ><b>Total: </b> &#160;$&#160;<?php echo $total ?> &#160;<?php if($descuento){ echo '<button class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="'.$descuento->getDescripcion().'" disabled>-'.$descuento->getPorcentaje().'%</button>';} ?></label>
+  
   </div>
   </div> 
 

@@ -127,6 +127,8 @@ class TicketController {
 
     public function ordenarXfecha($ticketList){
         
+        setlocale(LC_TIME, "es_ES");
+
         $fechasTickets = array();
 
         foreach($ticketList as $ticket){

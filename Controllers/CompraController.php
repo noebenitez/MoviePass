@@ -92,7 +92,7 @@ class CompraController {
                 $precioUnitario = $funcion->getValorEntrada();
  
                 if($descuento){
-                    $total = ($precioUnitario * $cantidad) - ((($precioUnitario * $cantidad) * $descuento) / 100);
+                    $total = ($precioUnitario * $cantidad) - ((($precioUnitario * $cantidad) * $descuento->getPorcentaje()) / 100);
                 }else{
                     $total = $precioUnitario * $cantidad;
                 }
@@ -183,7 +183,7 @@ class CompraController {
     
                 $this->enviarMail($email, $idCompra);
                 $ticketController = new TicketController();
-                $ticketController->ShowTicketList($_SESSION['id']); 
+                $ticketController->ShowTicketList($_SESSION['id'], 'pelicula'); 
 
 
             }catch(Exception $ex){
@@ -224,7 +224,7 @@ class CompraController {
 
                 $ticketList = $ticketController->getTicketsXcompra($idCompra);
 
-                $bodyhtml = '<div style="border: 1px solid #E2E2E2; border-radius: 5px; background-color: #1f1f1f; text-align: center;"><img src="'.IMAGES.'logo.png" width="30%" style="margin: 30px;" /></div><br>';
+                $bodyhtml = '<div style="border: 1px solid #E2E2E2; border-radius: 5px; background-color: #0e0e0e; text-align: center;"><img src="'.IMAGES.'logo.png" width="30%" style="margin: 30px;" /></div><br>';
 
                 $bodyplain = "MOVIEPASS";
 

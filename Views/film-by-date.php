@@ -1,5 +1,5 @@
 <br>
-<h2>FILTRO POR FECHA &#160;"<?php echo $date?>"</h2>
+<h2>FILTRO POR FECHA &#160;"<?php echo date("d/m/y", strtotime($date)) ?>"</h2>
 <br>
 
         <div id="peliculas" class="row col-12">

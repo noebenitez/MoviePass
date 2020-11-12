@@ -17,7 +17,7 @@
             <h3 class="card-text"><?php echo $film->getTitulo() ?></h3>
             <h5>#<?php echo $ticket->getId() ?></h5>
             <br>
-	    <p class="card-text"><b>Funci&oacute;n:</b> &#160;<?php echo $this->cinemaDAO->nombrePorId($room->getIdCine()) . " - " . $room->getNombre() . " - " . $funcion->getFecha() . " - " . $funcion->getHora() ?></p>
+	    <p class="card-text"><b>Funci&oacute;n:</b> &#160;<?php echo $this->cinemaDAO->nombrePorId($room->getIdCine()) . " - " . $room->getNombre() . " - " . date("d/m/y", strtotime($funcion->getFecha())) . " - " . date("h:i A", strtotime($funcion->getHora())) ?></p>
         <p class="card-text"><b>Asiento:</b> &#160;<?php echo $ticket->getAsiento() ?></p>
         <p class="card-text"><b>Valor:</b> &#160;$<?php echo $ticket->getValorUnitario() ?></p>
 <br>
