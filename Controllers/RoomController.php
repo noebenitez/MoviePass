@@ -106,13 +106,18 @@
 
         public function Add($idCine, $nombre, $capacidad){
 
-            $room = new Room();
-            $room->setNombre($nombre);
-            $room->setCapacidad($capacidad);
-            $room->setIdCine($idCine);
-
             try{
+                $nombre = HomeController::validateString($nombre);
+                
+                if(!$nombre){
+                    throw new Exception("El nombre está vacío.");
+                }
 
+                $room = new Room();
+                $room->setNombre($nombre);
+                $room->setCapacidad($capacidad);
+                $room->setIdCine($idCine);
+                
                 $this->roomDAO->Add($room);
                 $this->cinemaDAO->updateCapacidadCine($idCine, $this->roomDAO->capacidadCine($idCine));
                 $this->ShowListView(); 
@@ -169,13 +174,18 @@
 
         public function Edit($id, $idCine, $nombre, $capacidad){
 
-            $room = new Room();
-            $room->setId($id);
-            $room->setIdCine($idCine);
-            $room->setNombre($nombre);
-            $room->setCapacidad($capacidad);
-
             try{
+                $nombre = HomeController::validateString($nombre);
+                
+                if(!$nombre){
+                    throw new Exception("El nombre está vacío.");
+                }
+
+                $room = new Room();
+                $room->setId($id);
+                $room->setIdCine($idCine);
+                $room->setNombre($nombre);
+                $room->setCapacidad($capacidad);
 
                 $this->roomDAO->Edit($room);
                 $this->cinemaDAO->updateCapacidadCine($idCine, $this->roomDAO->capacidadCine($idCine));

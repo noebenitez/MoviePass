@@ -73,18 +73,25 @@ class UserController {
 
     public function Edit($id, $nombre, $apellido, $dni, $email, $pass, $admin, $idFB){
 
-        $user = new User();
-        $user->setId($id);
-        $user->setNombre($nombre);
-        $user->setApellido($apellido);
-        $user->setDni($dni);
-        $user->setEmail($email);
-        $user->setPassword($pass);
-        $user->setAdmin($admin);
-        $user->setIdFB($idFB);
-
         try{
+            $nombre = HomeController::validateString($nombre);
+            $apellido = HomeController::validateString($apellido);
 
+            if(!($nombre && $apellido)){
+
+                throw new Exception("El nombre y/o apellido está vacío.");
+            }
+    
+            $user = new User();
+            $user->setId($id);
+            $user->setNombre($nombre);
+            $user->setApellido($apellido);
+            $user->setDni($dni);
+            $user->setEmail($email);
+            $user->setPassword($pass);
+            $user->setAdmin($admin);
+            $user->setIdFB($idFB);
+            
             $this->usersDAO->Edit($user);
     
             $_SESSION['log'] = true;

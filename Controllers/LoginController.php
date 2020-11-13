@@ -78,17 +78,24 @@ class LoginController {
 
     public function signin($nombre, $apellido, $dni, $email, $pass){
 
-        $user = new User();
-        $user->setNombre($nombre);
-        $user->setApellido($apellido);
-        $user->setDni($dni);
-        $user->setEmail($email);
-        $user->setPassword($pass);
-        $user->setAdmin(false);
-        $user->setIdFB(0);
-
         try{
+            $nombre = HomeController::validateString($nombre);
+            $apellido = HomeController::validateString($apellido);
+
+            if (!($nombre && $apellido)){
+                
+                throw new Exception("El nombre o apellido está vacío.");
+            }
             
+            $user = new User();
+            $user->setNombre($nombre);
+            $user->setApellido($apellido);
+            $user->setDni($dni);
+            $user->setEmail($email);
+            $user->setPassword($pass);
+            $user->setAdmin(false);
+            $user->setIdFB(0);
+
             $this->usersDAO->Add($user);
             $user = $this->usersDAO->read($email, $pass);
     
