@@ -140,6 +140,13 @@ class CompraController {
             
             try{
 
+                $titular = HomeController::validateString($titular);
+
+                if(!$titular){
+                    
+                    throw new Exception("El nombre de titular ingresado no es válido.");
+                }
+
                 $tarjeta = new \Models\TarjetaDeCredito();
             
                 $tarjeta->setNroTarjeta($nroTarjeta);
@@ -206,13 +213,13 @@ class CompraController {
                 $mail->isSMTP();                                            // Envia usando SMTP
                 $mail->Host       = 'smtp.gmail.com';                    //  Host del SMTP server por donde se manda el mail
                 $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                $mail->Username   = 'moviepassmet@gmail.com';     // SMTP username
+                $mail->Username   = 'metodologialaboratorio2020@gmail.com';     // SMTP username
                 $mail->Password   = 'Argentina&2020';     // SMTP password
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
                 $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
                 
                 //Destinatarios
-                $mail->setFrom('moviepassmet@gmail.com', 'MoviePass');
+                $mail->setFrom('metodologialaboratorio2020@gmail.com', 'MoviePass');
                 $mail->addAddress($email);     // Se pueden agregar más de uno repitiendo esta línea
                 
                

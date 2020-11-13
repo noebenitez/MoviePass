@@ -35,5 +35,22 @@
             require_once(ROOT . '/Views/footer.php');
 
         }
+
+        public static function validateString($string){
+
+            $string = trim($string);                     //Saca los espacios del comienzo y final del string
+        
+            if(empty($string)){
+        
+                return false;                           //Eran solo espacios
+            }else{
+                
+                $array = explode(' ',$string);          //Hago un array separando al string por los espacios
+                $array = array_filter($array);          //Se eliminan los elementos del array que están vacios, por si había más de un espacio seguido
+                $string = implode(' ', $array);         //Se arma el string de nuevo
+        
+                return $string;
+            }
+        }
     }
 ?>

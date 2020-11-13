@@ -92,18 +92,26 @@
 
         public function Add($nombre, $calle, $altura, $horaApertura, $horaCierre){
 
-
-            $cinema = new Cinema();
-            $cinema->setNombre($nombre);
-            $cinema->setCalle($calle);
-            $cinema->setAltura($altura);
-            $cinema->setHoraApertura($horaApertura);
-            $cinema->setHoraCierre($horaCierre);
-            
             try{
+
+                $nombre = HomeController::validateString($nombre);
+                $calle = HomeController::validateString($calle);
+
+                if (!($calle && $nombre)){
+
+                    throw new Exception("El nombre y/o calle está vacío.");
+                }
+
+                $cinema = new Cinema();
+                $cinema->setNombre($nombre);
+                $cinema->setCalle($calle);
+                $cinema->setAltura($altura);
+                $cinema->setHoraApertura($horaApertura);
+                $cinema->setHoraCierre($horaCierre);
+            
                 $this->cinemaDAO->Add($cinema);
                 $this->ShowListView();
-                
+
             }catch (Exception $ex){
 
                 HomeController::ShowErrorView("Error al agregar el cine.", $ex->getMessage(), "Cinema/ShowAddView/");
@@ -153,23 +161,32 @@
 
         public function Edit($id, $nombre, $calle, $altura, $horaApertura, $horaCierre){
 
-            $cinema = new Cinema();
-            $cinema->setId($id);
-            $cinema->setNombre($nombre);
-            $cinema->setCalle($calle);
-            $cinema->setAltura($altura);
-            $cinema->setHoraApertura($horaApertura);
-            $cinema->setHoraCierre($horaCierre);
-
             try{
 
+                $nombre = HomeController::validateString($nombre);
+                $calle = HomeController::validateString($calle);
+
+                if (!($calle && $nombre)){
+                    
+                    throw new Exception("El nombre y/o calle está vacío.");
+                }
+
+                $cinema = new Cinema();
+                $cinema->setId($id);
+                $cinema->setNombre($nombre);
+                $cinema->setCalle($calle);
+                $cinema->setAltura($altura);
+                $cinema->setHoraApertura($horaApertura);
+                $cinema->setHoraCierre($horaCierre);
+
+                $this->cinemaDAO->Edit($cinema);
+                $this->ShowListView();
+                
 
             }catch(Exception $ex){
 
                 HomeController::ShowErrorView("No se pudo actualizar la información del cine.", $ex->getMessage(), "Cinema/ShowListView/");
             }
-            $this->cinemaDAO->Edit($cinema);
-            $this->ShowListView();
 
         }
         

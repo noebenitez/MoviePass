@@ -128,14 +128,19 @@
 
 
         public function Add($dia, $porcentaje, $cantidad, $descripcion){
-
-            $descuento = new Descuento();
-            $descuento->setDia($dia);
-            $descuento->setPorcentaje($porcentaje);
-            $descuento->setCantidadMinima($cantidad);
-            $descuento->setDescripcion($descripcion);
-
+            
             try{
+                $descripcion = HomeController::validateString($descripcion);
+
+                if (!$descripcion){
+                    throw new Exception("La descripción está vacía.");
+                }
+                $descuento = new Descuento();
+                $descuento->setDia($dia);
+                $descuento->setPorcentaje($porcentaje);
+                $descuento->setCantidadMinima($cantidad);
+                $descuento->setDescripcion($descripcion);
+
 
                 $this->descuentoDAO->Add($descuento);
                 $this->ShowListView();
