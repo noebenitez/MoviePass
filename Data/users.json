@@ -13,7 +13,7 @@
         "id": "2",
         "nombre": "Candela",
         "apellido": "Yarossi",
-        "dni": "39744958",
+        "dni": "39111111",
         "email": "candyarossi@gmail.com",
         "password": "cande1234",
         "esAdmin": "0",
@@ -25,8 +25,8 @@
         "apellido": "Yarossi",
         "dni": "1",
         "email": "candeeyarossie@gmail.com",
-        "password": "hola1",
-        "esAdmin": "",
+        "password": "candefb",
+        "esAdmin": "0",
         "idFB": "3380739588817302"
     },
     {
