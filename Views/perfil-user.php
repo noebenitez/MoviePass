@@ -10,7 +10,7 @@
         <p class="card-text"><b>Email:</b>&#160; <?php if($user->getEmail() != 'undefined'){ echo $user->getEmail(); } ?></p>
         <p class="card-text"><b>Contrase&ntilde;a:</b>&#160; <?php $cant = strlen($user->getPassword()); for($i=0;$i<$cant;$i++){ echo '*'; } ?></p>
         
-      <br><a href="<?php echo FRONT_ROOT ?>Ticket/ShowTicketList/<?php echo $_SESSION['id'] ?>" class="btn btn-danger"><i class="fa fa-ticket"></i>&#160;&#160;Mis Entradas</a>&#160; 
+      <br><a href="<?php echo FRONT_ROOT ?>Ticket/ShowTicketList/<?php echo $_SESSION['id'] ?>/pelicula" class="btn btn-danger"><i class="fa fa-ticket"></i>&#160;&#160;Mis Entradas</a>&#160; 
       <a href="<?php echo FRONT_ROOT ?>User/ShowEditView/<?php echo $user->getId() ?>" class="btn btn-secondary"><i class="fa fa-user"></i>&#160;&#160;Editar Perfil</a><br><br>
  </div>
  <br>

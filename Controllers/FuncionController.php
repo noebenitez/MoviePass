@@ -317,8 +317,14 @@
                     require_once(ROOT . '/Views/nav-principal.php');
                 }else{
                     require_once(ROOT . '/Views/header.php');
-                    require_once(ROOT . '/Views/nav-user.php');
+    
+                    if ($_SESSION['esAdmin'] == true){
+                        require_once(ROOT . '/Views/nav-admin.php');
+                    }else{
+                        require_once(ROOT . '/Views/nav-user.php');
+                    }
                 }
+
         
                 $films = $this->funcionDAO->getByDate($date);
                 require_once(ROOT . '/Views/film-by-date-funcion.php');
