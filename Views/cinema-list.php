@@ -30,8 +30,8 @@
               <td> <?= date("h:i A", strtotime($cinema->getHoraCierre())); ?> </td>
               <!--<td>  $cinema->getCapacidad();  </td>-->
               <td>
-                <button type="submit" name='edit' class="btn btn-danger" value="<?= $cinema->getId()?>" formaction="<?= FRONT_ROOT ?> Cinema/ShowEditView"> Editar </button>
-                <button type="submit" name='remove' class="btn btn-secondary" value="<?= $cinema->getId()?>" formaction="<?=FRONT_ROOT ?> Cinema/ShowRemoveView"> Eliminar </button> 
+                <button type="submit" name='edit' class="btn btn-danger" value="<?= $cinema->getId()?>" formaction="<?= FRONT_ROOT ?>Cinema/ShowEditView"> Editar </button>
+                <button type="submit" name='remove' class="btn btn-secondary" value="<?= $cinema->getId()?>" formaction="<?=FRONT_ROOT ?>Cinema/ShowRemoveView"> Eliminar </button> 
               </td>
             </tr>
 

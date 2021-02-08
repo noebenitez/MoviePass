@@ -6,7 +6,7 @@
         "dni": "123456789",
         "email": "admin@admin.com",
         "password": "admin1234",
-        "esAdmin": "1",
+        "esAdmin": true,
         "idFB": "0"
     },
     {
@@ -16,7 +16,7 @@
         "dni": "39111111",
         "email": "candyarossi@gmail.com",
         "password": "cande1234",
-        "esAdmin": "0",
+        "esAdmin": false,
         "idFB": "0"
     },
     {
@@ -26,7 +26,7 @@
         "dni": "1",
         "email": "candeeyarossie@gmail.com",
         "password": "candefb",
-        "esAdmin": "0",
+        "esAdmin": false,
         "idFB": "3380739588817302"
     },
     {
@@ -36,7 +36,17 @@
         "dni": "44123123",
         "email": "solchuyarossi@gmail.com",
         "password": "sol1234",
-        "esAdmin": "0",
+        "esAdmin": false,
         "idFB": "0"
+    },
+    {
+        "id": 5,
+        "nombre": "Pedro",
+        "apellido": "Juarez",
+        "dni": "34111444",
+        "email": "pedro@gmail.com",
+        "password": "1111",
+        "esAdmin": false,
+        "idFB": 0
     }
 ]

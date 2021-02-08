@@ -170,8 +170,6 @@ class CompraController {
 
                 //conseguir el ultimo id compra
                 $idCompra = $this->compraDAO->lastId();
-
-                //var_dump($idCompra);
     
                 $this->funcionDAO->actualizarEntradasVendidas($idFuncion, $cantidad);
 

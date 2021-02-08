@@ -52,8 +52,8 @@
               <td style="max-width: 400px;"> <?php echo $descuento->getDescripcion(); ?> </td>
               
               <td>
-                <button type="submit" name='edit' class="btn btn-danger" value="<?php echo $descuento->getId(); ?>" formaction="<?php FRONT_ROOT ?>../Descuento/ShowEditView"> Editar </button>
-                <button type="submit" name='remove' class="btn btn-secondary" value="<?php echo $descuento->getId(); ?>" formaction="<?php FRONT_ROOT ?>../Descuento/ShowRemoveView"> Eliminar </button> 
+                <button type="submit" name='edit' class="btn btn-danger" value="<?php echo $descuento->getId(); ?>" formaction="<?=FRONT_ROOT ?>Descuento/ShowEditView"> Editar </button>
+                <button type="submit" name='remove' class="btn btn-secondary" value="<?php echo $descuento->getId(); ?>" formaction="<?=FRONT_ROOT ?>Descuento/ShowRemoveView"> Eliminar </button> 
               </td>
             </tr>
 

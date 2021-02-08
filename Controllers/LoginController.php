@@ -97,16 +97,10 @@ class LoginController {
             $user->setIdFB(0);
 
             $this->usersDAO->Add($user);
-            $user = $this->usersDAO->read($email, $pass);
-    
-            $_SESSION['log'] = true;
-            $_SESSION['id'] = $idUser;
-            $_SESSION['name'] = $nombre;
-            $_SESSION['email'] = $email;
-            $_SESSION['esAdmin'] = false;
-    
-            $cartelera = new FuncionController();
-            $cartelera->ShowCartelera();
+            
+            require_once(ROOT . '/Views/header-login.php');
+            require_once(ROOT . '/Views/nav-principal.php');
+            require_once(ROOT . '/Views/login.php');
 
         }catch(Exception $ex){
 

@@ -153,7 +153,7 @@
 
             }catch (Exception $ex){
 
-                HomeController::ShowErrorView("La función no pudo ser eliminada.", $ex->getMessage(), "Funcion/ShowListView/");
+                HomeController::ShowErrorView("La función no pudo ser eliminada, hay entradas vendidas que le corresponden.", $ex->getMessage(), "Funcion/ShowListView/");
             }
         }
 
